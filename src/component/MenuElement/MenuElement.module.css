@@ -1,0 +1,11 @@
+.container {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logo {
+  margin-right: 288px;
+  margin-left: 132px;
+}

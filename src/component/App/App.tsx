@@ -1,10 +1,13 @@
 import React from 'react';
-import './App.css';
 
-function App() {
+import './App.css';
+import AppHeader from '../Header/AppHeader';
+
+
+const App = () => {
   return (
     <div className="App">
-      проверка
+      <AppHeader/>
     </div>
   );
 }
