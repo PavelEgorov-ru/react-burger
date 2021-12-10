@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
 import TabContainer from '../TabContainer/TabContainer';
 import ItemsContainer from '../ItemsContainer/ItemsContainer';
@@ -17,12 +18,29 @@ const BurgerIngredients = ({data}) => {
         Соберите бургер
       </h1>
       <TabContainer current = {current} onClick = {handleCurrent}/>
-      <ItemsContainer data = {data.filter(item => item.type === 'bun')}> Булки </ItemsContainer>
-      <ItemsContainer data = {data.filter(item => item.type === 'sauce')}> Соус </ItemsContainer>
-      <ItemsContainer data = {data.filter(item => item.type === 'main')}> Мясо </ItemsContainer>
-
+      <div className={burgerIngredientsStyles.container}>
+        <ItemsContainer key={1} data = {data.filter(item => item.type === 'bun')}> Булки </ItemsContainer>
+        <ItemsContainer key={2}data = {data.filter(item => item.type === 'sauce')}> Соус </ItemsContainer>
+        <ItemsContainer key={3}data = {data.filter(item => item.type === 'main')}> Мясо </ItemsContainer> 
+      </div>           
     </section>
   )
 }
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+      image_mobile: PropTypes.string,
+      price: PropTypes.number,
+    })
+  )
+}
+
+
+
+
+
 
 export default BurgerIngredients 

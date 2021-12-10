@@ -7,8 +7,8 @@ const Main = (props) => {
   
   return (
     <main className={mainStyles.main}>
-      <BurgerConstructor/>
       <BurgerIngredients data = {props.data}/>
+      <BurgerConstructor data = {props.data}/>      
     </main>
   )
 }
