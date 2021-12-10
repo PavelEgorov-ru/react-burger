@@ -1,13 +1,16 @@
 import React from 'react';
 
 import './App.css';
-import AppHeader from '../Header/AppHeader';
+import AppHeader from '../AppHeader/AppHeader';
+import Main from '../Main/Main';
+import data from '../../utils/data'
 
 
 const App = () => {
   return (
     <div className="App">
       <AppHeader/>
+      <Main data = {data} />
     </div>
   );
 }
