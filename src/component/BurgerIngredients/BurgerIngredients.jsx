@@ -30,10 +30,10 @@ const BurgerIngredients = ({data}) => {
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      image_mobile: PropTypes.string,
-      price: PropTypes.number,
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
     })
   )
 }
