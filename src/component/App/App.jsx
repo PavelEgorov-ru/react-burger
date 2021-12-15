@@ -2,9 +2,9 @@ import React from 'react';
 import '@ya.praktikum/react-developer-burger-ui-components';
 
 
-import appStyles from './App.module.css'
-import AppHeader from '../AppHeader/AppHeader';
-import Main from '../Main/Main';
+import appStyles from './app.module.css'
+import AppHeader from '../appHeader/appHeader';
+import Main from '../main/main';
 import data from '../../utils/data'
 
 

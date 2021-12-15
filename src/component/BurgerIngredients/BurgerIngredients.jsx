@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import burgerIngredientsStyles from './BurgerIngredients.module.css';
-import TabContainer from '../TabContainer/TabContainer';
-import ItemsContainer from '../ItemsContainer/ItemsContainer';
+import burgerIngredientsStyles from './burgerIngredients.module.css';
+import TabContainer from '../tabContainer/tabContainer';
+import ItemsContainer from '../itemsContainer/itemsContainer';
 
 const BurgerIngredients = ({data}) => {
   
