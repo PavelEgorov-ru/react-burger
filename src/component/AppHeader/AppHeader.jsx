@@ -1,6 +1,6 @@
 import React from 'react';
-import appHeaderStyles from './appHeader1.module.css';
-import Menu from '../menu1/menu1';
+import appHeaderStyles from './AppHeader.module.css';
+import Menu from '../Menu/Menu';
 
 
 

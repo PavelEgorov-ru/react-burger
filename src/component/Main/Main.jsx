@@ -1,7 +1,7 @@
 import React from 'react';
-import mainStyles from './main1.module.css'
-import BurgerConstructor from '../burgerConstructor1/burgerConstructor1';
-import BurgerIngredients from '../burgerIngredients1/burgerIngredients1';
+import mainStyles from './Main.module.css'
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 
 const Main = (props) => {
   
