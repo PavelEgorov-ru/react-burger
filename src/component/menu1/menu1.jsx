@@ -1,6 +1,6 @@
 import React from 'react';
-import menuStyles from './menu.module.css';
-import MenuElement from '../menuElement/menuElement';
+import menuStyles from './menu1.module.css';
+import MenuElement from '../menuElement1/menuElement1';
 import {Logo, BurgerIcon, ProfileIcon, ListIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 

@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import tabContainerStyles from './tabContainer.module.css';
+import tabContainerStyles from './tabContainer1.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 

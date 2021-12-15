@@ -1,5 +1,5 @@
 
-import itemsContainerStyles from './itemsContainer.module.css';
+import itemsContainerStyles from './itemsContainer1.module.css';
 import {Counter, CurrencyIcon,} from '@ya.praktikum/react-developer-burger-ui-components'
 
 const ItemsContainer = ({data}, props) => {
