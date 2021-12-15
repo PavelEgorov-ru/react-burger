@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
 import TabContainer from '../TabContainer/TabContainer';
 import ItemsContainer from '../ItemsContainer/ItemsContainer';
+import typeIndegrient from '../../utils/types';
 
 const BurgerIngredients = ({data}) => {
-  
   const [current, setCurrent] = React.useState('one')
-
   const handleCurrent = (value) => {
     setCurrent(value)
   }
@@ -20,8 +19,8 @@ const BurgerIngredients = ({data}) => {
       <TabContainer current = {current} onClick = {handleCurrent}/>
       <div className={burgerIngredientsStyles.container}>
         <ItemsContainer key={1} data = {data.filter(item => item.type === 'bun')}> Булки </ItemsContainer>
-        <ItemsContainer key={2}data = {data.filter(item => item.type === 'sauce')}> Соус </ItemsContainer>
-        <ItemsContainer key={3}data = {data.filter(item => item.type === 'main')}> Мясо </ItemsContainer> 
+        <ItemsContainer key={2} data = {data.filter(item => item.type === 'sauce')}> Соус </ItemsContainer>
+        <ItemsContainer key={3} data = {data.filter(item => item.type === 'main')}> Мясо </ItemsContainer> 
       </div>           
     </section>
   )
@@ -29,18 +28,8 @@ const BurgerIngredients = ({data}) => {
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-    })
+    PropTypes.shape(typeIndegrient)
   )
 }
 
-
-
-
-
-
-export default BurgerIngredients 
+export default BurgerIngredients

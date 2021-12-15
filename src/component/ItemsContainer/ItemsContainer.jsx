@@ -2,7 +2,7 @@
 import itemsContainerStyles from './ItemsContainer.module.css';
 import {Counter, CurrencyIcon,} from '@ya.praktikum/react-developer-burger-ui-components'
 
-const ItemsContainer = ({data}, props) => {
+const ItemsContainer = ({data, ...props}) => {
   return (    
     <>
       <h2 className='text text_type_main-medium pt-10'>{props.children}</h2>

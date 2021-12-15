@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyles from './BurgerConstructor.module.css';
-import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import typeIndegrient from '../../utils/types';
 
 const BurgerConstructor = ({data}) => {
   const bun = data[0]
@@ -53,12 +54,7 @@ const BurgerConstructor = ({data}) => {
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-    })
+    PropTypes.shape(typeIndegrient)
   )
 }
 
