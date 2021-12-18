@@ -1,0 +1,18 @@
+.title {
+  align-self: flex-start;
+}
+
+.description {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+}
+
+.li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+}

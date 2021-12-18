@@ -3,11 +3,11 @@ import menuElementStyles from './MenuElement.module.css';
 
 const MenuElement = (props) => {
   return (
-    <a className={`${menuElementStyles.container} + ${props.classContainer 
+    <a href="#" className={`${menuElementStyles.container} + ${props.classContainer 
     ? props.classContainer 
     : menuElementStyles.logo}`}>
       {props.icon}
-      {props.children && <p href="#" className={`${props.classText} + ${menuElementStyles.link}`}>{props.children}</p>}
+      {props.children && <p className={`${props.classText} + ${menuElementStyles.link}`}>{props.children}</p>}
     </a>
   )
 }

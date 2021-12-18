@@ -4,7 +4,7 @@ import burgerConstructorStyles from './BurgerConstructor.module.css';
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import typeIndegrient from '../../utils/types';
 
-const BurgerConstructor = ({data}) => {
+const BurgerConstructor = ({data, onOpen}) => {
   const bun = data[0]
   const elements = data.filter(element => element.type !== 'bun' )
   return (
@@ -45,7 +45,7 @@ const BurgerConstructor = ({data}) => {
           <p className='text text_type_digits-medium mr-2'>620</p>
           <CurrencyIcon type="primary"/>
         </div>        
-        <Button type="primary" size="medium"> Оформить заказ </Button>
+        <Button type="primary" size="medium" onClick = {onOpen}> Оформить заказ </Button>
       </div>
     </div>
   </section>
@@ -55,7 +55,8 @@ const BurgerConstructor = ({data}) => {
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape(typeIndegrient)
-  )
+  ),
+  onOpen: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor 

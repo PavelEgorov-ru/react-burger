@@ -4,10 +4,10 @@ import Menu from '../Menu/Menu';
 
 
 
-const AppHeader = () => {
+const AppHeader = (props) => {
   
   return (
-    <header className={appHeaderStyles.header}>
+    <header className={appHeaderStyles.header} onClick={props.onOpen}>
       <Menu/>      
     </header>
   )
