@@ -7,7 +7,7 @@ const MenuElement = (props) => {
     ? props.classContainer 
     : menuElementStyles.logo}`}>
       {props.icon}
-      {props.children && <p className={`${props.classText} + ${menuElementStyles.link}`}>{props.children}</p>}
+      {props.children && <p className={props.classText}>{props.children}</p>}
     </a>
   )
 }
