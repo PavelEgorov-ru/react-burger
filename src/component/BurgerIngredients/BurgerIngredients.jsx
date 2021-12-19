@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
 import TabContainer from '../TabContainer/TabContainer';
@@ -10,7 +10,29 @@ const BurgerIngredients = ({data, onOpen}) => {
   const [current, setCurrent] = React.useState('one')
   const handleCurrent = (value) => {
     setCurrent(value)
-  } 
+  }
+  const generateUniqueKey = () => {
+    return Math.random()
+  }
+  const buns = React.useMemo(() => {
+   return data.filter(element => element.type !== 'bun' )
+        .map(element => ({...element, uid: generateUniqueKey()}))
+      }, [data]
+  )
+  
+  const sauces = React.useMemo(() => {
+   return data.filter(element => element.type !== 'sauce' )
+      .map(element => ({...element, uid: generateUniqueKey()}))
+  }, [data]
+  ) 
+
+  const mains =  React.useMemo(() => {
+   return data.filter(element => element.type !== 'main' )
+    .map(element => ({...element, uid: generateUniqueKey()}))
+  }, [data]
+  )
+
+  console.log(buns)
   
   return (
      <section className={burgerIngredientsStyles.sectionSize} >
@@ -19,9 +41,9 @@ const BurgerIngredients = ({data, onOpen}) => {
       </h1>
       <TabContainer current = {current} onClick = {handleCurrent} />
       <div className={burgerIngredientsStyles.container}>
-        <ItemsContainer key={1} data = {data.filter(item => item.type === 'bun')} onOpen={onOpen}> Булки </ItemsContainer>
-        <ItemsContainer key={2} data = {data.filter(item => item.type === 'sauce')} onOpen={onOpen}> Соус </ItemsContainer>
-        <ItemsContainer key={3} data = {data.filter(item => item.type === 'main')} onOpen={onOpen}> Мясо </ItemsContainer> 
+        <ItemsContainer key={1} data = {buns} onOpen={onOpen}> Булки </ItemsContainer>
+        <ItemsContainer key={2} data = {sauces} onOpen={onOpen}> Соус </ItemsContainer>
+        <ItemsContainer key={3} data = {mains} onOpen={onOpen}> Мясо </ItemsContainer> 
       </div>           
     </section>
   )

@@ -19,6 +19,8 @@ const App = () => {
   const [indegrientInfo, setIndegrientInfo] = useState({})
 
 
+
+
   const closeModal = () => {
     setIngredientDetailsIsOpen(false)
     setOrderDetailsIsOpen(false)

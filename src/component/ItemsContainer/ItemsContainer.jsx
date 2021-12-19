@@ -12,7 +12,7 @@ const ItemsContainer = ({data, onOpen, children}) => {
       <ul className = {`pr-4 pl-4 pt-6 pb-10 ${itemsContainerStyles.itemContainer}`}>
         {data.map(item => {
           return (
-            <li  key={item._id} className = {`${itemsContainerStyles.item}`} onClick={() => onOpen(item)}>
+            <li  key={item.uid} className = {`${itemsContainerStyles.item}`} onClick={() => onOpen(item)}>
               {item.counter && <Counter count={item.counter} size="default"/>}
               <img className={`${itemsContainerStyles.image} mb-2`} src={item.image} alt="картинка индигрента" />
               <div className={`${itemsContainerStyles.price} mb-2`}>
