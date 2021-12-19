@@ -14,6 +14,7 @@ const Modal = ({onClose, children, title}) => {
   
 
   useEffect(() => {
+    
     const closeModalEsc = (event) => {
       event.key === 'Escape' && onClose();
     }

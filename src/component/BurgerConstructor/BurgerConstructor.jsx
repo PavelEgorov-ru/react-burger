@@ -4,7 +4,7 @@ import burgerConstructorStyles from './BurgerConstructor.module.css';
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import typeIndegrient from '../../utils/types';
 
-const BurgerConstructor = ({data, onOpen}) => {
+const BurgerConstructor = React.memo(({data, onOpen}) => {
   const bun = data[0]
   const elements = data.filter(element => element.type !== 'bun' )
   return (
@@ -50,7 +50,7 @@ const BurgerConstructor = ({data, onOpen}) => {
     </div>
   </section>
   )
-}
+})
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(
