@@ -1,13 +1,14 @@
-
+import PropTypes from 'prop-types';
 import itemsContainerStyles from './ItemsContainer.module.css';
-import {Counter, CurrencyIcon,} from '@ya.praktikum/react-developer-burger-ui-components'
+import {Counter, CurrencyIcon,} from '@ya.praktikum/react-developer-burger-ui-components';
+import typeIndegrient from '../../utils/types';
 
-const ItemsContainer = ({data, onOpen, ...props}) => {
+const ItemsContainer = ({data, onOpen, children}) => {
 
 
   return (    
     <>
-      <h2 className='text text_type_main-medium pt-10'>{props.children}</h2>
+      <h2 className='text text_type_main-medium pt-10'>{children}</h2>
       <ul className = {`pr-4 pl-4 pt-6 pb-10 ${itemsContainerStyles.itemContainer}`}>
         {data.map(item => {
           return (
@@ -24,6 +25,15 @@ const ItemsContainer = ({data, onOpen, ...props}) => {
       </ul>
       </>
   )
+}
+
+ItemsContainer.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape(typeIndegrient),    
+  ).isRequired, 
+  onOpen: PropTypes.func.isRequired,
+  children: PropTypes.string.isRequired,
+
 }
 
 export default ItemsContainer

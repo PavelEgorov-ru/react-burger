@@ -1,5 +1,5 @@
 import React from 'react';
-const baseUrl = 'https://norma.nomoreparties.space/api/ingredients';
+const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 class Api extends React.Component {
   constructor({baseUrl}) {
@@ -7,7 +7,7 @@ class Api extends React.Component {
     this.baseUrl = baseUrl;
   }
 
-  _request(method) {
+  _request(method, endpoint) {
     const pattern = {
       method: method,
       headers: {
@@ -15,7 +15,7 @@ class Api extends React.Component {
       }
      }
 
-     return fetch(this.baseUrl, pattern)
+     return fetch(`${this.baseUrl}/${endpoint}`, pattern)
      .then(res => {
       if(res.ok) {
         return res.json()
@@ -27,12 +27,12 @@ class Api extends React.Component {
   }
 
   getIdegrients() {
-    return this._request('GET')
+    return this._request('GET', 'ingredients')
   }
 }
 
 const newApi = new Api ({
-  baseUrl: baseUrl,
+  baseUrl: BASE_URL,
 })
 
 export default newApi

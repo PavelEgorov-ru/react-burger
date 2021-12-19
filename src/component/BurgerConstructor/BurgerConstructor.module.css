@@ -10,7 +10,7 @@
   box-sizing: border-box;
   width: 100%;
   list-style: none;
-  margin: 0;
+  transform: translateX(15px);
   padding: 0px 8px 0px 16px;
   display: flex;
   flex-direction: column;
@@ -20,7 +20,7 @@
 }
 
 .ul::-webkit-scrollbar {
-  width: 8px; /* ширина для вертикального скролла */
+  width: 8px;
   background-color:#2F2F37;
 }
 
@@ -41,10 +41,10 @@
 .container_btm {
   display: flex;
   gap: 40px;
-
+  align-items: center;
 }
 
 .container_price {
   display: flex;
-  justify-content: center;
+  align-items: center;
 }

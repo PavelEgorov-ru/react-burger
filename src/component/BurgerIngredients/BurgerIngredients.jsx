@@ -29,9 +29,8 @@ const BurgerIngredients = ({data, onOpen}) => {
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape(typeIndegrient),
-    
-  ), 
+    PropTypes.shape(typeIndegrient),    
+  ).isRequired, 
   onOpen: PropTypes.func.isRequired
 }
 

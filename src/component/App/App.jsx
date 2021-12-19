@@ -14,8 +14,8 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 
 const App = () => {
   const [indegrients, setIndegrients] = useState([])
-  const [IngredientDetailsIsOpen, setIngredientDetailsIsOpen] = useState(false)
-  const [OrderDetailsIsOpen, setOrderDetailsIsOpen] = useState(false)
+  const [ingredientDetailsIsOpen, setIngredientDetailsIsOpen] = useState(false)
+  const [orderDetailsIsOpen, setOrderDetailsIsOpen] = useState(false)
   const [indegrientInfo, setIndegrientInfo] = useState({})
 
 
@@ -24,12 +24,12 @@ const App = () => {
     setOrderDetailsIsOpen(false)
   }
 
-  const OpenIngredientDetails = (item) => {
+  const openIngredientDetails = (item) => {
     setIndegrientInfo(item)
     setIngredientDetailsIsOpen(true)
   }
   
-  const OpenOrderDetails = () => {
+  const openOrderDetails = () => {
     setOrderDetailsIsOpen(true)
   }
 
@@ -45,21 +45,22 @@ const App = () => {
 
   return (
     <div className={appStyles.App}>
-      {IngredientDetailsIsOpen 
-      && <Modal onClose = {closeModal}>
-          <IngredientDetails indegrient = {indegrientInfo}/>
-        </Modal>}
+      {ingredientDetailsIsOpen 
+      && (<Modal onClose = {closeModal} title = "Детали заказа">
+            <IngredientDetails indegrient = {indegrientInfo} />
+          </Modal>)}
 
-      {OrderDetailsIsOpen
-      && <Modal onClose = {closeModal}>
-          <OrderDetails/>
-        </Modal>}
+      {orderDetailsIsOpen
+      && (<Modal onClose = {closeModal}>
+            <OrderDetails/>
+          </Modal>)}
 
       <AppHeader/>
-      {indegrients.length !== 0 && <main className={appStyles.main}>
-        <BurgerIngredients data = {indegrients} onOpen = {OpenIngredientDetails}/>
-        <BurgerConstructor data = {indegrients} onOpen = {OpenOrderDetails}/> 
-      </main>}
+      {indegrients.length !== 0 
+      && (<main className={appStyles.main}>
+            <BurgerIngredients data = {indegrients} onOpen = {openIngredientDetails}/>
+            <BurgerConstructor data = {indegrients} onOpen = {openOrderDetails}/> 
+          </main>)}
     </div>
   );
 }

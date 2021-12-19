@@ -24,6 +24,11 @@
   background-color: #1C1C21;
 }
 
+.title {
+  align-self: flex-start;
+}
+
+
 .button {
   position: absolute;
   top: 60px;

@@ -21,7 +21,7 @@ const BurgerConstructor = ({data, onOpen}) => {
         {
           elements.map(element => {
             return (
-              <li key={element._id} className={burgerConstructorStyles.li}>
+              <li key={`${Math.random()}`} className={burgerConstructorStyles.li}>
                 <DragIcon/>
                 <ConstructorElement
                 text={element.name}
@@ -55,7 +55,7 @@ const BurgerConstructor = ({data, onOpen}) => {
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape(typeIndegrient)
-  ),
+  ).isRequired,
   onOpen: PropTypes.func.isRequired
 }
 
