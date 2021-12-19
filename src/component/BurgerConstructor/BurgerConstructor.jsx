@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyles from './BurgerConstructor.module.css';
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,7 +6,14 @@ import typeIndegrient from '../../utils/types';
 
 const BurgerConstructor = React.memo(({data, onOpen}) => {
   const bun = data[0]
-  const elements = data.filter(element => element.type !== 'bun' )
+
+  const generateUniqueKey = () => {
+    return Math.random()
+  }
+  const elements =React.useMemo(() => {
+  return   data.filter(element => element.type !== 'bun' )
+        .map(element => ({...element, uid: generateUniqueKey()}))
+  }, [data]) 
   return (
     <section className={`pt-25 + ${burgerConstructorStyles.container}`}>
       <ConstructorElement
@@ -21,7 +28,7 @@ const BurgerConstructor = React.memo(({data, onOpen}) => {
         {
           elements.map(element => {
             return (
-              <li key={`${Math.random()}`} className={burgerConstructorStyles.li}>
+              <li key={element.uid} className={burgerConstructorStyles.li}>
                 <DragIcon/>
                 <ConstructorElement
                 text={element.name}
