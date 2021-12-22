@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  max-height: calc(100vh - 230px);
+}
+
+.ul {
+  box-sizing: border-box;
+  width: 100%;
+  list-style: none;
+  transform: translateX(15px);
+  padding: 0px 8px 0px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.ul::-webkit-scrollbar {
+  width: 8px;
+  background-color:#2F2F37;
+}
+
+.ul::-webkit-scrollbar-thumb {
+  height: 92px;
+  background-color: #8585AD;
+}
+
+.li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  
+}
+
+.container_btm {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.container_price {
+  display: flex;
+  align-items: center;
+}
