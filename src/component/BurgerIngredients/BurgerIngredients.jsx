@@ -15,19 +15,19 @@ const BurgerIngredients = ({data, onOpen}) => {
     return Math.random()
   }
   const buns = React.useMemo(() => {
-   return data.filter(element => element.type !== 'bun' )
+   return data.filter(element => element.type === 'bun' )
         .map(element => ({...element, uid: generateUniqueKey()}))
       }, [data]
   )
   
   const sauces = React.useMemo(() => {
-   return data.filter(element => element.type !== 'sauce' )
+   return data.filter(element => element.type === 'sauce' )
       .map(element => ({...element, uid: generateUniqueKey()}))
   }, [data]
   ) 
 
   const mains =  React.useMemo(() => {
-   return data.filter(element => element.type !== 'main' )
+   return data.filter(element => element.type === 'main' )
     .map(element => ({...element, uid: generateUniqueKey()}))
   }, [data]
   )
