@@ -1,5 +1,4 @@
-import React from 'react';
-import menuStyles from './Menu.module.css';
+import styles from './Menu.module.css';
 import MenuElement from '../MenuElement/MenuElement';
 import {Logo, BurgerIcon, ProfileIcon, ListIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -14,7 +13,7 @@ const Menu = () => {
 
   return (
     <nav>
-      <ul className={menuStyles.list}>
+      <ul className={styles.list}>
         <MenuElement icon ={burgerIcon} classText="text text_type_main-default pl-2"
         classContainer="p-5 mt-4 mb-4">
           Конструктор

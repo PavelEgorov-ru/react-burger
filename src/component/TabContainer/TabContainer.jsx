@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import tabContainerStyles from './TabContainer.module.css';
+import styles from './TabContainer.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
@@ -11,7 +11,7 @@ const TabContainer = ({current, onClick}) => {
   }
 
   return (
-    <div className={tabContainerStyles.container}>
+    <div className={styles.container}>
       <Tab value="one" active={current === 'one'} onClick={handle}>
         Булки
       </Tab>

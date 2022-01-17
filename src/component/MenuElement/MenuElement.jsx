@@ -1,12 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import menuElementStyles from './MenuElement.module.css';
+import styles from './MenuElement.module.css';
 
 const MenuElement = ({icon, children, classContainer, classText}) => {
   return (
-    <a href="#" className={`${menuElementStyles.container} + ${classContainer 
+    <a href="#" className={`${styles.container} + ${classContainer 
     ? classContainer 
-    : menuElementStyles.logo}`}>
+    : styles.logo}`}>
       {icon}
       {children && <p className={classText}>{children}</p>}
     </a>

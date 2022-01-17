@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import '@ya.praktikum/react-developer-burger-ui-components';
-import appStyles from './App.module.css'
+import styles from './App.module.css'
 import AppHeader from '../AppHeader/AppHeader';
 import newApi from '../../utils/api';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
@@ -46,7 +46,7 @@ const App = () => {
   }, [])
 
   return (
-    <div className={appStyles.App}>
+    <div className={styles.app}>
       {ingredientDetailsIsOpen 
       && (<Modal onClose = {closeModal} title = "Детали заказа">
             <IngredientDetails indegrient = {indegrientInfo} />
@@ -59,7 +59,7 @@ const App = () => {
 
       <AppHeader/>
       {indegrients.length !== 0 
-      && (<main className={appStyles.main}>
+      && (<main className={styles.main}>
             <BurgerIngredients data = {indegrients} onOpen = {openIngredientDetails}/>
             <BurgerConstructor data = {indegrients} onOpen = {openOrderDetails}/> 
           </main>)}

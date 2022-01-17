@@ -1,13 +1,11 @@
-import React from 'react';
-import appHeaderStyles from './AppHeader.module.css';
+import styles from './AppHeader.module.css';
 import Menu from '../Menu/Menu';
 
 
 
-const AppHeader = () => {
-  
+const AppHeader = () => {  
   return (
-    <header className={appHeaderStyles.header}>
+    <header className={styles.header}>
       <Menu/>      
     </header>
   )
