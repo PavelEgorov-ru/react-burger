@@ -8,11 +8,6 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { createStore } from 'redux';
-import  {rootReducer} from '../../services/reducers/index';
-
-
-const store = createStore(rootReducer);
 
   const App = () => {
   const [indegrients, setIndegrients] = useState([])
