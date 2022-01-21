@@ -8,13 +8,18 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import {getIngredients} from '../../services/actions/index'
+import {getIngredients, getElementsConstructor} from '../../services/actions/index';
 
   const App = () => {
 
-   const {ingredients} = useSelector((store) => store.ingredients);
-   console.log(ingredients)
-   const dispatch = useDispatch()
+  const {ingredients, elements} = useSelector((store) => ({
+    ingredients: store.ingredients.ingredients,
+    elements: store.constructor.elements
+  }));
+  
+  const dispatch = useDispatch()
+
+
   const [ingredientDetailsIsOpen, setIngredientDetailsIsOpen] = useState(false)
   const [orderDetailsIsOpen, setOrderDetailsIsOpen] = useState(false)
   const [indegrientInfo, setIndegrientInfo] = useState({})
@@ -36,9 +41,12 @@ import {getIngredients} from '../../services/actions/index'
   
   React.useEffect(() => {
     dispatch(getIngredients())
+    dispatch(getElementsConstructor())
   }, [])
 
+  
 
+  console.log(elements)
   console.log(ingredients)
 
 
@@ -58,7 +66,7 @@ import {getIngredients} from '../../services/actions/index'
       {ingredients.length !== 0 
       && (<main className={styles.main}>
             <BurgerIngredients data = {ingredients} onOpen = {openIngredientDetails}/>
-            <BurgerConstructor data = {ingredients} onOpen = {openOrderDetails}/> 
+            <BurgerConstructor data = {elements} onOpen = {openOrderDetails}/>
           </main>)}
     </div>
   );
