@@ -3,15 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './App.module.css'
 import AppHeader from '../AppHeader/AppHeader';
-import newApi from '../../utils/api';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
+import {getIngredients} from '../../services/actions/index'
 
   const App = () => {
-  const [indegrients, setIndegrients] = useState([])
+
+   const {ingredients} = useSelector((store) => store.ingredients);
+   console.log(ingredients)
+   const dispatch = useDispatch()
   const [ingredientDetailsIsOpen, setIngredientDetailsIsOpen] = useState(false)
   const [orderDetailsIsOpen, setOrderDetailsIsOpen] = useState(false)
   const [indegrientInfo, setIndegrientInfo] = useState({})
@@ -30,16 +33,13 @@ import OrderDetails from '../OrderDetails/OrderDetails';
   const openOrderDetails = () => {
     setOrderDetailsIsOpen(true)
   }
-
+  
   React.useEffect(() => {
-    newApi.getIdegrients()
-    .then((indegrientData) => {
-      setIndegrients(indegrientData.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+    dispatch(getIngredients())
   }, [])
+
+
+  console.log(ingredients)
 
 
   return (
@@ -55,10 +55,10 @@ import OrderDetails from '../OrderDetails/OrderDetails';
           </Modal>)}
 
       <AppHeader/>
-      {indegrients.length !== 0 
+      {ingredients.length !== 0 
       && (<main className={styles.main}>
-            <BurgerIngredients data = {indegrients} onOpen = {openIngredientDetails}/>
-            <BurgerConstructor data = {indegrients} onOpen = {openOrderDetails}/> 
+            <BurgerIngredients data = {ingredients} onOpen = {openIngredientDetails}/>
+            <BurgerConstructor data = {ingredients} onOpen = {openOrderDetails}/> 
           </main>)}
     </div>
   );

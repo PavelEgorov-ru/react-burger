@@ -31,8 +31,6 @@ const BurgerIngredients = ({data, onOpen}) => {
     .map(element => ({...element, uid: generateUniqueKey()}))
   }, [data]
   )
-
-  console.log(buns)
   
   return (
      <section className={styles.sectionSize} >

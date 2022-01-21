@@ -1,12 +1,36 @@
 import { combineReducers } from 'redux';
+import { GET_INGREDIENTS_REQUEST,
+  GET_INGREDIENTS_SUCCESS,
+  GET_INGREDIENTS_FAILED } from '../actions/index'
 
-const initialStateIgredients = []
+const initialStateIgredients = {
+  ingredients: [],
+}
 const initialStateConstructor = []
 const initialStateIngredient = {}
 const initialStateOrder = {}
 
+
 const ingredientsReducer = (state = initialStateIgredients, action) => {
-  return null
+  switch (action.type) {
+    case GET_INGREDIENTS_REQUEST: {
+      return {
+        ...state
+      };
+    }
+    case GET_INGREDIENTS_SUCCESS: {
+      console.log(action.payload)
+      return {
+        ingredients: action.payload
+      };
+    }
+    case GET_INGREDIENTS_FAILED: {
+      return { ...state};
+    }
+    default: {
+      return state
+    }
+}
 }
 
 const constructorReducer = (state = initialStateConstructor, action) => {
@@ -22,9 +46,9 @@ const orderReducer = (state = initialStateOrder, action) => {
 }
 
 export const rootReducer = combineReducers({
-  ingredientsReducer,
-  constructorReducer,
-  igredientReducer,
-  orderReducer
+  ingredients: ingredientsReducer,
+  constructor: constructorReducer,
+  igredient: igredientReducer,
+  order: orderReducer
 })
 
