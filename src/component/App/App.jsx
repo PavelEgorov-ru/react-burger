@@ -5,6 +5,7 @@ import styles from './App.module.css'
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import BurgerContainer from '../BurgerContainer/BurgerContainer'
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
@@ -66,7 +67,11 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
       {ingredients.length !== 0 
       && (<main className={styles.main}>
             <BurgerIngredients data = {ingredients} onOpen = {openIngredientDetails}/>
-            <BurgerConstructor data = {elements} onOpen = {openOrderDetails}/>
+            {/* <BurgerConstructor data = {ingredients} onOpen = {openOrderDetails}/> */}
+            { elements.length !== 0 
+            ? <BurgerConstructor data = {elements} onOpen = {openOrderDetails}/>
+            : <BurgerContainer/>
+            }
           </main>)}
     </div>
   );

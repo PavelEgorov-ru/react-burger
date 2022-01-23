@@ -1,0 +1,37 @@
+.container {
+  width: 600px;
+  padding-top: 100px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.bun_top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 536px;
+  height: 80px;
+  background-color: #2f2f37;
+  border-radius: 88px 88px 40px 40px;
+}
+
+.bun_bottom {
+  width: 536px;
+  height: 80px;
+  background-color: #2f2f37;
+  border-radius: 40px 40px 88px 88px;
+}
+
+/* потом удалить свойство */
+.bun_top:hover {
+  transition: all .6s linear;
+  box-shadow: 0 0 20px #6434db;
+}
+
+bun_activ {
+  transition: all .6s linear;
+  box-shadow: 0 0 20px #6434db;
+}
+
