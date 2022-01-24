@@ -30,7 +30,7 @@
   box-shadow: 0 0 20px #6434db;
 }
 
-bun_activ {
+.bun_activ {
   transition: all .6s linear;
   box-shadow: 0 0 20px #6434db;
 }

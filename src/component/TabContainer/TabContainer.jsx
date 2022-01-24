@@ -1,25 +1,24 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './TabContainer.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
-const TabContainer = ({current, onClick}) => {
+const TabContainer = ({current, handleCurrent}) => {
 
-  const handle = (value) => {
-    onClick(value)
+  const scrollTab = (value) => {
+    handleCurrent(value)
   }
 
   return (
     <div className={styles.container}>
-      <Tab value="one" active={current === 'one'} onClick={handle}>
+      <Tab value='булки' active={current === 'булки'} onClick={scrollTab}>
         Булки
       </Tab>
-      <Tab value="two" active={current === 'two'} onClick={handle}>
+      <Tab value='соусы' active={current === 'соусы'} onClick={scrollTab}>
         Соусы
       </Tab>
-      <Tab value="three" active={current === 'three'} onClick={handle}>
-        Начинки
+      <Tab value='мясо' active={current === 'мясо'} onClick={scrollTab}>
+        Мясо
       </Tab>
     </div>
   )

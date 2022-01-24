@@ -66,7 +66,7 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
       <AppHeader/>
       {ingredients.length !== 0 
       && (<main className={styles.main}>
-            <BurgerIngredients data = {ingredients} onOpen = {openIngredientDetails}/>
+            <BurgerIngredients data = {ingredients} onOpen = {openIngredientDetails} />
             {/* <BurgerConstructor data = {ingredients} onOpen = {openOrderDetails}/> */}
             { elements.length !== 0 
             ? <BurgerConstructor data = {elements} onOpen = {openOrderDetails}/>

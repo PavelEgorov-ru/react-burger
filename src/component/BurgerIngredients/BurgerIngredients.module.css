@@ -5,6 +5,7 @@
 .container {
   overflow: auto;
   max-height: calc(100vh - 330px);
+  position: relative;
 }
 
 .container::-webkit-scrollbar {

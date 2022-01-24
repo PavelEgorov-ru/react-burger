@@ -4,7 +4,7 @@ const BurgerContainer = () => {
   return(
     <div className={styles.container}>
       <div className={styles.bun_top}>
-        <p className='text text_type_main-default'>Выберите булочку</p>
+        <p className='text text_type_main-default'>Перетащите сюда булочку, а затем ингредиенты</p>
       </div>
       <div className={styles.bun_bottom}></div>
     </div>

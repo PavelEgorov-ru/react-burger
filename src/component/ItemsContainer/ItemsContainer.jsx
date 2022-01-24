@@ -1,14 +1,15 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ItemsContainer.module.css';
 import {Counter, CurrencyIcon,} from '@ya.praktikum/react-developer-burger-ui-components';
 import typeIndegrient from '../../utils/types';
 
-const ItemsContainer = ({data, onOpen, children}) => {
+const ItemsContainer = React.forwardRef(({data, onOpen, children}, ref) => {
 
 
   return (    
     <>
-      <h2 className='text text_type_main-medium pt-10'>{children}</h2>
+      <h2 className='text text_type_main-medium pt-10' ref={ref}>{children}</h2>
       <ul className = {`pr-4 pl-4 pt-6 pb-10 ${styles.itemContainer}`}>
         {data.map(item => {
           return (
@@ -25,7 +26,7 @@ const ItemsContainer = ({data, onOpen, children}) => {
       </ul>
       </>
   )
-}
+})
 
 ItemsContainer.propTypes = {
   data: PropTypes.arrayOf(
