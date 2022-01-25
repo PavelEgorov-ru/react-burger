@@ -5,7 +5,8 @@ import TabContainer from '../TabContainer/TabContainer';
 import ItemsContainer from '../ItemsContainer/ItemsContainer';
 import typeIndegrient from '../../utils/types';
 
-const BurgerIngredients = ({data, onOpen}) => {
+const BurgerIngredients = ({data, onOpen,}) => {
+
 
   const [current, setCurrent] = React.useState('булки')
   const handleCurrent = (value) => {
@@ -69,7 +70,7 @@ const BurgerIngredients = ({data, onOpen}) => {
       </h1>
       <TabContainer current = {current} handleCurrent = {handleCurrent} />
       <div className={styles.container} onScroll={onScroll}>
-        <ItemsContainer key={1} data = {buns} onOpen={onOpen} ref={bunsSectoin}> Булки </ItemsContainer>
+        <ItemsContainer key={1} data = {buns} onOpen={onOpen} ref={bunsSectoin} > Булки </ItemsContainer>
         <ItemsContainer key={2} data = {sauces} onOpen={onOpen} ref={saucesSection} > Соусы </ItemsContainer>
         <ItemsContainer key={3} data = {mains} onOpen={onOpen} ref={mainsSection} > Мясо </ItemsContainer> 
       </div>           

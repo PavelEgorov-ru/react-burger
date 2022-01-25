@@ -6,29 +6,6 @@
   list-style: none;
 }
 
-.item {
-  box-sizing: border-box;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 272px;
-  position: relative;
-}
 
-.image {
-  width: 240px;
-  height: 120px;
-}
-
-.price {
-  display: flex;
-  justify-content: center;
-  
-}
-
-.description {
-  text-align: center;
-}
 
 

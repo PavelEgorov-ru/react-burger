@@ -26,6 +26,6 @@ const TabContainer = ({current, handleCurrent}) => {
 
 TabContainer.propTypes = {
   current: PropTypes.string.isRequired, 
-  onClick: PropTypes.func.isRequired
+  handleCurrent: PropTypes.func.isRequired
 }
 export default TabContainer

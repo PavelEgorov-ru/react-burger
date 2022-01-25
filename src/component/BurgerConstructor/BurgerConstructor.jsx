@@ -5,7 +5,8 @@ import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/
 import typeIndegrient from '../../utils/types';
 
 const BurgerConstructor = React.memo(({data, onOpen}) => {
-  const bun = data[0]
+  const bun = data.filter(element => element.type === 'bun' )
+  console.log(bun)
 
   const generateUniqueKey = () => {
     return Math.random()
