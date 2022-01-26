@@ -1,8 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+// import { DndProvider } from "react-dnd";
+// import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from './App.module.css'
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
@@ -23,13 +23,13 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
   const {ingredients} = useSelector((store) => ({
     ingredients: store.ingredients.ingredients,
     
-  }));
-  
+  }));  
   const dispatch = useDispatch()
 
   // блок со стейтами DnD, который нужно будет потом удалить
   const [elements, setElements] = useState([]) //массив в елементов в целевом контейнере, пока еще пустой
   const [draggedElement, setDraggedElement] = useState({}) // объект с перетаскиваемым элементом
+
   
   console.log(elements)
 
@@ -71,13 +71,11 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
       <AppHeader/>
       {ingredients.length !== 0 
       && (<main className={styles.main}>
-            <DndProvider backend={HTML5Backend}>
               <BurgerIngredients data = {ingredients} onOpen = {openIngredientDetails}/>
               {/* <BurgerConstructor data = {ingredients} onOpen = {openOrderDetails}/> */}
               { elements.length !== 0 
               ? <BurgerConstructor data = {elements} onOpen = {openOrderDetails}/>
               : <BurgerContainer />}
-            </DndProvider>
           </main>)}
     </div>
   );

@@ -4,17 +4,21 @@ import {Counter, CurrencyIcon,} from '@ya.praktikum/react-developer-burger-ui-co
 import typeIndegrient from '../../utils/types';
 import PropTypes from 'prop-types';
 
-const Item = ({item, onOpen}) => {
+const Item = ({item, onOpen,}) => {
+  const {_id, counter, image, price, name, type} = item
+
+
   return(
-    <li key={item.uid} className = {styles.item} onClick={() => onOpen(item)} draggable={true} >
-     {item.counter && <Counter count={item.counter} size="default"/>}
-        <img className={`${styles.image} mb-2`} src={item.image} alt="картинка индигрента" />
+    <li className = {styles.item} onClick={() => onOpen(item)} draggable={true}>
+     {counter && <Counter count={counter} size="default"/>}
+        <img className={`${styles.image} mb-2`} src={image} alt="картинка индигрента" />
         <div className={`${styles.price} mb-2`}>
-          <p className='text text_type_digits-default mr-2'>{item.price}</p>
+          <p className='text text_type_digits-default mr-2'>{price}</p>
           <CurrencyIcon type="primary"/>
         </div>
-        <p className={`${styles.description} + text text_type_main-default mb-10`}>{item.name}</p>
+        <p className={`${styles.description} + text text_type_main-default mb-10`}>{name}</p>
     </li>
+    
   )
 }
 
