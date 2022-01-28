@@ -4,8 +4,10 @@ export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const GET_ELEMENTS_CONSTRUCTOR = 'GET_ELEMENTS_CONSTRUCTOR';
-export const POST_BUN_CONSTRUCTOR = 'POST_BUN_CONSTRUCTOR'
-export const POST_ELEMENT_CONSTRUCTOR = 'POST_ELEMENT_CONSTRUCTOR'
+export const POST_BUN_CONSTRUCTOR = 'POST_BUN_CONSTRUCTOR';
+export const POST_ELEMENT_CONSTRUCTOR = 'POST_ELEMENT_CONSTRUCTOR';
+export const OPEN_MODAL_INGREDIENT = 'OPEN_MODAL_INGREDIENT';
+export const CLOSE_MODAL_INGREDIENT = 'CLOSE_MODAL_INGREDIENT'
 
 export function getIngredients() {
   return function(dispatch) {
@@ -45,4 +47,17 @@ export function postElementConstructor(element) {
     type: POST_ELEMENT_CONSTRUCTOR,
     payload: element
   }
+}
+
+export function openModalIngredient (element) {
+  return {
+    type: OPEN_MODAL_INGREDIENT,
+    payload: element
+  }  
+}
+
+export function closeModalIngredient () {
+  return {
+    type: CLOSE_MODAL_INGREDIENT
+  }  
 }

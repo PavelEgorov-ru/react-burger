@@ -5,8 +5,9 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_ELEMENTS_CONSTRUCTOR,
   POST_BUN_CONSTRUCTOR,
-  POST_ELEMENT_CONSTRUCTOR
-
+  POST_ELEMENT_CONSTRUCTOR,
+  OPEN_MODAL_INGREDIENT,
+  CLOSE_MODAL_INGREDIENT,
 } from '../actions/index'
 
 const initialStateIgredients = {
@@ -20,7 +21,10 @@ const initialStateConstructor = {
   isElements: false,
 }
 
-const initialStateIngredient = {}
+const initialStateIngredient = {
+  ingredient: {},
+  isOpenModal: false
+}
 const initialStateOrder = {}
 
 
@@ -76,8 +80,27 @@ const elements = (state = initialStateConstructor, action) => {
 }
 
 
-const igredient = (state = initialStateIngredient, action) => {
-  return null
+const ingredient = (state = initialStateIngredient, action) => {
+  // return null
+  switch (action.type) {
+    case OPEN_MODAL_INGREDIENT: {
+      return {
+        ...state,
+        ingredient: action.payload,
+        isOpenModal: true
+      }
+    }
+    case CLOSE_MODAL_INGREDIENT: {
+      return {
+        ...state,
+        ingredient: {},
+        isOpenModal: false
+      }
+    }
+    default: {
+      return state
+    }
+  }
 }
 
 const order = (state = initialStateOrder, action) => {
@@ -87,7 +110,7 @@ const order = (state = initialStateOrder, action) => {
 export const rootReducer = combineReducers({
   ingredients,
   elements,
-  igredient,
+  ingredient,
   order
 })
 

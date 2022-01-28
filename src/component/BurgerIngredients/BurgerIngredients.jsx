@@ -6,7 +6,7 @@ import TabContainer from '../TabContainer/TabContainer';
 import ItemsContainer from '../ItemsContainer/ItemsContainer';
 
 
-const BurgerIngredients = ({onOpen}) => {
+const BurgerIngredients = () => {
 
   const {ingredients} = useSelector(store => store.ingredients)
 
@@ -63,16 +63,13 @@ const BurgerIngredients = ({onOpen}) => {
       </h1>
       <TabContainer current = {current} handleCurrent = {handleCurrent} />
       <div className={styles.container} onScroll={onScroll}>
-        <ItemsContainer key={1} data = {buns} onOpen={onOpen} ref={bunsSectoin} > Булки </ItemsContainer>
-        <ItemsContainer key={2} data = {sauces} onOpen={onOpen} ref={saucesSection} > Соусы </ItemsContainer>
-        <ItemsContainer key={3} data = {mains} onOpen={onOpen} ref={mainsSection} > Мясо </ItemsContainer> 
+        <ItemsContainer key={1} data = {buns}  ref={bunsSectoin} > Булки </ItemsContainer>
+        <ItemsContainer key={2} data = {sauces} ref={saucesSection} > Соусы </ItemsContainer>
+        <ItemsContainer key={3} data = {mains} ref={mainsSection} > Мясо </ItemsContainer> 
       </div>           
     </section>
   )
 }
 
-BurgerIngredients.propTypes = { 
-  onOpen: PropTypes.func.isRequired,
-}
 
 export default BurgerIngredients

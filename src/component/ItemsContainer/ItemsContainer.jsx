@@ -5,14 +5,14 @@ import typeIndegrient from '../../utils/types';
 import Item from '../Item/Item'
 
 
-const ItemsContainer = React.forwardRef(({data, onOpen, children,}, ref) => {
+const ItemsContainer = React.forwardRef(({data, children,}, ref) => {
   return (    
     <>
       <h2 className='text text_type_main-medium pt-10' ref={ref}>{children}</h2>
       <ul className = {`pr-4 pl-4 pt-6 pb-10 ${styles.itemContainer}`}>
         {data.map(item => {
           return (
-            <Item key={item._id} item = {item} onOpen={onOpen}/>
+            <Item key={item._id} item = {item}/>
           )
         })}      
       </ul>
@@ -23,8 +23,7 @@ const ItemsContainer = React.forwardRef(({data, onOpen, children,}, ref) => {
 ItemsContainer.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape(typeIndegrient),    
-  ).isRequired, 
-  onOpen: PropTypes.func.isRequired,
+  ).isRequired,
   children: PropTypes.string.isRequired,
 
 }

@@ -4,13 +4,16 @@ import {Counter, CurrencyIcon,} from '@ya.praktikum/react-developer-burger-ui-co
 import typeIndegrient from '../../utils/types';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import {openModalIngredient} from '../../services/actions/index'
 
 
-const Item = ({item, onOpen,}) => {
+const Item = ({item,}) => {
   const {bun, elements} = useSelector(store => ({
     bun: store.elements.bun,
     elements: store.elements.elements
   }))
+
+  const dispatch = useDispatch()
 
   let count = 0
   if(item._id === bun._id) {
@@ -31,10 +34,15 @@ const Item = ({item, onOpen,}) => {
     })
   });
 
+  const openModal = (item) => {
+    console.log(item)
+    dispatch(openModalIngredient(item))
+  }
+
   const boxShadow = isDrag ? '0 0 20px #6434db' : null
 
   return(
-    <li className = {styles.item} onClick={() => onOpen(item)} draggable ref={dragRef} style={{boxShadow}}>
+    <li className = {styles.item} onClick={() => openModal(item)} draggable ref={dragRef} style={{boxShadow}}>
      {count !== 0 && <Counter count={count} size="default"/>}
         <img className={`${styles.image} mb-2`} src={item.image} alt="картинка индигрента" />
         <div className={`${styles.price} mb-2`}>
@@ -48,8 +56,7 @@ const Item = ({item, onOpen,}) => {
 }
 
 Item.propTypes = {
-  item: PropTypes.shape(typeIndegrient).isRequired, 
-  onOpen: PropTypes.func.isRequired,
+  item: PropTypes.shape(typeIndegrient).isRequired,
 }
 
 export default Item

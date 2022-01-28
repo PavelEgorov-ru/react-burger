@@ -15,15 +15,10 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
 
   const App = () => {
 
-  // const {ingredients, elements} = useSelector((store) => ({
-  //   ingredients: store.ingredients.ingredients,
-  //   elements: store.constructor.elements
-  // }));
-
-  const {isIngredients, isElements} = useSelector((store) => ({
+  const {isIngredients, isElements, isOpenModal} = useSelector((store) => ({
     isElements: store.elements.isElements,  
     isIngredients: store.ingredients.isIngredients,
-    
+    isOpenModal: store.ingredient.isOpenModal
   }));
   const dispatch = useDispatch()
 
@@ -31,19 +26,7 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
     dispatch(getIngredients())
   }, [])
 
-  const [ingredientDetailsIsOpen, setIngredientDetailsIsOpen] = useState(false)
   const [orderDetailsIsOpen, setOrderDetailsIsOpen] = useState(false)
-  const [indegrientInfo, setIndegrientInfo] = useState({})
-
-  const closeModal = () => {
-    setIngredientDetailsIsOpen(false)
-    setOrderDetailsIsOpen(false)
-  }
-
-  const openIngredientDetails = (item) => {
-    setIndegrientInfo(item)
-    setIngredientDetailsIsOpen(true)
-  }
   
   const openOrderDetails = () => {
     setOrderDetailsIsOpen(true)
@@ -53,13 +36,13 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
 
   return (
     <div className={styles.app}>
-      {ingredientDetailsIsOpen 
-      && (<Modal onClose = {closeModal} title = "Детали заказа">
-            <IngredientDetails indegrient = {indegrientInfo} />
+      {isOpenModal
+      && (<Modal title = "Детали заказа">
+            <IngredientDetails />
           </Modal>)}
 
       {orderDetailsIsOpen
-      && (<Modal onClose = {closeModal}>
+      && (<Modal>
             <OrderDetails/>
           </Modal>)}
 
@@ -68,7 +51,7 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
       && (
         <DndProvider backend={HTML5Backend}>
             <main className={styles.main}>
-              <BurgerIngredients onOpen = {openIngredientDetails}/>
+              <BurgerIngredients/>
               { isElements
               ? <BurgerConstructor onOpen = {openOrderDetails}/>
               : <BurgerContainer />}
