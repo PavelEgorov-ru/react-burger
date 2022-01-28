@@ -12,7 +12,7 @@ const ItemsContainer = React.forwardRef(({data, onOpen, children,}, ref) => {
       <ul className = {`pr-4 pl-4 pt-6 pb-10 ${styles.itemContainer}`}>
         {data.map(item => {
           return (
-            <Item key={item.uid} item = {item} onOpen={onOpen}/>
+            <Item key={item._id} item = {item} onOpen={onOpen}/>
           )
         })}      
       </ul>

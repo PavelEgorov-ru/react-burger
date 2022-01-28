@@ -1,12 +1,14 @@
 import React, {useMemo, useRef} from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './BurgerIngredients.module.css';
 import TabContainer from '../TabContainer/TabContainer';
 import ItemsContainer from '../ItemsContainer/ItemsContainer';
-import typeIndegrient from '../../utils/types';
 
-const BurgerIngredients = ({data, onOpen,}) => {
 
+const BurgerIngredients = ({onOpen}) => {
+
+  const {ingredients} = useSelector(store => store.ingredients)
 
   const [current, setCurrent] = React.useState('булки')
   const handleCurrent = (value) => {
@@ -19,16 +21,10 @@ const BurgerIngredients = ({data, onOpen,}) => {
       mainsSection.current.scrollIntoView({behavior:"smooth"})
     }
   }
-
-  const generateUniqueKey = () => {
-    return Math.random()
-  }
   
   const bunsSectoin = useRef(null)
   const saucesSection = useRef(null)
   const mainsSection = useRef(null)
-
-  
 
   const onScroll = (event) => {
     const container = event.target
@@ -46,21 +42,18 @@ const BurgerIngredients = ({data, onOpen,}) => {
   }
 
   const buns = React.useMemo(() => {
-   return data.filter(element => element.type === 'bun' )
-        .map(element => ({...element, uid: generateUniqueKey()}))
-      }, [data]
+   return ingredients.filter(element => element.type === 'bun' )
+      }, [ingredients]
   )
   
   const sauces = React.useMemo(() => {
-   return data.filter(element => element.type === 'sauce' )
-      .map(element => ({...element, uid: generateUniqueKey()}))
-  }, [data]
+   return ingredients.filter(element => element.type === 'sauce' )
+  }, [ingredients]
   ) 
 
   const mains =  React.useMemo(() => {
-   return data.filter(element => element.type === 'main' )
-    .map(element => ({...element, uid: generateUniqueKey()}))
-  }, [data]
+   return ingredients.filter(element => element.type === 'main' )
+  }, [ingredients]
   )
   
   return (
@@ -78,10 +71,7 @@ const BurgerIngredients = ({data, onOpen,}) => {
   )
 }
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape(typeIndegrient),    
-  ).isRequired, 
+BurgerIngredients.propTypes = { 
   onOpen: PropTypes.func.isRequired,
 }
 

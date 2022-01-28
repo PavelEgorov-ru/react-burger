@@ -1,8 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
-// import { DndProvider } from "react-dnd";
-// import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from './App.module.css'
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
@@ -20,18 +20,16 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
   //   elements: store.constructor.elements
   // }));
 
-  const {ingredients} = useSelector((store) => ({
-    ingredients: store.ingredients.ingredients,
+  const {isIngredients, isElements} = useSelector((store) => ({
+    isElements: store.elements.isElements,  
+    isIngredients: store.ingredients.isIngredients,
     
-  }));  
+  }));
   const dispatch = useDispatch()
 
-  // блок со стейтами DnD, который нужно будет потом удалить
-  const [elements, setElements] = useState([]) //массив в елементов в целевом контейнере, пока еще пустой
-  const [draggedElement, setDraggedElement] = useState({}) // объект с перетаскиваемым элементом
-
-  
-  console.log(elements)
+  React.useEffect(() => {
+    dispatch(getIngredients())
+  }, [])
 
   const [ingredientDetailsIsOpen, setIngredientDetailsIsOpen] = useState(false)
   const [orderDetailsIsOpen, setOrderDetailsIsOpen] = useState(false)
@@ -51,10 +49,7 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
     setOrderDetailsIsOpen(true)
   }
   
-  React.useEffect(() => {
-    dispatch(getIngredients())
-    dispatch(getElementsConstructor())
-  }, [])
+ 
 
   return (
     <div className={styles.app}>
@@ -69,14 +64,17 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
           </Modal>)}
 
       <AppHeader/>
-      {ingredients.length !== 0 
-      && (<main className={styles.main}>
-              <BurgerIngredients data = {ingredients} onOpen = {openIngredientDetails}/>
-              {/* <BurgerConstructor data = {ingredients} onOpen = {openOrderDetails}/> */}
-              { elements.length !== 0 
-              ? <BurgerConstructor data = {elements} onOpen = {openOrderDetails}/>
+      {isIngredients
+      && (
+        <DndProvider backend={HTML5Backend}>
+            <main className={styles.main}>
+              <BurgerIngredients onOpen = {openIngredientDetails}/>
+              { isElements
+              ? <BurgerConstructor onOpen = {openOrderDetails}/>
               : <BurgerContainer />}
-          </main>)}
+            </main>
+        </DndProvider>
+          )}
     </div>
   );
 }

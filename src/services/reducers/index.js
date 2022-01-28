@@ -4,20 +4,27 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
   GET_ELEMENTS_CONSTRUCTOR,
+  POST_BUN_CONSTRUCTOR,
+  POST_ELEMENT_CONSTRUCTOR
 
 } from '../actions/index'
 
 const initialStateIgredients = {
   ingredients: [],
+  isIngredients: false,
 }
+
 const initialStateConstructor = {
+  bun: {},
   elements: [],
+  isElements: false,
 }
+
 const initialStateIngredient = {}
 const initialStateOrder = {}
 
 
-const ingredientsReducer = (state = initialStateIgredients, action) => {
+const ingredients = (state = initialStateIgredients, action) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
@@ -27,7 +34,8 @@ const ingredientsReducer = (state = initialStateIgredients, action) => {
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
-        ingredients: action.payload
+        ingredients: action.payload,
+        isIngredients: true
       };
     }
     case GET_INGREDIENTS_FAILED: {
@@ -41,12 +49,24 @@ const ingredientsReducer = (state = initialStateIgredients, action) => {
   }
 }
 
-const constructorReducer = (state = initialStateConstructor, action) => {
+const elements = (state = initialStateConstructor, action) => {
   switch(action.type) {    
     case GET_ELEMENTS_CONSTRUCTOR: {
       return {
+        ...state      
+      }
+    }
+    case POST_BUN_CONSTRUCTOR: {
+      return {
         ...state,
-        elements: []
+        bun: action.payload,
+        isElements: true,
+      }
+    }
+    case POST_ELEMENT_CONSTRUCTOR: {
+      return {
+        ...state,
+        elements: [...state.elements, {...action.payload}]
       }
     }
     default: {
@@ -56,18 +76,18 @@ const constructorReducer = (state = initialStateConstructor, action) => {
 }
 
 
-const igredientReducer = (state = initialStateIngredient, action) => {
+const igredient = (state = initialStateIngredient, action) => {
   return null
 }
 
-const orderReducer = (state = initialStateOrder, action) => {
+const order = (state = initialStateOrder, action) => {
   return null
 }
 
 export const rootReducer = combineReducers({
-  ingredients: ingredientsReducer,
-  constructor: constructorReducer,
-  igredient: igredientReducer,
-  order: orderReducer
+  ingredients,
+  elements,
+  igredient,
+  order
 })
 
