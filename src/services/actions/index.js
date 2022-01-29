@@ -3,11 +3,14 @@ import newApi from '../../utils/api'
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
+export const POST_ORDERS_REQUEST = 'POST_ORDERS_REQUEST';
+export const POST_ORDERS_SUCCESS = 'POST_ORDERS_SUCCESS';
+export const POST_ORDERS_FAILED = 'POST_ORDERS_FAILED';
 export const GET_ELEMENTS_CONSTRUCTOR = 'GET_ELEMENTS_CONSTRUCTOR';
 export const POST_BUN_CONSTRUCTOR = 'POST_BUN_CONSTRUCTOR';
 export const POST_ELEMENT_CONSTRUCTOR = 'POST_ELEMENT_CONSTRUCTOR';
 export const OPEN_MODAL_INGREDIENT = 'OPEN_MODAL_INGREDIENT';
-export const CLOSE_MODAL_INGREDIENT = 'CLOSE_MODAL_INGREDIENT'
+export const CLOSE_MODAL = 'CLOSE_MODAL_INGREDIENT'
 
 export function getIngredients() {
   return function(dispatch) {
@@ -24,6 +27,26 @@ export function getIngredients() {
     .catch(() => {
       dispatch({
         type: GET_INGREDIENTS_FAILED
+      });
+    });
+  };
+}
+
+export function postOrders(info) {
+  return function(dispatch) {
+    dispatch({
+      type: POST_ORDERS_REQUEST
+    });
+    newApi.postOrders(info).
+    then((ordersData) => {
+      dispatch({
+        type: POST_ORDERS_SUCCESS,
+        payload: ordersData.order
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: POST_ORDERS_FAILED
       });
     });
   };
@@ -56,8 +79,8 @@ export function openModalIngredient (element) {
   }  
 }
 
-export function closeModalIngredient () {
+export function closeModal () {
   return {
-    type: CLOSE_MODAL_INGREDIENT
+    type: CLOSE_MODAL
   }  
 }

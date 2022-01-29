@@ -5,17 +5,26 @@ import PropTypes from 'prop-types';
 import styles from './BurgerConstructor.module.css';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import Element from '../Element/Element';
-import {postElementConstructor} from '../../services/actions/index';
+import {postElementConstructor, postOrders} from '../../services/actions/index';
 import {postBunConstructor} from '../../services/actions/index';
 
 
-const BurgerConstructor = React.memo(({onOpen}) => {
+const BurgerConstructor = React.memo(() => {
+  const dispatch = useDispatch()
+
   const {bun, elements} = useSelector(store => ({
     bun: store.elements.bun,
     elements: store.elements.elements
   }))
 
-  const dispatch = useDispatch()
+  const onClick = ({bun, elements}) => {
+    let arrayId = [bun, ...elements].map(function(element){
+        return element._id
+      })
+    console.log(arrayId)
+    dispatch(postOrders({"ingredients": arrayId}))
+
+  }
 
   const [, dropBunRef] = useDrop({
     accept: 'bun',
@@ -78,7 +87,7 @@ const BurgerConstructor = React.memo(({onOpen}) => {
           <p className='text text_type_digits-medium mr-2'>620</p>
           <CurrencyIcon type="primary"/>
         </div>        
-        <Button type="primary" size="medium" onClick = {onOpen}> Оформить заказ </Button>
+        <Button type="primary" size="medium" onClick={() => onClick({bun, elements})}> Оформить заказ </Button>
       </div>
   </section>
   )

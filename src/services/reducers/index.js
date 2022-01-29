@@ -7,7 +7,10 @@ import {
   POST_BUN_CONSTRUCTOR,
   POST_ELEMENT_CONSTRUCTOR,
   OPEN_MODAL_INGREDIENT,
-  CLOSE_MODAL_INGREDIENT,
+  CLOSE_MODAL,
+  POST_ORDERS_REQUEST,
+  POST_ORDERS_SUCCESS,
+  POST_ORDERS_FAILED
 } from '../actions/index'
 
 const initialStateIgredients = {
@@ -25,7 +28,10 @@ const initialStateIngredient = {
   ingredient: {},
   isOpenModal: false
 }
-const initialStateOrder = {}
+const initialStateOrder = {
+  order: {},
+  isOrder: false
+}
 
 
 const ingredients = (state = initialStateIgredients, action) => {
@@ -90,7 +96,7 @@ const ingredient = (state = initialStateIngredient, action) => {
         isOpenModal: true
       }
     }
-    case CLOSE_MODAL_INGREDIENT: {
+    case CLOSE_MODAL: {
       return {
         ...state,
         ingredient: {},
@@ -104,7 +110,37 @@ const ingredient = (state = initialStateIngredient, action) => {
 }
 
 const order = (state = initialStateOrder, action) => {
-  return null
+  // return null
+  switch (action.type) {
+    case POST_ORDERS_REQUEST: {
+      return {
+        ...state,
+        isOrder: false
+      };
+    }
+    case POST_ORDERS_SUCCESS: {
+      return {
+        ...state,
+        order: action.payload,
+        isOrder: true
+      };
+    }
+    case POST_ORDERS_FAILED: {
+      return { 
+        ...state
+      };
+    }
+    case CLOSE_MODAL: {
+      return {
+        ...state,
+        order: {},
+        isOrder: false
+      }
+    }
+    default: {
+      return state
+    }
+  }
 }
 
 export const rootReducer = combineReducers({

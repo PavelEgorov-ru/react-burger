@@ -11,28 +11,29 @@ import BurgerContainer from '../BurgerContainer/BurgerContainer'
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import {getIngredients, getElementsConstructor} from '../../services/actions/index';
+import {getIngredients} from '../../services/actions/index';
 
   const App = () => {
 
-  const {isIngredients, isElements, isOpenModal} = useSelector((store) => ({
+  const {isIngredients, isElements, isOpenModal, isOrder} = useSelector((store) => ({
     isElements: store.elements.isElements,  
     isIngredients: store.ingredients.isIngredients,
-    isOpenModal: store.ingredient.isOpenModal
+    isOpenModal: store.ingredient.isOpenModal,
+    isOrder: store.order.isOrder
   }));
   const dispatch = useDispatch()
+  // console.log(elements)
+  // const arrayId = elements.map(function(element){
+  //   return element._id
+  // })
+  // console.log(arrayId)
+
 
   React.useEffect(() => {
     dispatch(getIngredients())
   }, [])
+  
 
-  const [orderDetailsIsOpen, setOrderDetailsIsOpen] = useState(false)
-  
-  const openOrderDetails = () => {
-    setOrderDetailsIsOpen(true)
-  }
-  
- 
 
   return (
     <div className={styles.app}>
@@ -41,8 +42,8 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
             <IngredientDetails />
           </Modal>)}
 
-      {orderDetailsIsOpen
-      && (<Modal>
+      {isOrder
+       && (<Modal>
             <OrderDetails/>
           </Modal>)}
 
@@ -52,9 +53,7 @@ import {getIngredients, getElementsConstructor} from '../../services/actions/ind
         <DndProvider backend={HTML5Backend}>
             <main className={styles.main}>
               <BurgerIngredients/>
-              { isElements
-              ? <BurgerConstructor onOpen = {openOrderDetails}/>
-              : <BurgerContainer />}
+              { isElements ? <BurgerConstructor /> : <BurgerContainer />}
             </main>
         </DndProvider>
           )}
