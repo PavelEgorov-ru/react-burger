@@ -1,27 +1,28 @@
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import styles from './Modal.module.css';
 import { createPortal } from 'react-dom';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {closeModal} from '../../services/actions/index';
-import { useSelector,useDispatch } from 'react-redux';
 
 const modalRoot = document.getElementById("modal-root")
 
 
-const Modal = ({children, title}) => {
+const Modal = ({children, title, onClose}) => {
 
-  const dispatch = useDispatch()
 
-  const closeModalEsc = (event) => {
-    event.key === 'Escape' && onClose();
-    document.removeEventListener('keydown', closeModalEsc);
-  }
-  document.addEventListener('keydown', closeModalEsc);
+  useEffect(() => {    
+    const closeModalEsc = (event) => {
+      event.key === 'Escape' && onClose();
+    }
 
-  const onClose = () => {
-    dispatch(closeModal())    
-  } 
+    document.addEventListener('keydown', closeModalEsc);
+    return () => {
+      document.removeEventListener('keydown', closeModalEsc);
+    }
+  }, [onClose])
+
+
 
   return createPortal((
     <div className={styles.window}>

@@ -11,7 +11,7 @@ import BurgerContainer from '../BurgerContainer/BurgerContainer'
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import {getIngredients} from '../../services/actions/index';
+import {getIngredients, closeModal} from '../../services/actions/index';
 
   const App = () => {
 
@@ -23,6 +23,11 @@ import {getIngredients} from '../../services/actions/index';
   }));
 
   const dispatch = useDispatch()
+
+  const onClose = () => {
+    dispatch(closeModal())    
+  } 
+
   React.useEffect(() => {
     dispatch(getIngredients())
   }, [])
@@ -30,12 +35,12 @@ import {getIngredients} from '../../services/actions/index';
   return (
     <div className={styles.app}>
       {isOpenModal
-      && (<Modal title = "Детали заказа">
+      && (<Modal title = "Детали заказа" onClose={onClose}>
             <IngredientDetails />
           </Modal>)}
 
       {isOrder
-       && (<Modal>
+       && (<Modal onClose={onClose}>
             <OrderDetails/>
           </Modal>)}
 
