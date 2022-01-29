@@ -17,8 +17,14 @@ const BurgerConstructor = React.memo(() => {
     elements: store.elements.elements
   }))
 
-  const onClick = ({bun, elements}) => {
-    let arrayId = [bun, ...elements].map(function(element){
+  const arrayElements = [bun, ...elements]
+  const count = arrayElements.reduce((acc, item) => {
+    return acc + item.price
+  }, 0)
+
+
+  const onClick = (arrayElements) => {
+    const arrayId =  arrayElements.map(function(element){
         return element._id
       })
     console.log(arrayId)
@@ -84,10 +90,10 @@ const BurgerConstructor = React.memo(() => {
     
       <div className={`${styles.container_btm} + mt-10`}>
         <div className={styles.container_price}>
-          <p className='text text_type_digits-medium mr-2'>620</p>
+          <p className='text text_type_digits-medium mr-2'>{count}</p>
           <CurrencyIcon type="primary"/>
         </div>        
-        <Button type="primary" size="medium" onClick={() => onClick({bun, elements})}> Оформить заказ </Button>
+        <Button type="primary" size="medium" onClick={() => onClick(arrayElements)}> Оформить заказ </Button>
       </div>
   </section>
   )
