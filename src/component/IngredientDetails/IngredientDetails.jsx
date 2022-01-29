@@ -8,8 +8,6 @@ const IngredientDetails = () => {
     ingredient: store.ingredient.ingredient
   }))
 
- 
-
   return(
     <>      
       <img src = {ingredient.image_large} alt={ingredient.name}></img>

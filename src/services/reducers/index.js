@@ -6,6 +6,8 @@ import {
   GET_ELEMENTS_CONSTRUCTOR,
   POST_BUN_CONSTRUCTOR,
   POST_ELEMENT_CONSTRUCTOR,
+  DELETE_ELEMENT_CONSTRUCTOR,
+  NEWORDER_ELEMENTS_CONSTRUCTOR,
   OPEN_MODAL_INGREDIENT,
   CLOSE_MODAL,
   POST_ORDERS_REQUEST,
@@ -77,6 +79,18 @@ const elements = (state = initialStateConstructor, action) => {
       return {
         ...state,
         elements: [...state.elements, {...action.payload}]
+      }
+    }
+    case DELETE_ELEMENT_CONSTRUCTOR: {
+      return {
+        ...state,
+        elements: state.elements.filter((element) => {return element.uid !== action.payload})
+      }
+    }
+    case NEWORDER_ELEMENTS_CONSTRUCTOR: {
+      return {
+        ...state,
+        elements: action.payload
       }
     }
     default: {

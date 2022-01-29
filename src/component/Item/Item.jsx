@@ -19,11 +19,10 @@ const Item = ({item,}) => {
   if(item._id === bun._id) {
     count += 1
   } else {
-    const test = (element) => {
+    elements.forEach((element) => {
       if(element._id === item._id) return count = count + 1;
       return count;
-    }
-    elements.forEach((element) => test(element));
+    });
   }
 
   const [{isDrag},dragRef] = useDrag({
@@ -35,7 +34,6 @@ const Item = ({item,}) => {
   });
 
   const openModal = (item) => {
-    console.log(item)
     dispatch(openModalIngredient(item))
   }
 
@@ -51,7 +49,6 @@ const Item = ({item,}) => {
         </div>
         <p className={`${styles.description} + text text_type_main-default mb-10`}>{item.name}</p>
     </li>
-    
   )
 }
 

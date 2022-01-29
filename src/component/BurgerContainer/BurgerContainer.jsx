@@ -15,10 +15,6 @@ const BurgerContainer = () => {
       isHover: monitor.isOver(),
     })
   })
-
-  const test = (item) => {
-    console.log(item)
-  }
   
   const boxShadow = isHover ? '0 0 20px #6434db' : null
 

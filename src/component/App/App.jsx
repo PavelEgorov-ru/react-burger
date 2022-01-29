@@ -21,20 +21,12 @@ import {getIngredients} from '../../services/actions/index';
     isOpenModal: store.ingredient.isOpenModal,
     isOrder: store.order.isOrder
   }));
+
   const dispatch = useDispatch()
-  // console.log(elements)
-  // const arrayId = elements.map(function(element){
-  //   return element._id
-  // })
-  // console.log(arrayId)
-
-
   React.useEffect(() => {
     dispatch(getIngredients())
   }, [])
   
-
-
   return (
     <div className={styles.app}>
       {isOpenModal
