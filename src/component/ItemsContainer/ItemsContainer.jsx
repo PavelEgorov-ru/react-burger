@@ -1,37 +1,29 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import itemsContainerStyles from './ItemsContainer.module.css';
-import {Counter, CurrencyIcon,} from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './ItemsContainer.module.css';
 import typeIndegrient from '../../utils/types';
+import Item from '../Item/Item'
 
-const ItemsContainer = ({data, onOpen, children}) => {
 
-
+const ItemsContainer = React.forwardRef(({data, children,}, ref) => {
   return (    
     <>
-      <h2 className='text text_type_main-medium pt-10'>{children}</h2>
-      <ul className = {`pr-4 pl-4 pt-6 pb-10 ${itemsContainerStyles.itemContainer}`}>
+      <h2 className='text text_type_main-medium pt-10' ref={ref}>{children}</h2>
+      <ul className = {`pr-4 pl-4 pt-6 pb-10 ${styles.itemContainer}`}>
         {data.map(item => {
           return (
-            <li  key={item.uid} className = {`${itemsContainerStyles.item}`} onClick={() => onOpen(item)}>
-              {item.counter && <Counter count={item.counter} size="default"/>}
-              <img className={`${itemsContainerStyles.image} mb-2`} src={item.image} alt="картинка индигрента" />
-              <div className={`${itemsContainerStyles.price} mb-2`}>
-                <p className='text text_type_digits-default mr-2'>{item.price}</p>
-                <CurrencyIcon type="primary"/>
-              </div>
-              <p className={`${itemsContainerStyles.description} + text text_type_main-default mb-10`}>{item.name}</p>
-            </li>)
-          })}      
+            <Item key={item._id} item = {item}/>
+          )
+        })}      
       </ul>
       </>
   )
-}
+})
 
 ItemsContainer.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape(typeIndegrient),    
-  ).isRequired, 
-  onOpen: PropTypes.func.isRequired,
+  ).isRequired,
   children: PropTypes.string.isRequired,
 
 }

@@ -7,7 +7,7 @@ class Api extends React.Component {
     this.baseUrl = baseUrl;
   }
 
-  _request(method, endpoint) {
+  _request(method, endpoint, info) {
     const pattern = {
       method: method,
       headers: {
@@ -15,7 +15,8 @@ class Api extends React.Component {
       }
      }
 
-     return fetch(`${this.baseUrl}/${endpoint}`, pattern)
+     return fetch(`${this.baseUrl}/${endpoint}`,
+     info ? {...pattern, body: JSON.stringify(info)} : pattern)
      .then(res => {
       if(res.ok) {
         return res.json()
@@ -28,6 +29,10 @@ class Api extends React.Component {
 
   getIdegrients() {
     return this._request('GET', 'ingredients')
+  }
+
+  postOrders(info) {
+    return this._request('POST', 'orders', info)
   }
 }
 

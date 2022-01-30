@@ -4,6 +4,8 @@
   gap: 10px;
   align-items: flex-end;
   max-height: calc(100vh - 230px);
+  min-height: 350px;
+  /* height: 300px */
 }
 
 .ul {
@@ -29,15 +31,6 @@
   background-color: #8585AD;
 }
 
-.li {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  
-}
-
 .container_btm {
   display: flex;
   gap: 40px;
@@ -47,4 +40,16 @@
 .container_price {
   display: flex;
   align-items: center;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+  border: dashed 3px #8585AD;
+}
+
+.bun {
+  max-height: 80px;
 }

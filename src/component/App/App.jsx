@@ -1,68 +1,59 @@
 import React, { useState, useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
-import appStyles from './App.module.css'
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import styles from './App.module.css'
 import AppHeader from '../AppHeader/AppHeader';
-import newApi from '../../utils/api';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import BurgerContainer from '../BurgerContainer/BurgerContainer'
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
+import {getIngredients, closeModal} from '../../services/actions/index';
 
+  const App = () => {
 
+  const {isIngredients, isElements, isOpenModal, isOrder} = useSelector((store) => ({
+    isElements: store.elements.isElements,  
+    isIngredients: store.ingredients.isIngredients,
+    isOpenModal: store.ingredient.isOpenModal,
+    isOrder: store.order.isOrder
+  }));
 
+  const dispatch = useDispatch()
 
-const App = () => {
-  const [indegrients, setIndegrients] = useState([])
-  const [ingredientDetailsIsOpen, setIngredientDetailsIsOpen] = useState(false)
-  const [orderDetailsIsOpen, setOrderDetailsIsOpen] = useState(false)
-  const [indegrientInfo, setIndegrientInfo] = useState({})
-
-
-
-
-  const closeModal = () => {
-    setIngredientDetailsIsOpen(false)
-    setOrderDetailsIsOpen(false)
-  }
-
-  const openIngredientDetails = (item) => {
-    setIndegrientInfo(item)
-    setIngredientDetailsIsOpen(true)
-  }
-  
-  const openOrderDetails = () => {
-    setOrderDetailsIsOpen(true)
-  }
+  const onClose = () => {
+    dispatch(closeModal())    
+  } 
 
   React.useEffect(() => {
-    newApi.getIdegrients()
-    .then((indegrientData) => {
-      setIndegrients(indegrientData.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+    dispatch(getIngredients())
   }, [])
-
+  
   return (
-    <div className={appStyles.App}>
-      {ingredientDetailsIsOpen 
-      && (<Modal onClose = {closeModal} title = "Детали заказа">
-            <IngredientDetails indegrient = {indegrientInfo} />
+    <div className={styles.app}>
+      {isOpenModal
+      && (<Modal title = "Детали заказа" onClose={onClose}>
+            <IngredientDetails />
           </Modal>)}
 
-      {orderDetailsIsOpen
-      && (<Modal onClose = {closeModal}>
+      {isOrder
+       && (<Modal onClose={onClose}>
             <OrderDetails/>
           </Modal>)}
 
       <AppHeader/>
-      {indegrients.length !== 0 
-      && (<main className={appStyles.main}>
-            <BurgerIngredients data = {indegrients} onOpen = {openIngredientDetails}/>
-            <BurgerConstructor data = {indegrients} onOpen = {openOrderDetails}/> 
-          </main>)}
+      {isIngredients
+      && (
+        <DndProvider backend={HTML5Backend}>
+            <main className={styles.main}>
+              <BurgerIngredients/>
+              { isElements ? <BurgerConstructor /> : <BurgerContainer />}
+            </main>
+        </DndProvider>
+          )}
     </div>
   );
 }
