@@ -1,4 +1,7 @@
 import { combineReducers } from 'redux';
+import newApi from '../../utils/api';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import { 
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -18,6 +21,7 @@ import {
 const initialStateIgredients = {
   ingredients: [],
   isIngredients: false,
+  error: null
 }
 
 const initialStateConstructor = {
@@ -35,31 +39,59 @@ const initialStateOrder = {
   isOrder: false
 }
 
-
-const ingredients = (state = initialStateIgredients, action) => {
-  switch (action.type) {
-    case GET_INGREDIENTS_REQUEST: {
-      return {
-        ...state
-      };
-    }
-    case GET_INGREDIENTS_SUCCESS: {
-      return {
-        ...state,
-        ingredients: action.payload,
-        isIngredients: true
-      };
-    }
-    case GET_INGREDIENTS_FAILED: {
-      return { 
-        ...state
-      };
-    }
-    default: {
-      return state
-    }
+export const fetchIngredients = createAsyncThunk(
+  'ingredients/fetchIngredients',
+  async () => {
+    const response = await newApi.getIdegrients()
+    return response.data
   }
-}
+)
+
+const ingredients = createSlice({
+  name: 'ingredients',
+  initialState: {
+    ingredients: [1,2],
+    isIngredients: false,
+    error: null
+  },
+  // reducers:
+  extrareducers: {
+    [fetchIngredients.pending]: state => state ,
+    [fetchIngredients.fulfilled]: (state, action) => {
+      state.ingredients = action.payload;
+      state.isIngredients = true;
+    },
+    [fetchIngredients.rejected]: (state, action) => {
+      state.error = action.error.message;
+      state.isIngredients = false;
+    },
+  }
+});
+
+// const ingredients = (state = initialStateIgredients, action) => {
+//   switch (action.type) {
+//     case GET_INGREDIENTS_REQUEST: {
+//       return {
+//         ...state
+//       };
+//     }
+//     case GET_INGREDIENTS_SUCCESS: {
+//       return {
+//         ...state,
+//         ingredients: action.payload,
+//         isIngredients: true
+//       };
+//     }
+//     case GET_INGREDIENTS_FAILED: {
+//       return { 
+//         ...state
+//       };
+//     }
+//     default: {
+//       return state
+//     }
+//   }
+// }
 
 const elements = (state = initialStateConstructor, action) => {
   switch(action.type) {    
@@ -158,7 +190,7 @@ const order = (state = initialStateOrder, action) => {
 }
 
 export const rootReducer = combineReducers({
-  ingredients,
+  ingredients: ingredients.reducer,
   elements,
   ingredient,
   order

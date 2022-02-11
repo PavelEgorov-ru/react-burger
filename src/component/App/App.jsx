@@ -12,6 +12,7 @@ import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import {getIngredients, closeModal} from '../../services/actions/index';
+import {fetchIngredients} from '../../services/reducers/index'
 
   const App = () => {
 
@@ -21,6 +22,9 @@ import {getIngredients, closeModal} from '../../services/actions/index';
     isOpenModal: store.ingredient.isOpenModal,
     isOrder: store.order.isOrder
   }));
+  
+  const ingredients = useSelector((store) => store.ingredients)
+  console.log(ingredients)
 
   const dispatch = useDispatch()
 
@@ -29,7 +33,7 @@ import {getIngredients, closeModal} from '../../services/actions/index';
   } 
 
   React.useEffect(() => {
-    dispatch(getIngredients())
+    dispatch(fetchIngredients())
   }, [])
   
   return (

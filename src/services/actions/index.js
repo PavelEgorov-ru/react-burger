@@ -15,25 +15,25 @@ export const NEWORDER_ELEMENTS_CONSTRUCTOR = 'NEWORDER_ELEMENTS_CONSTRUCTOR'
 export const OPEN_MODAL_INGREDIENT = 'OPEN_MODAL_INGREDIENT';
 export const CLOSE_MODAL = 'CLOSE_MODAL_INGREDIENT'
 
-export function getIngredients() {
-  return function(dispatch) {
-    dispatch({
-      type: GET_INGREDIENTS_REQUEST
-    });
-    newApi.getIdegrients().
-    then((ingredientsData) => {
-      dispatch({
-        type: GET_INGREDIENTS_SUCCESS,
-        payload: ingredientsData.data
-      });
-    })
-    .catch(() => {
-      dispatch({
-        type: GET_INGREDIENTS_FAILED
-      });
-    });
-  };
-}
+// export function getIngredients() {
+//   return function(dispatch) {
+//     dispatch({
+//       type: GET_INGREDIENTS_REQUEST
+//     });
+//     newApi.getIdegrients()
+//     .then((ingredientsData) => {
+//       dispatch({
+//         type: GET_INGREDIENTS_SUCCESS,
+//         payload: ingredientsData.data
+//       });
+//     })
+//     .catch(() => {
+//       dispatch({
+//         type: GET_INGREDIENTS_FAILED
+//       });
+//     });
+//   };
+// }
 
 export function postOrders(info) {
   return function(dispatch) {
