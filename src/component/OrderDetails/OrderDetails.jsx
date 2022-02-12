@@ -6,7 +6,7 @@ const OrderDetails = () => {
   const {order} = useSelector(store => ({
     order: store.order.order
   }))
-  
+
   return(
     <>
       <p className='text text_type_digits-large mt-20'> {order.number} </p>

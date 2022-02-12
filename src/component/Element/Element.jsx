@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 import { useDrag, useDrop } from "react-dnd";
 import {useDispatch} from 'react-redux';
 import typeIndegrient from '../../utils/types';
-import {deleteElementConstructor} from '../../services/actions/index'
+import {elementsSlice} from '../../services/reducers/index'
 
 const Element = ({element, moveCard, index}) => {
+  const {actions} = elementsSlice
   const dispatch = useDispatch()
   const ref = useRef()
   const handleClose = (elementUid) => {
-    dispatch(deleteElementConstructor(elementUid))
+    dispatch(actions.deleteElement(elementUid))
   }
 
   const [,drag] = useDrag({

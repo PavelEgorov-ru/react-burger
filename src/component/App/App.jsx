@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import { DndProvider } from "react-dnd";
@@ -11,8 +11,7 @@ import BurgerContainer from '../BurgerContainer/BurgerContainer'
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import {getIngredients, closeModal} from '../../services/actions/index';
-import {fetchIngredients} from '../../services/reducers/index'
+import {fetchIngredients, ingredientSlice, orderSlice} from '../../services/reducers/index'
 
   const App = () => {
 
@@ -22,14 +21,16 @@ import {fetchIngredients} from '../../services/reducers/index'
     isOpenModal: store.ingredient.isOpenModal,
     isOrder: store.order.isOrder
   }));
-  
-  const ingredients = useSelector((store) => store.ingredients)
-  console.log(ingredients)
 
   const dispatch = useDispatch()
 
+  const ingredientActions = ingredientSlice.actions
+  const orderActions = orderSlice.actions
+
   const onClose = () => {
-    dispatch(closeModal())    
+    isOpenModal
+    ? dispatch(ingredientActions.closeModal())
+    : dispatch(orderActions.closeModal())  
   } 
 
   React.useEffect(() => {

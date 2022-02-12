@@ -1,27 +1,10 @@
 import { combineReducers } from 'redux';
 import newApi from '../../utils/api';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
-import { 
-  GET_INGREDIENTS_REQUEST,
-  GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_FAILED,
-  GET_ELEMENTS_CONSTRUCTOR,
-  POST_BUN_CONSTRUCTOR,
-  POST_ELEMENT_CONSTRUCTOR,
-  DELETE_ELEMENT_CONSTRUCTOR,
-  NEWORDER_ELEMENTS_CONSTRUCTOR,
-  OPEN_MODAL_INGREDIENT,
-  CLOSE_MODAL,
-  POST_ORDERS_REQUEST,
-  POST_ORDERS_SUCCESS,
-  POST_ORDERS_FAILED
-} from '../actions/index'
+import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 
 const initialStateIgredients = {
   ingredients: [],
   isIngredients: false,
-  error: null
 }
 
 const initialStateConstructor = {
@@ -47,152 +30,96 @@ export const fetchIngredients = createAsyncThunk(
   }
 )
 
-const ingredients = createSlice({
+export const fetchOrder = createAsyncThunk(
+  'order/fetchOrder',
+  async (info) => {
+    const response = await newApi.postOrders(info)
+    return response.order
+  }
+)
+
+export const ingredientsSlice = createSlice({
   name: 'ingredients',
-  initialState: {
-    ingredients: [1,2],
-    isIngredients: false,
-    error: null
-  },
-  // reducers:
-  extrareducers: {
+  initialState: initialStateIgredients,
+  extraReducers: {
     [fetchIngredients.pending]: state => state ,
     [fetchIngredients.fulfilled]: (state, action) => {
       state.ingredients = action.payload;
       state.isIngredients = true;
     },
-    [fetchIngredients.rejected]: (state, action) => {
-      state.error = action.error.message;
+    [fetchIngredients.rejected]: (state) => {
       state.isIngredients = false;
     },
   }
 });
 
-// const ingredients = (state = initialStateIgredients, action) => {
-//   switch (action.type) {
-//     case GET_INGREDIENTS_REQUEST: {
-//       return {
-//         ...state
-//       };
-//     }
-//     case GET_INGREDIENTS_SUCCESS: {
-//       return {
-//         ...state,
-//         ingredients: action.payload,
-//         isIngredients: true
-//       };
-//     }
-//     case GET_INGREDIENTS_FAILED: {
-//       return { 
-//         ...state
-//       };
-//     }
-//     default: {
-//       return state
-//     }
-//   }
-// }
+export const orderSlice = createSlice({
+  name: 'order',
+  initialState: initialStateOrder,
+  reducers: {
+    closeModal(state) {
+      state.order = {}
+      state.isOrder = false
+    }
+  },
+  extraReducers: {
+    [fetchOrder.pending]: (state, action) => {
+      console.log(action)
+      state.isOrder = false
+    } ,
+    [fetchOrder.fulfilled]: (state, action) => {
+      state.isOrder = true
+      state.order = action.payload
 
-const elements = (state = initialStateConstructor, action) => {
-  switch(action.type) {    
-    case GET_ELEMENTS_CONSTRUCTOR: {
-      return {
-        ...state      
-      }
-    }
-    case POST_BUN_CONSTRUCTOR: {
-      return {
-        ...state,
-        bun: action.payload,
-        isElements: true,
-      }
-    }
-    case POST_ELEMENT_CONSTRUCTOR: {
-      return {
-        ...state,
-        elements: [...state.elements, {...action.payload}]
-      }
-    }
-    case DELETE_ELEMENT_CONSTRUCTOR: {
-      return {
-        ...state,
-        elements: state.elements.filter((element) => {return element.uid !== action.payload})
-      }
-    }
-    case NEWORDER_ELEMENTS_CONSTRUCTOR: {
-      return {
-        ...state,
-        elements: action.payload
-      }
-    }
-    default: {
-      return state
-    }
+    },
+    [fetchOrder.rejected]: state => state 
   }
-}
-
-
-const ingredient = (state = initialStateIngredient, action) => {
-  // return null
-  switch (action.type) {
-    case OPEN_MODAL_INGREDIENT: {
-      return {
-        ...state,
-        ingredient: action.payload,
-        isOpenModal: true
-      }
-    }
-    case CLOSE_MODAL: {
-      return {
-        ...state,
-        ingredient: {},
-        isOpenModal: false
-      }
-    }
-    default: {
-      return state
-    }
-  }
-}
-
-const order = (state = initialStateOrder, action) => {
-  // return null
-  switch (action.type) {
-    case POST_ORDERS_REQUEST: {
-      return {
-        ...state,
-        isOrder: false
-      };
-    }
-    case POST_ORDERS_SUCCESS: {
-      return {
-        ...state,
-        order: action.payload,
-        isOrder: true
-      };
-    }
-    case POST_ORDERS_FAILED: {
-      return { 
-        ...state
-      };
-    }
-    case CLOSE_MODAL: {
-      return {
-        ...state,
-        order: {},
-        isOrder: false
-      }
-    }
-    default: {
-      return state
-    }
-  }
-}
-
-export const rootReducer = combineReducers({
-  ingredients: ingredients.reducer,
-  elements,
-  ingredient,
-  order
 })
 
+export const elementsSlice = createSlice({
+  name: 'elements',
+  initialState: initialStateConstructor,
+  reducers: {
+    postBun(state, action) {    
+      state.bun = action.payload
+      state.isElements=true      
+    },
+    postElement: {
+      reducer: (state, action) => {
+        state.elements = [...state.elements, action.payload]
+      },
+      prepare: (text) => {
+        const uid = nanoid()
+        return { payload: { uid, ...text } }
+      },
+    },
+    deleteElement(state, action) {
+      state.elements = state.elements.filter((element) => element.uid !== action.payload)
+    },
+    newOrderElements(state, action) {
+      state.elements = action.payload
+    }
+  }
+})
+
+export const ingredientSlice  = createSlice({
+  name: 'ingredient',
+  initialState: initialStateIngredient,
+  reducers: {
+    openModal(state, action) {
+      state.ingredient = action.payload
+      state.isOpenModal = true
+    },
+    closeModal(state) {
+      state.ingredient = {}
+      state.isOpenModal = false
+    }
+  }
+})
+
+export const rootReducer = combineReducers({
+  ingredients: ingredientsSlice.reducer,
+  elements: elementsSlice.reducer,
+  ingredient: ingredientSlice.reducer,
+  order: orderSlice.reducer
+})

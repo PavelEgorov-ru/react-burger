@@ -1,6 +1,4 @@
-import PropTypes from 'prop-types';
 import styles from './IngredientDetails.module.css';
-import typeIndegrient from '../../utils/types';
 import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {

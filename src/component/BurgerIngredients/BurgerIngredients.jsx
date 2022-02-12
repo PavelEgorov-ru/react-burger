@@ -1,6 +1,5 @@
 import React, {useMemo, useRef} from 'react';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import styles from './BurgerIngredients.module.css';
 import TabContainer from '../TabContainer/TabContainer';
 import ItemsContainer from '../ItemsContainer/ItemsContainer';
@@ -41,17 +40,17 @@ const BurgerIngredients = () => {
     }
   }
 
-  const buns = React.useMemo(() => {
+  const buns = useMemo(() => {
    return ingredients.filter(element => element.type === 'bun' )
       }, [ingredients]
   )
   
-  const sauces = React.useMemo(() => {
+  const sauces = useMemo(() => {
    return ingredients.filter(element => element.type === 'sauce' )
   }, [ingredients]
   ) 
 
-  const mains =  React.useMemo(() => {
+  const mains = useMemo(() => {
    return ingredients.filter(element => element.type === 'main' )
   }, [ingredients]
   )
