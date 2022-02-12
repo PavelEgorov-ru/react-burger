@@ -123,3 +123,4 @@ export const rootReducer = combineReducers({
   ingredient: ingredientSlice.reducer,
   order: orderSlice.reducer
 })
+
