@@ -15,6 +15,8 @@ import {fetchIngredients, ingredientSlice, orderSlice} from '../../services/redu
 
   const App = () => {
 
+  
+
   const {isIngredients, isElements, isOpenModal, isOrder} = useSelector((store) => ({
     isElements: store.elements.isElements,  
     isIngredients: store.ingredients.isIngredients,
@@ -33,7 +35,7 @@ import {fetchIngredients, ingredientSlice, orderSlice} from '../../services/redu
     : dispatch(orderActions.closeModal())  
   } 
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(fetchIngredients())
   }, [])
   
