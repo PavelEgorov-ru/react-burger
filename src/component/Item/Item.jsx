@@ -4,7 +4,7 @@ import {Counter, CurrencyIcon,} from '@ya.praktikum/react-developer-burger-ui-co
 import typeIndegrient from '../../utils/types';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import {ingredientSlice} from '../../services/reducers/index';
+import {ingredientActions} from '../../services/reducers/index';
 
 
 const Item = ({item,}) => {
@@ -12,7 +12,6 @@ const Item = ({item,}) => {
     bun: store.elements.bun,
     elements: store.elements.elements
   }))
-  const {actions} = ingredientSlice
   const dispatch = useDispatch()
 
   let count = 0
@@ -34,7 +33,7 @@ const Item = ({item,}) => {
   });
 
   const openModal = (item) => {
-    dispatch(actions.openModal(item))
+    dispatch(ingredientActions.openModal(item))
   }
 
   const boxShadow = isDrag ? '0 0 20px #6434db' : null

@@ -1,17 +1,17 @@
 import styles from './BurgerContainer.module.css';
 import { useDrop } from "react-dnd";
 import { useDispatch } from 'react-redux';
-import {elementsSlice} from '../../services/reducers/index';
+import {elementsActions} from '../../services/reducers/index';
 
 
 const BurgerContainer = () => {
-  const {actions} = elementsSlice
+  
   const dispatch = useDispatch()
 
   const [{isHover},dropRef] = useDrop({
     accept: 'bun',
     drop(item) {
-      dispatch(actions.postBun(item))
+      dispatch(elementsActions.postBun(item))
     },
     collect: monitor => ({
       isHover: monitor.isOver(),

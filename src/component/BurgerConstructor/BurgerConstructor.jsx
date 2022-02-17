@@ -4,11 +4,13 @@ import { useDrop } from "react-dnd";
 import styles from './BurgerConstructor.module.css';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import Element from '../Element/Element';
-import {elementsSlice, fetchOrder} from '../../services/reducers/index'
+// import {elementsSlice, fetchOrder} from '../../services/reducers/index';
+import {elementsActions} from '../../services/reducers/index';
+import {fetchOrder} from '../../services/reducers/order/orderSlice';
 
 
 const BurgerConstructor = React.memo(() => {
-  const {actions} = elementsSlice
+  // const {actions} = elementsSlice
   const dispatch = useDispatch()
   const {bun, elements} = useSelector(store => ({
     bun: store.elements.bun,
@@ -34,20 +36,20 @@ const BurgerConstructor = React.memo(() => {
     let dragElement = newElements[dragIndex]
     newElements.splice(dragIndex, 1)
     newElements.splice(hoverIndex, 0, dragElement)
-    dispatch(actions.newOrderElements(newElements))
+    dispatch(elementsActions.newOrderElements(newElements))
   }
 
   const [, dropBunRef] = useDrop({
     accept: 'bun',
     drop(item) {
-      dispatch(actions.postBun(item))
+      dispatch(elementsActions.postBun(item))
     },
   })
 
   const [{isHover}, dropRef] = useDrop({
     accept: ['sauce', 'main'],
     drop(item) {
-      dispatch(actions.postElement(item))
+      dispatch(elementsActions.postElement(item))
     },
     collect: monitor => ({
       isHover: monitor.isOver(),
