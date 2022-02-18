@@ -1,7 +1,7 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { IStateConstructor, IIngredient, IElement } from "./types";
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { IStateConstructor, IIngredient, IElement } from './types';
 
 const initialStateConstructor: IStateConstructor = {
   bun: {},
@@ -10,7 +10,7 @@ const initialStateConstructor: IStateConstructor = {
 };
 
 const elementsSlice = createSlice({
-  name: "elements",
+  name: 'elements',
   initialState: initialStateConstructor,
   reducers: {
     postBun(state, action) {
