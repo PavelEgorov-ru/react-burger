@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC, ReactNode} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hoocks/hoocks';
 import { useDrop } from "react-dnd";
 import styles from './BurgerConstructor.module.css';
@@ -6,8 +6,9 @@ import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-deve
 import Element from '../Element/Element';
 import {elementsActions} from '../../services/reducers/index';
 import {fetchOrder} from '../../services/reducers/order/orderSlice';
+import type {IIngredient, IElement, IElementsConstructor, IIngredientsId} from '../../utils/types';
 
-const BurgerConstructor = React.memo(() => {
+const BurgerConstructor: FC<Readonly<{ children?: ReactNode }>> = React.memo(() => {
   const dispatch = useAppDispatch()
   const {bun} = useAppSelector(store => store.elements)
   const {elements} = useAppSelector(store => store.elements)
@@ -18,14 +19,14 @@ const BurgerConstructor = React.memo(() => {
   }, 0)
 
 
-  const onClick = (arrayElements) => {
-    const arrayId =  arrayElements.map(function(element){
+  const onClick = (arrayElements: IElementsConstructor[]) => {
+    const arrayId: any=  arrayElements.map(function(element){
         return element._id
       })
     dispatch(fetchOrder({"ingredients": arrayId}))
   }
 
-  const moveCard = (dragIndex, hoverIndex) => {
+  const moveCard = (dragIndex: number, hoverIndex: number) => {
     
     const newElements = [...elements]
     let dragElement = newElements[dragIndex]

@@ -1,7 +1,7 @@
 /* здесь интерфейс для начального стейта. Я так понимаю, он типизирует и стейт
 который прилетает в редьюсер*/
 export interface IStateConstructor {
-  bun: {} | IIngredient;
+  bun: Record<string, any> | IIngredient;
   elements: IElement[];
   isElements: boolean;
 }
@@ -21,6 +21,7 @@ export interface IIngredient {
   image_mobile: string;
   image_large: string;
   __v: number;
+  uid?: string;
 }
 
 // интерфейс элемента, который попадает в массив для конструктора
