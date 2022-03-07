@@ -1,5 +1,5 @@
-import {useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import {FC, ReactNode, useEffect} from 'react';
+import {useAppSelector, useAppDispatch} from '../../hoocks/hoocks';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -15,25 +15,24 @@ import {fetchIngredients} from '../../services/reducers/ingredients/ingredientsS
 import { ingredientActions, orderActions} from '../../services/reducers/index'
 
 
-  const App = () => {
+  const App: FC<Readonly<{ children?: ReactNode }>> =  () => {
 
-  const {isIngredients, isElements, isOpenModal, isOrder} = useSelector((store) => ({
-    isElements: store.elements.isElements,
-    isIngredients: store.ingredients.isIngredients,
-    isOpenModal: store.ingredient.isOpenModal,
-    isOrder: store.order.isOrder
-  }));
+  const {isElements} = useAppSelector(store => store.elements)
+  const {isIngredients} = useAppSelector(store => store.ingredients)
+  const {isOpenModal} = useAppSelector(store => store.ingredient)
+  const {isOrder} = useAppSelector(store => store.order)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const onClose = () => {
     isOpenModal
     ? dispatch(ingredientActions.closeModal())
     : dispatch(orderActions.closeModal())  
-  } 
+  }
 
   useEffect(() => {
     dispatch(fetchIngredients())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   return (

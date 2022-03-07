@@ -1,8 +1,3 @@
-export interface IStateIgredients {
-  ingredients: [] | IIngredient[];
-  isIngredients: boolean;
-}
-
 export interface IIngredient {
   _id: string;
   name: string;
@@ -17,5 +12,8 @@ export interface IIngredient {
   image_large: string;
   __v: number;
 }
-export type IResponseIngredients = IIngredient[];
 
+// интерфейс элемента, который попадает в массив для конструктора
+export interface IElement extends IIngredient {
+  uid: string;
+}

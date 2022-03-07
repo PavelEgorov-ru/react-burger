@@ -1,21 +1,19 @@
 import React from 'react';
-import { useSelector, useDispatch} from 'react-redux';
+// import { useSelector, useDispatch} from 'react-redux';
+import {useAppSelector, useAppDispatch} from '../../hoocks/hoocks';
+
 import { useDrop } from "react-dnd";
 import styles from './BurgerConstructor.module.css';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import Element from '../Element/Element';
-// import {elementsSlice, fetchOrder} from '../../services/reducers/index';
 import {elementsActions} from '../../services/reducers/index';
 import {fetchOrder} from '../../services/reducers/order/orderSlice';
 
 
 const BurgerConstructor = React.memo(() => {
-  // const {actions} = elementsSlice
-  const dispatch = useDispatch()
-  const {bun, elements} = useSelector(store => ({
-    bun: store.elements.bun,
-    elements: store.elements.elements
-  }))
+  const dispatch = useAppDispatch()
+  const {bun} = useAppSelector(store => store.elements)
+  const {elements} = useAppSelector(store => store.elements)
 
   const arrayElements = [bun, ...elements]
   const count = arrayElements.reduce((acc, item) => {
