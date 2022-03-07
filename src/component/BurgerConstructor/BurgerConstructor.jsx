@@ -1,14 +1,11 @@
 import React from 'react';
-// import { useSelector, useDispatch} from 'react-redux';
 import {useAppSelector, useAppDispatch} from '../../hoocks/hoocks';
-
 import { useDrop } from "react-dnd";
 import styles from './BurgerConstructor.module.css';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import Element from '../Element/Element';
 import {elementsActions} from '../../services/reducers/index';
 import {fetchOrder} from '../../services/reducers/order/orderSlice';
-
 
 const BurgerConstructor = React.memo(() => {
   const dispatch = useAppDispatch()
