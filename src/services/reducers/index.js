@@ -5,8 +5,8 @@ import { ingredientReducers } from './ingredientSlice';
 import { orderReducers } from  './orderSlice';
 export { elementsActions } from './elementsSlice';
 export { ingredientActions } from './ingredientSlice';
-export { ingredientsActions} from './ingredientsSlice';
-export { orderActions } from './orderSlice';
+export { ingredientsActions, fetchIngredients} from './ingredientsSlice';
+export { orderActions, fetchOrder } from './orderSlice';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducers,
