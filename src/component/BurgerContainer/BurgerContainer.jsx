@@ -1,24 +1,22 @@
 import styles from './BurgerContainer.module.css';
-import { useDrop } from "react-dnd";
+import { useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import {elementsSlice} from '../../services/reducers/index';
-
+import { elementsActions } from '../../services/reducers/index';
 
 const BurgerContainer = () => {
-  const {actions} = elementsSlice
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [{isHover},dropRef] = useDrop({
     accept: 'bun',
     drop(item) {
-      dispatch(actions.postBun(item))
+      dispatch(elementsActions.postBun(item))
     },
     collect: monitor => ({
       isHover: monitor.isOver(),
     })
-  })
+  });
   
-  const boxShadow = isHover ? '0 0 20px #6434db' : null
+  const boxShadow = isHover ? '0 0 20px #6434db' : null;
 
   return(
     <div className={styles.container} ref={dropRef}>
@@ -30,4 +28,4 @@ const BurgerContainer = () => {
   )
 }
 
-export default BurgerContainer
+export default BurgerContainer;

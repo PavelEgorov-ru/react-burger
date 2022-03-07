@@ -1,11 +1,9 @@
-import styles from './OrderDetails.module.css'
-import checkIcon from '../../images/check-icon.png'
-import { useSelector } from 'react-redux'
+import styles from './OrderDetails.module.css';
+import checkIcon from '../../images/check-icon.png';
+import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
-  const {order} = useSelector(store => ({
-    order: store.order.order
-  }))
+  const {order} = useSelector(store => store.order);
 
   return(
     <>
@@ -16,8 +14,6 @@ const OrderDetails = () => {
       <p className='text text_type_main-default text_color_inactive mb-15'>Дождитесь готовности на орбитальной станции</p>
     </>
   )
-  
-
 }
 
-export default OrderDetails
+export default OrderDetails;

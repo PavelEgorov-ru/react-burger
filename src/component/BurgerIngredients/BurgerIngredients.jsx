@@ -4,12 +4,10 @@ import styles from './BurgerIngredients.module.css';
 import TabContainer from '../TabContainer/TabContainer';
 import ItemsContainer from '../ItemsContainer/ItemsContainer';
 
-
 const BurgerIngredients = () => {
+  const {ingredients} = useSelector(store => store.ingredients);
 
-  const {ingredients} = useSelector(store => store.ingredients)
-
-  const [current, setCurrent] = React.useState('булки')
+  const [current, setCurrent] = React.useState('булки');
   const handleCurrent = (value) => {
     setCurrent(value)
     if (value === 'булки') {
@@ -19,11 +17,11 @@ const BurgerIngredients = () => {
     } else {
       mainsSection.current.scrollIntoView({behavior:"smooth"})
     }
-  }
+  };
   
-  const bunsSectoin = useRef(null)
-  const saucesSection = useRef(null)
-  const mainsSection = useRef(null)
+  const bunsSectoin = useRef(null);
+  const saucesSection = useRef(null);
+  const mainsSection = useRef(null);
 
   const onScroll = (event) => {
     const container = event.target
@@ -38,22 +36,22 @@ const BurgerIngredients = () => {
     } else {
       setCurrent('булки')
     }
-  }
+  };
 
   const buns = useMemo(() => {
    return ingredients.filter(element => element.type === 'bun' )
       }, [ingredients]
-  )
+  );
   
   const sauces = useMemo(() => {
    return ingredients.filter(element => element.type === 'sauce' )
   }, [ingredients]
-  ) 
+  ); 
 
   const mains = useMemo(() => {
    return ingredients.filter(element => element.type === 'main' )
   }, [ingredients]
-  )
+  );
   
   return (
      <section className={styles.sectionSize} >
@@ -70,5 +68,4 @@ const BurgerIngredients = () => {
   )
 }
 
-
-export default BurgerIngredients
+export default BurgerIngredients;

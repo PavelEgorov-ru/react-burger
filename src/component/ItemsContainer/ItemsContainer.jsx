@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ItemsContainer.module.css';
 import typeIndegrient from '../../utils/types';
-import Item from '../Item/Item'
+import Item from '../Item/Item';
 
-
-const ItemsContainer = React.forwardRef(({data, children,}, ref) => {
+const ItemsContainer = React.forwardRef(({data, children}, ref) => {
   return (    
     <>
       <h2 className='text text_type_main-medium pt-10' ref={ref}>{children}</h2>
@@ -18,14 +17,13 @@ const ItemsContainer = React.forwardRef(({data, children,}, ref) => {
       </ul>
       </>
   )
-})
+});
 
 ItemsContainer.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape(typeIndegrient),    
   ).isRequired,
   children: PropTypes.string.isRequired,
+};
 
-}
-
-export default ItemsContainer
+export default ItemsContainer;

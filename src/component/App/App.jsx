@@ -11,23 +11,15 @@ import BurgerContainer from '../BurgerContainer/BurgerContainer'
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import {fetchIngredients, ingredientSlice, orderSlice} from '../../services/reducers/index'
+import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers'
 
   const App = () => {
-
-  
-
-  const {isIngredients, isElements, isOpenModal, isOrder} = useSelector((store) => ({
-    isElements: store.elements.isElements,  
-    isIngredients: store.ingredients.isIngredients,
-    isOpenModal: store.ingredient.isOpenModal,
-    isOrder: store.order.isOrder
-  }));
+  const {isIngredients} = useSelector(store => store.ingredients);
+  const {isElements} = useSelector(store => store.elements);
+  const {isOpenModal} = useSelector(store => store.ingredient)
+  const {isOrder} = useSelector(store => store.order)
 
   const dispatch = useDispatch()
-
-  const ingredientActions = ingredientSlice.actions
-  const orderActions = orderSlice.actions
 
   const onClose = () => {
     isOpenModal

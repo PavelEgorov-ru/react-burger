@@ -1,19 +1,17 @@
 import styles from './Item.module.css';
 import { useDrag } from "react-dnd";
-import {Counter, CurrencyIcon,} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Counter, CurrencyIcon, } from '@ya.praktikum/react-developer-burger-ui-components';
 import typeIndegrient from '../../utils/types';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import {ingredientSlice} from '../../services/reducers/index';
+import { ingredientActions } from '../../services/reducers/index';
 
 
 const Item = ({item,}) => {
-  const {bun, elements} = useSelector(store => ({
-    bun: store.elements.bun,
-    elements: store.elements.elements
-  }))
-  const {actions} = ingredientSlice
-  const dispatch = useDispatch()
+  const { bun } = useSelector(store => store.elements);
+  const { elements } = useSelector(store => store.elements);
+
+  const dispatch = useDispatch();
 
   let count = 0
   if(item._id === bun._id) {
@@ -23,7 +21,7 @@ const Item = ({item,}) => {
       if(element._id === item._id) return count = count + 1;
       return count;
     });
-  }
+  };
 
   const [{isDrag},dragRef] = useDrag({
     type: item.type,
@@ -34,10 +32,10 @@ const Item = ({item,}) => {
   });
 
   const openModal = (item) => {
-    dispatch(actions.openModal(item))
-  }
+    dispatch(ingredientActions.openModal(item))
+  };
 
-  const boxShadow = isDrag ? '0 0 20px #6434db' : null
+  const boxShadow = isDrag ? '0 0 20px #6434db' : null;
 
   return(
     <li className = {styles.item} onClick={() => openModal(item)} draggable ref={dragRef} style={{boxShadow}}>
@@ -54,6 +52,6 @@ const Item = ({item,}) => {
 
 Item.propTypes = {
   item: PropTypes.shape(typeIndegrient).isRequired,
-}
+};
 
-export default Item
+export default Item;

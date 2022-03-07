@@ -1,5 +1,5 @@
 .sectionSize {
-  max-width: 622px; 
+  max-width: 622px;
 }
 
 .container {
@@ -10,10 +10,10 @@
 
 .container::-webkit-scrollbar {
   width: 8px; /* ширина для вертикального скролла */
-  background-color:#2F2F37;
+  background-color: #2f2f37;
 }
 
 .container::-webkit-scrollbar-thumb {
   height: 392px;
-  background-color: #8585AD;
+  background-color: #8585ad;
 }

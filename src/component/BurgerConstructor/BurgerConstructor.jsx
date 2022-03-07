@@ -4,59 +4,53 @@ import { useDrop } from "react-dnd";
 import styles from './BurgerConstructor.module.css';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import Element from '../Element/Element';
-import {elementsSlice, fetchOrder} from '../../services/reducers/index'
+import {elementsActions, fetchOrder} from '../../services/reducers'
 
 
 const BurgerConstructor = React.memo(() => {
-  const {actions} = elementsSlice
-  const dispatch = useDispatch()
-  const {bun, elements} = useSelector(store => ({
-    bun: store.elements.bun,
-    elements: store.elements.elements
-  }))
+  const dispatch = useDispatch();
+  const { bun } = useSelector(store => store.elements);
+  const { elements } = useSelector(store => store.elements);
 
   const arrayElements = [bun, ...elements]
   const count = arrayElements.reduce((acc, item) => {
     return acc + item.price
-  }, 0)
-
+  }, 0);
 
   const onClick = (arrayElements) => {
     const arrayId =  arrayElements.map(function(element){
         return element._id
       })
     dispatch(fetchOrder({"ingredients": arrayId}))
-  }
+  };
 
   const moveCard = (dragIndex, hoverIndex) => {
-    
     const newElements = [...elements]
     let dragElement = newElements[dragIndex]
     newElements.splice(dragIndex, 1)
     newElements.splice(hoverIndex, 0, dragElement)
-    dispatch(actions.newOrderElements(newElements))
-  }
+    dispatch(elementsActions.newOrderElements(newElements))
+  };
 
   const [, dropBunRef] = useDrop({
     accept: 'bun',
     drop(item) {
-      dispatch(actions.postBun(item))
+      dispatch(elementsActions.postBun(item))
     },
-  })
+  });
 
   const [{isHover}, dropRef] = useDrop({
     accept: ['sauce', 'main'],
     drop(item) {
-      dispatch(actions.postElement(item))
+      dispatch(elementsActions.postElement(item))
     },
     collect: monitor => ({
       isHover: monitor.isOver(),
     })
-  })
+  });
 
   const boxShadow = isHover ? '0 0 20px #6434db' : null;
  
-
   return (
     <section className={`pt-25 + ${styles.container}`}>
       <div className={styles.bun} ref={dropBunRef}>
