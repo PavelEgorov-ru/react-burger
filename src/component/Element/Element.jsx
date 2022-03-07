@@ -2,17 +2,16 @@ import styles from './Element.module.css';
 import {useRef} from 'react';
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag, useDrop } from 'react-dnd';
 import {useDispatch} from 'react-redux';
 import typeIndegrient from '../../utils/types';
-import {elementsSlice} from '../../services/reducers/index'
+import {elementsActions} from '../../services/reducers/index';
 
 const Element = ({element, moveCard, index}) => {
-  const {actions} = elementsSlice
   const dispatch = useDispatch()
   const ref = useRef()
   const handleClose = (elementUid) => {
-    dispatch(actions.deleteElement(elementUid))
+    dispatch(elementsActions.deleteElement(elementUid))
   }
 
   const [,drag] = useDrag({
@@ -32,8 +31,9 @@ const Element = ({element, moveCard, index}) => {
       moveCard(item.index, index)
       item.index = index
     }
-  })
-  drag(drop(ref))
+  });
+
+  drag(drop(ref));
 
   return (
     <li className={styles.li} draggable ref={ref} index={index}>
@@ -51,6 +51,7 @@ Element.propTypes = {
   element: PropTypes.shape(typeIndegrient).isRequired,
   index: PropTypes.number.isRequired, 
   moveCard: PropTypes.func.isRequired
-}
-export default Element
+};
+
+export default Element;
 
