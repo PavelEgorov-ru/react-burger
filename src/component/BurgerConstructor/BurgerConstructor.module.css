@@ -5,7 +5,6 @@
   align-items: flex-end;
   max-height: calc(100vh - 230px);
   min-height: 350px;
-  /* height: 300px */
 }
 
 .ul {
@@ -23,12 +22,12 @@
 
 .ul::-webkit-scrollbar {
   width: 8px;
-  background-color:#2F2F37;
+  background-color: #2f2f37;
 }
 
 .ul::-webkit-scrollbar-thumb {
   height: 92px;
-  background-color: #8585AD;
+  background-color: #8585ad;
 }
 
 .container_btm {
@@ -47,7 +46,7 @@
   justify-content: center;
   align-items: center;
   min-height: 40vh;
-  border: dashed 3px #8585AD;
+  border: dashed 3px #8585ad;
 }
 
 .bun {

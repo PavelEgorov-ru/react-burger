@@ -1,19 +1,17 @@
-import React from 'react';
-import { useSelector, useDispatch} from 'react-redux';
+import React, {FC, ReactNode} from 'react';
+import {useAppSelector, useAppDispatch} from '../../hoocks/hoocks';
 import { useDrop } from "react-dnd";
 import styles from './BurgerConstructor.module.css';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import Element from '../Element/Element';
-import {elementsSlice, fetchOrder} from '../../services/reducers/index'
+import {elementsActions} from '../../services/reducers/index';
+import {fetchOrder} from '../../services/reducers/order/orderSlice';
+import type {IIngredient, IElement, IElementsConstructor, IIngredientsId} from '../../utils/types';
 
-
-const BurgerConstructor = React.memo(() => {
-  const {actions} = elementsSlice
-  const dispatch = useDispatch()
-  const {bun, elements} = useSelector(store => ({
-    bun: store.elements.bun,
-    elements: store.elements.elements
-  }))
+const BurgerConstructor: FC<Readonly<{ children?: ReactNode }>> = React.memo(() => {
+  const dispatch = useAppDispatch()
+  const {bun} = useAppSelector(store => store.elements)
+  const {elements} = useAppSelector(store => store.elements)
 
   const arrayElements = [bun, ...elements]
   const count = arrayElements.reduce((acc, item) => {
@@ -21,33 +19,33 @@ const BurgerConstructor = React.memo(() => {
   }, 0)
 
 
-  const onClick = (arrayElements) => {
-    const arrayId =  arrayElements.map(function(element){
+  const onClick = (arrayElements: IElementsConstructor[]) => {
+    const arrayId: any=  arrayElements.map(function(element){
         return element._id
       })
     dispatch(fetchOrder({"ingredients": arrayId}))
   }
 
-  const moveCard = (dragIndex, hoverIndex) => {
+  const moveCard = (dragIndex: number, hoverIndex: number) => {
     
     const newElements = [...elements]
     let dragElement = newElements[dragIndex]
     newElements.splice(dragIndex, 1)
     newElements.splice(hoverIndex, 0, dragElement)
-    dispatch(actions.newOrderElements(newElements))
+    dispatch(elementsActions.newOrderElements(newElements))
   }
 
   const [, dropBunRef] = useDrop({
     accept: 'bun',
     drop(item) {
-      dispatch(actions.postBun(item))
+      dispatch(elementsActions.postBun(item))
     },
   })
 
   const [{isHover}, dropRef] = useDrop({
     accept: ['sauce', 'main'],
     drop(item) {
-      dispatch(actions.postElement(item))
+      dispatch(elementsActions.postElement(item))
     },
     collect: monitor => ({
       isHover: monitor.isOver(),

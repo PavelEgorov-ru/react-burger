@@ -9,13 +9,10 @@ const modalRoot = document.getElementById("modal-root")
 
 
 const Modal = ({children, title, onClose}) => {
-
-
   useEffect(() => {    
     const closeModalEsc = (event) => {
       event.key === 'Escape' && onClose();
     }
-
     document.addEventListener('keydown', closeModalEsc);
     return () => {
       document.removeEventListener('keydown', closeModalEsc);
