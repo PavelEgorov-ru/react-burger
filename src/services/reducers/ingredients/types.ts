@@ -18,4 +18,3 @@ export interface IIngredient {
   __v: number;
 }
 export type IResponseIngredients = IIngredient[];
-
