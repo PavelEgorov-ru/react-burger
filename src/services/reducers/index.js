@@ -2,12 +2,10 @@ import { combineReducers } from 'redux';
 import newApi from '../../utils/api';
 import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { ingredientsReducers } from './ingredientsSlice';
-import { elementsReducers } from './elementsSlice'
+import { elementsReducers } from './elementsSlice';
+import { ingredientReducers } from './ingredientSlice';
 
-const initialStateIngredient = {
-  ingredient: {},
-  isOpenModal: false
-}
+
 const initialStateOrder = {
   order: {},
   isOrder: false
@@ -44,50 +42,11 @@ export const orderSlice = createSlice({
   }
 })
 
-export const elementsSlice = createSlice({
-  name: 'elements',
-  initialState: initialStateConstructor,
-  reducers: {
-    postBun(state, action) {    
-      state.bun = action.payload
-      state.isElements=true      
-    },
-    postElement: {
-      reducer: (state, action) => {
-        state.elements = [...state.elements, action.payload]
-      },
-      prepare: (text) => {
-        const uid = nanoid()
-        return { payload: { uid, ...text } }
-      },
-    },
-    deleteElement(state, action) {
-      state.elements = state.elements.filter((element) => element.uid !== action.payload)
-    },
-    newOrderElements(state, action) {
-      state.elements = action.payload
-    }
-  }
-})
 
-export const ingredientSlice  = createSlice({
-  name: 'ingredient',
-  initialState: initialStateIngredient,
-  reducers: {
-    openModal(state, action) {
-      state.ingredient = action.payload
-      state.isOpenModal = true
-    },
-    closeModal(state) {
-      state.ingredient = {}
-      state.isOpenModal = false
-    }
-  }
-})
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducers,
   elements: elementsReducers,
-  ingredient: ingredientSlice.reducer,
+  ingredient: ingredientReducers,
   order: orderSlice.reducer
 })
