@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import newApi from '../../utils/api';
 
 const initialStateIgredients = {
   ingredients: [],
