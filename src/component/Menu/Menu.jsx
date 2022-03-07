@@ -2,14 +2,11 @@ import styles from './Menu.module.css';
 import MenuElement from '../MenuElement/MenuElement';
 import {Logo, BurgerIcon, ProfileIcon, ListIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
-
 const Menu = () => {
-
-  const burgerIcon = <BurgerIcon type="primary"/>
-  const profileIcon = <ProfileIcon type="secondary"/>
-  const logo = <Logo/>
-  const listIcon = <ListIcon type="secondary"/>
-  
+  const burgerIcon = <BurgerIcon type="primary"/>;
+  const profileIcon = <ProfileIcon type="secondary"/>;
+  const logo = <Logo/>;
+  const listIcon = <ListIcon type="secondary"/>;  
 
   return (
     <nav>
