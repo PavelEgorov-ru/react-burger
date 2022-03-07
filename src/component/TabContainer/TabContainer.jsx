@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import styles from './TabContainer.module.css';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const TabContainer = ({current, handleCurrent}) => {
-
   const scrollTab = (value) => {
     handleCurrent(value)
   }
@@ -22,10 +20,11 @@ const TabContainer = ({current, handleCurrent}) => {
       </Tab>
     </div>
   )
-}
+};
 
 TabContainer.propTypes = {
   current: PropTypes.string.isRequired, 
   handleCurrent: PropTypes.func.isRequired
-}
-export default TabContainer
+};
+
+export default TabContainer;
