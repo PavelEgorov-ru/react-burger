@@ -1,17 +1,8 @@
 import { combineReducers } from 'redux';
 import newApi from '../../utils/api';
 import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
-
-const initialStateIgredients = {
-  ingredients: [],
-  isIngredients: false,
-}
-
-const initialStateConstructor = {
-  bun: {},
-  elements: [],
-  isElements: false,
-}
+import { ingredientsReducers } from './ingredientsSlice';
+import { elementsReducers } from './elementsSlice'
 
 const initialStateIngredient = {
   ingredient: {},
@@ -22,14 +13,6 @@ const initialStateOrder = {
   isOrder: false
 }
 
-export const fetchIngredients = createAsyncThunk(
-  'ingredients/fetchIngredients',
-  async () => {
-    const response = await newApi.getIdegrients()
-    return response.data
-  }
-)
-
 export const fetchOrder = createAsyncThunk(
   'order/fetchOrder',
   async (info) => {
@@ -37,21 +20,6 @@ export const fetchOrder = createAsyncThunk(
     return response.order
   }
 )
-
-export const ingredientsSlice = createSlice({
-  name: 'ingredients',
-  initialState: initialStateIgredients,
-  extraReducers: {
-    [fetchIngredients.pending]: state => state ,
-    [fetchIngredients.fulfilled]: (state, action) => {
-      state.ingredients = action.payload;
-      state.isIngredients = true;
-    },
-    [fetchIngredients.rejected]: (state) => {
-      state.isIngredients = false;
-    },
-  }
-});
 
 export const orderSlice = createSlice({
   name: 'order',
@@ -118,8 +86,8 @@ export const ingredientSlice  = createSlice({
 })
 
 export const rootReducer = combineReducers({
-  ingredients: ingredientsSlice.reducer,
-  elements: elementsSlice.reducer,
+  ingredients: ingredientsReducers,
+  elements: elementsReducers,
   ingredient: ingredientSlice.reducer,
   order: orderSlice.reducer
 })
