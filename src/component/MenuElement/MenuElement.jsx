@@ -10,13 +10,13 @@ const MenuElement = ({icon, children, classContainer, classText}) => {
       {children && <p className={classText}>{children}</p>}
     </a>
   )
-}
+};
 
 MenuElement.propTypes = {
   icon: PropTypes.element.isRequired,
   children: PropTypes.string,
   classContainer: PropTypes.string,
   classText: PropTypes.string,
-}
+};
 
 export default MenuElement
