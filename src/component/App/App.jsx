@@ -1,21 +1,19 @@
 import React, {useEffect} from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+
 import styles from './App.module.css'
 import AppHeader from '../AppHeader/AppHeader';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import BurgerContainer from '../BurgerContainer/BurgerContainer'
+
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers'
+import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers';
+import { HomePage } from '../../pages/home/home';
 
-  const App = () => {
-  const {isIngredients} = useSelector(store => store.ingredients);
-  const {isElements} = useSelector(store => store.elements);
+const App = () => {
+
   const {isOpenModal} = useSelector(store => store.ingredient)
   const {isOrder} = useSelector(store => store.order)
 
@@ -44,15 +42,13 @@ import { ingredientActions, orderActions, fetchIngredients } from '../../service
           </Modal>)}
 
       <AppHeader/>
-      {isIngredients
-      && (
-        <DndProvider backend={HTML5Backend}>
-            <main className={styles.main}>
-              <BurgerIngredients/>
-              { isElements ? <BurgerConstructor /> : <BurgerContainer />}
-            </main>
-        </DndProvider>
-          )}
+      <Router>
+        <Switch>
+          <Route path="/" exact={true}>
+            <HomePage/>
+          </Route>
+        </Switch>
+      </Router>      
     </div>
   );
 }
