@@ -1,26 +1,27 @@
 import styles from './Menu.module.css';
 import { NavLink } from 'react-router-dom';
+import cn from 'classnames';
 import {Logo, BurgerIcon, ProfileIcon, ListIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const Menu = () => {
 
   return (
     <nav>
-      <ul className={styles.list}>
-        <NavLink className={`p-5 mt-4 mb-4 ${styles.container}`} to = {{ pathname: '/' }}>
+      <ul className={cn(styles.list)}>
+        <NavLink className={cn(`p-5 mt-4 mb-4 ${styles.container}`)} to = {{ pathname: '/' }}>
           <BurgerIcon type="primary"/>
-          <p className='text text_type_main-default pl-2'>Конструктор</p>
+          <p className={cn('text text_type_main-default pl-2')}>Конструктор</p>
         </NavLink>
-        <NavLink className={`p-5 mt-4 mb-4 ml-2 ${styles.container}`} to = {{ pathname: '/2' }}>
+        <NavLink className={cn(`p-5 mt-4 mb-4 ml-2 ${styles.container}`)} to = {{ pathname: '/2' }}>
           <ListIcon type="secondary"/>
-          <p className='text text_type_main-default pl-2 text_color_inactive'>Лента заказов</p>
+          <p className={cn('text text_type_main-default pl-2 text_color_inactive')}>Лента заказов</p>
         </NavLink>
-        <NavLink className={`${styles.logo} ${styles.container}`} to = {{ pathname: '/' }}>
+        <NavLink className={cn(`${styles.logo} ${styles.container}`)} to = {{ pathname: '/' }}>
           <Logo/>
         </NavLink>
-        <NavLink className={`p-5 mt-4 mb-4 ${styles.container}`} to = {{ pathname: '/4' }}>
+        <NavLink className={cn(`p-5 mt-4 mb-4 ${styles.container}`)} to = {{ pathname: '/4' }}>
           <ProfileIcon type="secondary"/>
-          <p className='text text_type_main-default pl-2 text_color_inactive'>Личный кабинет</p>
+          <p className={cn('text text_type_main-default pl-2 text_color_inactive')}>Личный кабинет</p>
         </NavLink>
       </ul>
     </nav>
