@@ -1,33 +1,27 @@
 import styles from './Menu.module.css';
-import MenuElement from '../MenuElement/MenuElement';
+import { NavLink } from 'react-router-dom';
 import {Logo, BurgerIcon, ProfileIcon, ListIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const Menu = () => {
-  const burgerIcon = <BurgerIcon type="primary"/>;
-  const profileIcon = <ProfileIcon type="secondary"/>;
-  const logo = <Logo/>;
-  const listIcon = <ListIcon type="secondary"/>;  
 
   return (
     <nav>
       <ul className={styles.list}>
-        <MenuElement icon ={burgerIcon} classText="text text_type_main-default pl-2"
-        classContainer="p-5 mt-4 mb-4">
-          Конструктор
-        </MenuElement>
-        <MenuElement icon={listIcon} classText="
-        text text_type_main-default pl-2
-        text_color_inactive"
-        classContainer="p-5 mt-4 mb-4 ml-2">
-          Лента заказов
-        </MenuElement>
-        <MenuElement icon={logo}/>
-        <MenuElement icon={profileIcon} classText="
-        text text_type_main-default pl-2 
-        text_color_inactive"
-        classContainer="p-5 mt-4 mb-4">
-          Личный кабинет
-        </MenuElement>
+        <NavLink className={`p-5 mt-4 mb-4 ${styles.container}`} to = {{ pathname: '/' }}>
+          <BurgerIcon type="primary"/>
+          <p className='text text_type_main-default pl-2'>Конструктор</p>
+        </NavLink>
+        <NavLink className={`p-5 mt-4 mb-4 ml-2 ${styles.container}`} to = {{ pathname: '/2' }}>
+          <ListIcon type="secondary"/>
+          <p className='text text_type_main-default pl-2 text_color_inactive'>Лента заказов</p>
+        </NavLink>
+        <NavLink className={`${styles.logo} ${styles.container}`} to = {{ pathname: '/' }}>
+          <Logo/>
+        </NavLink>
+        <NavLink className={`p-5 mt-4 mb-4 ${styles.container}`} to = {{ pathname: '/4' }}>
+          <ProfileIcon type="secondary"/>
+          <p className='text text_type_main-default pl-2 text_color_inactive'>Личный кабинет</p>
+        </NavLink>
       </ul>
     </nav>
   )

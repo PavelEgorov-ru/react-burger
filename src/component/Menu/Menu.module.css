@@ -5,3 +5,17 @@
   flex-direction: row;
   max-height: 88px;
 }
+
+.container {
+  color: white;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.logo {
+  margin-right: 288px;
+  margin-left: 132px;
+}

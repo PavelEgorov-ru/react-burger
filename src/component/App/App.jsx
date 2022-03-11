@@ -39,8 +39,8 @@ const App = () => {
             <OrderDetails/>
           </Modal>)}
 
-      <AppHeader/>
       <Router>
+        <AppHeader/>      
         <Switch>
           <Route path="/" exact={true}>
             <HomePage/>
