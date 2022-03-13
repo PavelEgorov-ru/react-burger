@@ -6,26 +6,26 @@ import { elementsActions } from '../../services/reducers/index';
 const BurgerContainer = () => {
   const dispatch = useDispatch();
 
-  const [{isHover},dropRef] = useDrop({
+  const [{ isHover }, dropRef] = useDrop({
     accept: 'bun',
     drop(item) {
-      dispatch(elementsActions.postBun(item))
+      dispatch(elementsActions.postBun(item));
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isHover: monitor.isOver(),
-    })
+    }),
   });
-  
+
   const boxShadow = isHover ? '0 0 20px #6434db' : null;
 
-  return(
+  return (
     <div className={styles.container} ref={dropRef}>
-      <div className={styles.bun_top} style={{boxShadow}}>
-        <p className='text text_type_main-default'>Перетащите сюда булочку, а затем ингредиенты</p>
+      <div className={styles.bun_top} style={{ boxShadow }}>
+        <p className="text text_type_main-default">Перетащите сюда булочку, а затем ингредиенты</p>
       </div>
-      <div className={styles.bun_bottom} style={{boxShadow}}></div>
+      <div className={styles.bun_bottom} style={{ boxShadow }}></div>
     </div>
-  )
-}
+  );
+};
 
 export default BurgerContainer;

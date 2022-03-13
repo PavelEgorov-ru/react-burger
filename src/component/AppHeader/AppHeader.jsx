@@ -1,12 +1,12 @@
 import styles from './AppHeader.module.css';
 import Menu from '../Menu/Menu';
 
-const AppHeader = () => {  
+const AppHeader = () => {
   return (
     <header className={styles.header}>
-      <Menu/>      
+      <Menu />
     </header>
-  )
-}
+  );
+};
 
-export default AppHeader 
+export default AppHeader;

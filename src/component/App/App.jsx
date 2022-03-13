@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './App.module.css'
+import styles from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
@@ -12,47 +12,46 @@ import { HomePage } from '../../pages/home/home';
 import { LoginPage } from '../../pages/login/login';
 
 const App = () => {
+  const { isOpenModal } = useSelector((store) => store.ingredient);
+  const { isOrder } = useSelector((store) => store.order);
 
-  const {isOpenModal} = useSelector(store => store.ingredient)
-  const {isOrder} = useSelector(store => store.order)
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onClose = () => {
-    isOpenModal
-    ? dispatch(ingredientActions.closeModal())
-    : dispatch(orderActions.closeModal())  
-  } 
+    isOpenModal ? dispatch(ingredientActions.closeModal()) : dispatch(orderActions.closeModal());
+  };
 
   useEffect(() => {
-    dispatch(fetchIngredients())
-  }, [])
-  
+    dispatch(fetchIngredients());
+  }, []);
+
   return (
     <div className={styles.app}>
-      {isOpenModal
-      && (<Modal title = "Детали заказа" onClose={onClose}>
-            <IngredientDetails />
-          </Modal>)}
+      {isOpenModal && (
+        <Modal title="Детали заказа" onClose={onClose}>
+          <IngredientDetails />
+        </Modal>
+      )}
 
-      {isOrder
-       && (<Modal onClose={onClose}>
-            <OrderDetails/>
-          </Modal>)}
+      {isOrder && (
+        <Modal onClose={onClose}>
+          <OrderDetails />
+        </Modal>
+      )}
 
       <Router>
-        <AppHeader/>      
+        <AppHeader />
         <Switch>
           <Route path="/" exact={true}>
-            <HomePage/>
+            <HomePage />
           </Route>
-          <Route path='/login' exact={true}>
-            <LoginPage/>
+          <Route path="/login" exact={true}>
+            <LoginPage />
           </Route>
         </Switch>
-      </Router>      
+      </Router>
     </div>
   );
-}
+};
 
 export default App;
