@@ -9,6 +9,7 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers';
 import { HomePage } from '../../pages/home/home';
+import { LoginPage } from '../../pages/login/login';
 
 const App = () => {
 
@@ -44,6 +45,9 @@ const App = () => {
         <Switch>
           <Route path="/" exact={true}>
             <HomePage/>
+          </Route>
+          <Route path='/login' exact={true}>
+            <LoginPage/>
           </Route>
         </Switch>
       </Router>      
