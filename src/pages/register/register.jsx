@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import styles from './login.module.css';
+import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
   const [formState, setFormState] = useState({
     name: '',
     email: '',

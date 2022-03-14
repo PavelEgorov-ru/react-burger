@@ -9,7 +9,7 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers';
 import { HomePage } from '../../pages/home/home';
-import { LoginPage } from '../../pages/login/login';
+import { RegisterPage } from '../../pages/register/register';
 
 const App = () => {
   const { isOpenModal } = useSelector((store) => store.ingredient);
@@ -45,8 +45,8 @@ const App = () => {
           <Route path="/" exact={true}>
             <HomePage />
           </Route>
-          <Route path="/login" exact={true}>
-            <LoginPage />
+          <Route path="/register" exact={true}>
+            <RegisterPage />
           </Route>
         </Switch>
       </Router>
