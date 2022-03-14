@@ -9,10 +9,12 @@ export const RegisterPage = () => {
     email: '',
     password: '',
   });
+
+  const [visibleIcon, setVisibleIcon] = useState(false);
   const inputRef = useRef();
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
-    alert(`Ваш пароль: ${formState.password}`);
+    setVisibleIcon(!visibleIcon);
   };
 
   const handleInputChange = (event) => {
@@ -59,8 +61,8 @@ export const RegisterPage = () => {
         <div className={styles.input}>
           <Input
             placeholder={'Пароль'}
-            icon={'HideIcon'}
-            type={'password'}
+            icon={visibleIcon ? 'ShowIcon' : 'HideIcon'}
+            type={visibleIcon ? 'text' : 'password'}
             onChange={handleInputChange}
             value={formState.password}
             name={'password'}
