@@ -69,7 +69,7 @@ export const LoginPage = () => {
       </p>
       <p className={`text text_type_main-default text_color_inactive ${styles.text}`}>
         Забыли пароль?
-        <NavLink className={styles.link} to={{ pathname: '/test' }}>
+        <NavLink className={styles.link} to={{ pathname: '/forgot-password' }}>
           Восстановить пароль
         </NavLink>
       </p>

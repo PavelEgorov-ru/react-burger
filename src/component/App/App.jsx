@@ -8,7 +8,7 @@ import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers';
-import { RegisterPage, HomePage, LoginPage } from '../../pages';
+import { RegisterPage, HomePage, LoginPage, ForgotPage } from '../../pages';
 
 const App = () => {
   const { isOpenModal } = useSelector((store) => store.ingredient);
@@ -49,6 +49,9 @@ const App = () => {
           </Route>
           <Route path="/login" exact={true}>
             <LoginPage />
+          </Route>
+          <Route path="/forgot-password" exact={true}>
+            <ForgotPage />
           </Route>
         </Switch>
       </Router>
