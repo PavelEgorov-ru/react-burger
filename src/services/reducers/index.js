@@ -1,11 +1,14 @@
+//редьюсеры
 import { combineReducers } from 'redux';
 import { ingredientsReducers } from './ingredientsSlice';
 import { elementsReducers } from './elementsSlice';
 import { ingredientReducers } from './ingredientSlice';
-import { orderReducers } from  './orderSlice';
+import { orderReducers } from './orderSlice';
+
+//экшены
 export { elementsActions } from './elementsSlice';
 export { ingredientActions } from './ingredientSlice';
-export { ingredientsActions, fetchIngredients} from './ingredientsSlice';
+export { ingredientsActions, fetchIngredients } from './ingredientsSlice';
 export { orderActions, fetchOrder } from './orderSlice';
 
 export const rootReducer = combineReducers({
@@ -13,4 +16,4 @@ export const rootReducer = combineReducers({
   elements: elementsReducers,
   ingredient: ingredientReducers,
   order: orderReducers,
-})
+});
