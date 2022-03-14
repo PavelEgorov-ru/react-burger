@@ -8,8 +8,7 @@ import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers';
-import { HomePage } from '../../pages/home/home';
-import { RegisterPage } from '../../pages/register/register';
+import { RegisterPage, HomePage } from '../../pages';
 
 const App = () => {
   const { isOpenModal } = useSelector((store) => store.ingredient);
