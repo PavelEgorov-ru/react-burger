@@ -28,7 +28,7 @@ export const RegisterPage = () => {
 
   return (
     <main className={styles.main}>
-      <form className={styles.container}>
+      <form className={styles.form}>
         <p className="text text_type_main-medium">Регистрация</p>
         <div className={styles.input}>
           <Input
@@ -77,7 +77,7 @@ export const RegisterPage = () => {
       </form>
       <p className={`text text_type_main-default text_color_inactive ${styles.text}`}>
         Уже зарегитсрированны?
-        <NavLink className={styles.link} to={{ pathname: '/test' }}>
+        <NavLink className={styles.link} to={{ pathname: '/login' }}>
           Войти
         </NavLink>
       </p>
