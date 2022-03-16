@@ -3,8 +3,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '../../utils/auth';
 
 const initialState = {
-  user: {},
-  refreshToken: '',
+  user: {
+    email: '',
+    password: '',
+    name: '',
+  },
   success: false,
 };
 
@@ -23,6 +26,7 @@ const userSlice = createSlice({
       state.refreshToken = payload.refreshToken;
       state.success = payload.success;
       setCookie('token', payload.accessToken);
+      localStorage.setItem('reftoken', payload.refreshToken);
     },
     [fetchNewUser.rejected]: (state) => {
       state.success = false;
