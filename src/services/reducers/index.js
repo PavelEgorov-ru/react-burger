@@ -18,5 +18,5 @@ export const rootReducer = combineReducers({
   elements: elementsReducers,
   ingredient: ingredientReducers,
   order: orderReducers,
-  singIn: userReducers,
+  user: userReducers,
 });

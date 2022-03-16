@@ -12,8 +12,10 @@ const initialState = {
 };
 
 export const fetchNewUser = createAsyncThunk('user/fetchNewUser', async (info) => {
+  console.log('111');
   const response = await auth.registration(info);
-  return response.data;
+  console.log(response);
+  return response;
 });
 
 const userSlice = createSlice({
@@ -23,7 +25,6 @@ const userSlice = createSlice({
     [fetchNewUser.pending]: (state) => state,
     [fetchNewUser.fulfilled]: (state, { payload }) => {
       state.user = payload.user;
-      state.refreshToken = payload.refreshToken;
       state.success = payload.success;
       setCookie('token', payload.accessToken);
       localStorage.setItem('reftoken', payload.refreshToken);

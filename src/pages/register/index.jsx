@@ -1,14 +1,27 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { getCookie } from '../../utils/cookie';
+import { fetchNewUser } from '../../services/reducers';
 
 export const RegisterPage = () => {
+  const dispatch = useDispatch();
   const [formState, setFormState] = useState({
-    name: '',
     email: '',
     password: '',
+    name: '',
   });
+  const submitForm = (e) => {
+    e.preventDefault();
+    dispatch(fetchNewUser(formState));
+    setFormState({
+      email: '',
+      password: '',
+      name: '',
+    });
+  };
 
   const [visibleIcon, setVisibleIcon] = useState(false);
   const inputRef = useRef();
@@ -27,10 +40,12 @@ export const RegisterPage = () => {
       [name]: value,
     });
   };
+  console.log(getCookie('token'));
+  console.log(localStorage.getItem('reftoken'));
 
   return (
     <main className={styles.main}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={submitForm}>
         <p className="text text_type_main-medium">Регистрация</p>
         <div className={styles.input}>
           <Input
