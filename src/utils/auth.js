@@ -11,7 +11,7 @@ class Auth extends React.Component {
     const pattern = {
       method: method,
       headers: {
-        Accept: 'application/json',
+        'Content-Type': 'application/json',
         authorization: token,
       },
     };

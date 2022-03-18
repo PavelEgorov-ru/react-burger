@@ -8,12 +8,13 @@ const initialState = {
     password: '',
     name: '',
   },
-  success: false,
-  accessToken: '',
+  successReg: false,
+  successAuth: false,
 };
 
 export const fetchNewUser = createAsyncThunk('user/fetchNewUser', async (info) => {
   const response = await auth.registration(info);
+  console.log(response);
   return response;
 });
 
@@ -28,21 +29,23 @@ const userSlice = createSlice({
   extraReducers: {
     [fetchNewUser.pending]: (state) => state,
     [fetchNewUser.fulfilled]: (state, { payload }) => {
-      state.user = payload.user;
-      state.success = payload.success;
+      state.user.email = payload.user.email;
+      state.user.name = payload.user.name;
+      state.successReg = payload.success;
       setCookie('token', payload.accessToken);
       localStorage.setItem('reftoken', payload.refreshToken);
     },
     [fetchNewUser.rejected]: (state) => {
-      state.success = false;
+      state.successReg = false;
     },
-    [fetchAuth.pending]: (state) => state,
-    [fetchAuth.fulfilled]: (state, { payload }) => {
-      state.success = payload.accessToken === getCookie('token');
-    },
-    [fetchAuth.rejected]: (state) => {
-      state.success = false;
-    },
+    // [fetchAuth.pending]: (state) => state,
+    // [fetchAuth.fulfilled]: (state, { payload }) => {
+    //   console.log(payload.refreshToken === localStorage.getItem('reftoken'));
+    //   state.successAuth = payload.accessToken === getCookie('token');
+    // },
+    // [fetchAuth.rejected]: (state) => {
+    //   state.successAuth = false;
+    // },
   },
 });
 

@@ -42,9 +42,9 @@ export const RegisterPage = () => {
     });
   };
 
-  const login = useCallback(() => {
-    history.replace({ pathname: '/login' });
-  }, [history]);
+  // const login = useCallback(() => {
+  //   history.replace({ pathname: '/login' });
+  // }, [history]);
 
   // console.log('рендер компонента');
   // console.log(getCookie('token'));
@@ -95,7 +95,7 @@ export const RegisterPage = () => {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium" onClick={login}>
+        <Button type="primary" size="medium">
           Зарегистрироваться
         </Button>
       </form>

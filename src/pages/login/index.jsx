@@ -40,9 +40,9 @@ export const LoginPage = () => {
     });
   };
 
-  const login = useCallback(() => {
-    history.replace({ pathname: '/' });
-  }, [history]);
+  // const login = useCallback(() => {
+  //   history.replace({ pathname: '/' });
+  // }, [history]);
 
   return (
     <main className={styles.main}>
@@ -76,7 +76,7 @@ export const LoginPage = () => {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium" onClick={login}>
+        <Button type="primary" size="medium">
           Войти
         </Button>
       </form>
