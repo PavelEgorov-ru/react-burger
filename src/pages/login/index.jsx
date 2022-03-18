@@ -1,6 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { fetchAuth } from '../../services/reducers';
+import { getCookie } from '../../utils/cookie';
 import styles from './login.module.css';
 
 export const LoginPage = () => {
@@ -10,6 +13,7 @@ export const LoginPage = () => {
   });
   const inputRef = useRef();
   const history = useHistory();
+  const dispatch = useDispatch();
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
     alert(`Ваш пароль: ${formState.password}`);
@@ -26,13 +30,23 @@ export const LoginPage = () => {
     });
   };
 
+  const submitForm = (e) => {
+    e.preventDefault();
+    dispatch(fetchAuth(formState, getCookie('token')));
+    setFormState({
+      email: '',
+      password: '',
+      name: '',
+    });
+  };
+
   const login = useCallback(() => {
-    history.replace({ pathname: '/login' });
+    history.replace({ pathname: '/' });
   }, [history]);
 
   return (
     <main className={styles.main}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={submitForm}>
         <p className="text text_type_main-medium">Вход</p>
         <div className={styles.input}>
           <Input
