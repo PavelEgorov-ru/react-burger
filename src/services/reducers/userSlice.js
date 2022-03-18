@@ -9,13 +9,26 @@ const initialState = {
   },
   successReg: false,
   successAuth: false,
+  error: '',
 };
 
-export const fetchNewUser = createAsyncThunk('user/fetchNewUser', async (info) => {
-  const response = await auth.registration(info);
-  console.log(response);
-  return response;
-});
+export const fetchNewUser = createAsyncThunk(
+  'user/fetchNewUser',
+  async (info, { rejectWithValue }) => {
+    try {
+      const response = await auth.registration(info);
+      console.log(response);
+      return response;
+    } catch (err) {
+      console.log(err);
+      let error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, token) => {
   const response = await auth.authorization(info, token);
@@ -32,11 +45,16 @@ const userSlice = createSlice({
         return state;
       })
       .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
-        console.log(111);
         console.log(payload);
       })
-      .addCase(fetchNewUser.rejected, (state, { payload }) => {
-        console.log(payload.message);
+      .addCase(fetchNewUser.rejected, (state, action) => {
+        console.log(222);
+        if (action) {
+          console.log(111);
+          state.error = action.payload.errorMessage;
+        } else {
+          state.error = action.error.message;
+        }
       });
 
     builder

@@ -21,11 +21,10 @@ class Auth extends React.Component {
       info ? { ...pattern, body: JSON.stringify(info) } : pattern
     ).then((res) => {
       if (res.ok) {
+        console.log(res.json());
         return res.json();
       } else {
-        console.log(res.json());
-        // Promise.reject(`ошибка: ${res.status}`);
-        return res.json();
+        Promise.reject(res);
       }
     });
   }
