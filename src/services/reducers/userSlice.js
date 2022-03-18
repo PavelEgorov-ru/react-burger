@@ -1,4 +1,4 @@
-import { setCookie } from '../../utils/cookie';
+import { setCookie, getCookie } from '../../utils/cookie';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '../../utils/auth';
 
@@ -9,12 +9,16 @@ const initialState = {
     name: '',
   },
   success: false,
+  accessToken: '',
 };
 
 export const fetchNewUser = createAsyncThunk('user/fetchNewUser', async (info) => {
-  console.log('111');
   const response = await auth.registration(info);
-  console.log(response);
+  return response;
+});
+
+export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, token) => {
+  const response = await auth.authorization(info, token);
   return response;
 });
 
@@ -30,6 +34,13 @@ const userSlice = createSlice({
       localStorage.setItem('reftoken', payload.refreshToken);
     },
     [fetchNewUser.rejected]: (state) => {
+      state.success = false;
+    },
+    [fetchAuth.pending]: (state) => state,
+    [fetchAuth.fulfilled]: (state, { payload }) => {
+      state.success = payload.accessToken === getCookie('token');
+    },
+    [fetchAuth.rejected]: (state) => {
       state.success = false;
     },
   },

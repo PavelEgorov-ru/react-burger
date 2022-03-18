@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useRef, useCallback } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 
@@ -9,6 +9,7 @@ export const LoginPage = () => {
     password: '',
   });
   const inputRef = useRef();
+  const history = useHistory();
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
     alert(`Ваш пароль: ${formState.password}`);
@@ -24,6 +25,10 @@ export const LoginPage = () => {
       [name]: value,
     });
   };
+
+  const login = useCallback(() => {
+    history.replace({ pathname: '/login' });
+  }, [history]);
 
   return (
     <main className={styles.main}>
@@ -57,7 +62,7 @@ export const LoginPage = () => {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={login}>
           Войти
         </Button>
       </form>

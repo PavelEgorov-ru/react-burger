@@ -7,12 +7,12 @@ class Auth extends React.Component {
     this.baseUrl = baseUrl;
   }
 
-  _request(method, endpoint, info) {
+  _request(method, endpoint, info, token) {
     const pattern = {
       method: method,
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        authorization: token,
       },
     };
 
@@ -32,8 +32,8 @@ class Auth extends React.Component {
     return this._request('POST', 'register', info);
   }
 
-  authorization(info) {
-    return this._request('POST', 'login', info);
+  authorization(info, token) {
+    return this._request('POST', 'login', info, token);
   }
 
   logOut(info) {
