@@ -24,6 +24,7 @@ class Auth extends React.Component {
         console.log(res.json());
         return res.json();
       } else {
+        //
         Promise.reject(res);
       }
     });

@@ -11,7 +11,7 @@ const initialState = {
   successAuth: false,
   error: '',
 };
-
+//
 export const fetchNewUser = createAsyncThunk(
   'user/fetchNewUser',
   async (info, { rejectWithValue }) => {
