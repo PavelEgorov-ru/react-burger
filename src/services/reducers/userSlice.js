@@ -1,4 +1,3 @@
-import { setCookie, getCookie } from '../../utils/cookie';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '../../utils/auth';
 
@@ -26,26 +25,24 @@ export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, token) 
 const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
-  extraReducers: {
-    [fetchNewUser.pending]: (state) => state,
-    [fetchNewUser.fulfilled]: (state, { payload }) => {
-      state.user.email = payload.user.email;
-      state.user.name = payload.user.name;
-      state.successReg = payload.success;
-      setCookie('token', payload.accessToken);
-      localStorage.setItem('reftoken', payload.refreshToken);
-    },
-    [fetchNewUser.rejected]: (state) => {
-      state.successReg = false;
-    },
-    // [fetchAuth.pending]: (state) => state,
-    // [fetchAuth.fulfilled]: (state, { payload }) => {
-    //   console.log(payload.refreshToken === localStorage.getItem('reftoken'));
-    //   state.successAuth = payload.accessToken === getCookie('token');
-    // },
-    // [fetchAuth.rejected]: (state) => {
-    //   state.successAuth = false;
-    // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchNewUser.pending, (state) => {
+        // console.log(payload.message);
+        return state;
+      })
+      .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
+        console.log(111);
+        console.log(payload);
+      })
+      .addCase(fetchNewUser.rejected, (state, { payload }) => {
+        console.log(payload.message);
+      });
+
+    builder
+      .addCase(fetchAuth.pending, (state) => state)
+      .addCase(fetchAuth.fulfilled, ({ payload }) => console.log(payload))
+      .addCase(fetchAuth.rejected, ({ payload }) => console.log(payload));
   },
 });
 

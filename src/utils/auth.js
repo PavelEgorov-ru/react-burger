@@ -23,7 +23,9 @@ class Auth extends React.Component {
       if (res.ok) {
         return res.json();
       } else {
-        Promise.reject(`ошибка: ${res.status}`);
+        console.log(res.json());
+        // Promise.reject(`ошибка: ${res.status}`);
+        return res.json();
       }
     });
   }
