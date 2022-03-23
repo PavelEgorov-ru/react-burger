@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-// import { getCookie } from '../../utils/cookie';
+import { getCookie } from '../../utils/cookie';
 import { fetchNewUser } from '../../services/reducers';
 
 export const RegisterPage = () => {
@@ -45,10 +45,6 @@ export const RegisterPage = () => {
   // const login = useCallback(() => {
   //   history.replace({ pathname: '/login' });
   // }, [history]);
-
-  // console.log('рендер компонента');
-  // console.log(getCookie('token'));
-  // console.log(localStorage.getItem('reftoken'));
 
   return (
     <main className={styles.main}>

@@ -8,26 +8,19 @@ class Auth extends React.Component {
   }
 
   _request(method, endpoint, info, token) {
+    console.log(token);
     const pattern = {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        authorization: token,
+        authorization: `${token}`,
       },
     };
 
     return fetch(
       `${this.baseUrl}/${endpoint}`,
       info ? { ...pattern, body: JSON.stringify(info) } : pattern
-    ).then((res) => {
-      if (res.ok) {
-        console.log(res.json());
-        return res.json();
-      } else {
-        //
-        Promise.reject(res);
-      }
-    });
+    );
   }
 
   registration(info) {
@@ -35,6 +28,7 @@ class Auth extends React.Component {
   }
 
   authorization(info, token) {
+    console.log(token);
     return this._request('POST', 'login', info, token);
   }
 

@@ -11,9 +11,20 @@ export const LoginPage = () => {
     email: '',
     password: '',
   });
-  const inputRef = useRef();
-  const history = useHistory();
   const dispatch = useDispatch();
+
+  const submitForm = (e) => {
+    console.log(1111);
+    console.log(formState);
+    e.preventDefault();
+    dispatch(fetchAuth(formState));
+    setFormState({
+      email: '',
+      password: '',
+    });
+  };
+  const inputRef = useRef();
+  // const history = useHistory();
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
     alert(`Ваш пароль: ${formState.password}`);
@@ -27,16 +38,6 @@ export const LoginPage = () => {
     setFormState({
       ...formState,
       [name]: value,
-    });
-  };
-
-  const submitForm = (e) => {
-    e.preventDefault();
-    dispatch(fetchAuth(formState, getCookie('token')));
-    setFormState({
-      email: '',
-      password: '',
-      name: '',
     });
   };
 

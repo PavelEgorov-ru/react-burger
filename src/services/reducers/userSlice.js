@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '../../utils/auth';
+import { getCookie, setCookie } from '../../utils/cookie';
 
 const initialState = {
   user: {
@@ -10,29 +11,40 @@ const initialState = {
   successReg: false,
   successAuth: false,
   error: '',
+  loader: false,
 };
-//
+
 export const fetchNewUser = createAsyncThunk(
   'user/fetchNewUser',
   async (info, { rejectWithValue }) => {
+    console.log('запрос');
     try {
       const response = await auth.registration(info);
-      console.log(response);
-      return response;
-    } catch (err) {
-      console.log(err);
-      let error = err;
-      if (!error.response) {
-        throw err;
+      const responseData = await response.json();
+      console.log(responseData);
+      if (!response.ok) {
+        return rejectWithValue(responseData.message);
       }
-      return rejectWithValue(error.response.data);
+      return responseData;
+    } catch (res) {
+      console.log({ res });
     }
   }
 );
 
-export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, token) => {
-  const response = await auth.authorization(info, token);
-  return response;
+export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejectWithValue }) => {
+  try {
+    console.log(info);
+    const response = await auth.authorization(info, getCookie('token'));
+    const responseData = await response.json();
+    if (!response.ok) {
+      console.log(responseData.message);
+      return rejectWithValue(responseData.message);
+    }
+    return responseData;
+  } catch (res) {
+    console.log({ res });
+  }
 });
 
 const userSlice = createSlice({
@@ -41,26 +53,33 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchNewUser.pending, (state) => {
-        // console.log(payload.message);
-        return state;
+        state.loader = true;
       })
       .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
-        console.log(payload);
+        state.loader = false;
+        state.successReg = payload.success;
+        state.user.email = payload.user.email;
+        state.user.name = payload.user.name;
+        state.user.password = payload.user.password;
+        setCookie('token', payload.accessToken);
+        localStorage.setItem('reftoken', payload.refreshToken);
       })
-      .addCase(fetchNewUser.rejected, (state, action) => {
-        console.log(222);
-        if (action) {
-          console.log(111);
-          state.error = action.payload.errorMessage;
-        } else {
-          state.error = action.error.message;
-        }
+      .addCase(fetchNewUser.rejected, (state, { payload }) => {
+        console.log(payload);
+        state.error = payload;
+      })
+      .addCase(fetchAuth.pending, (state) => {
+        state.loader = true;
+      })
+      .addCase(fetchAuth.fulfilled, (state, { payload }) => {
+        state.loader = false;
+        state.successAuth = true;
+        setCookie('token', payload.accessToken);
+        localStorage.setItem('reftoken', payload.refreshToken);
+      })
+      .addCase(fetchAuth.rejected, (state, { payload }) => {
+        state.error = payload;
       });
-
-    builder
-      .addCase(fetchAuth.pending, (state) => state)
-      .addCase(fetchAuth.fulfilled, ({ payload }) => console.log(payload))
-      .addCase(fetchAuth.rejected, ({ payload }) => console.log(payload));
   },
 });
 
