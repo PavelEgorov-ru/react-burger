@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { fetchAuth } from '../../services/reducers';
 import { getCookie } from '../../utils/cookie';
+import cn from 'classnames';
 import styles from './login.module.css';
 
 export const LoginPage = () => {
@@ -46,10 +47,10 @@ export const LoginPage = () => {
   // }, [history]);
 
   return (
-    <main className={styles.main}>
-      <form className={styles.form} onSubmit={submitForm}>
+    <main className={cn(styles.main)}>
+      <form className={cn(styles.form)} onSubmit={submitForm}>
         <p className="text text_type_main-medium">Вход</p>
-        <div className={styles.input}>
+        <div className={cn(styles.input)}>
           <Input
             placeholder={'Email'}
             type={'email'}
@@ -62,7 +63,7 @@ export const LoginPage = () => {
             size={'default'}
           />
         </div>
-        <div className={styles.input}>
+        <div className={cn(styles.input)}>
           <Input
             placeholder={'Пароль'}
             icon={'HideIcon'}
@@ -81,13 +82,13 @@ export const LoginPage = () => {
           Войти
         </Button>
       </form>
-      <p className={`text text_type_main-default text_color_inactive ${styles.text}`}>
+      <p className={cn(`text text_type_main-default text_color_inactive ${styles.text}`)}>
         Вы - новый пользователь?
-        <NavLink className={styles.link} to={{ pathname: '/register' }}>
+        <NavLink className={cn(styles.link)} to={{ pathname: '/register' }}>
           Зарегистрироваться
         </NavLink>
       </p>
-      <p className={`text text_type_main-default text_color_inactive ${styles.text}`}>
+      <p className={cn(`text text_type_main-default text_color_inactive ${styles.text}`)}>
         Забыли пароль?
         <NavLink className={styles.link} to={{ pathname: '/forgot-password' }}>
           Восстановить пароль

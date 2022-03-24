@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
+import cn from 'classnames';
 import styles from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../Modal/Modal';
@@ -25,7 +26,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className={styles.app}>
+    <div className={cn(styles.app)}>
       {isOpenModal && (
         <Modal title="Детали заказа" onClose={onClose}>
           <IngredientDetails />

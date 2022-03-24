@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import cn from 'classnames';
 import styles from './reset.module.css';
 
 export const ResetPage = () => {
@@ -26,10 +27,10 @@ export const ResetPage = () => {
   };
 
   return (
-    <main className={styles.main}>
-      <form className={styles.form}>
-        <p className="text text_type_main-medium">Восстановление пароля</p>
-        <div className={styles.input}>
+    <main className={cn(styles.main)}>
+      <form className={cn(styles.form)}>
+        <p className={cn('text text_type_main-medium')}>Восстановление пароля</p>
+        <div className={cn(styles.input)}>
           <Input
             placeholder={'Введите новый пароль'}
             icon={'HideIcon'}
@@ -44,7 +45,7 @@ export const ResetPage = () => {
             size={'default'}
           />
         </div>
-        <div className={styles.input}>
+        <div className={cn(styles.input)}>
           <Input
             placeholder={'Введите код из письма'}
             type={'text'}
@@ -61,9 +62,9 @@ export const ResetPage = () => {
           Сохранить
         </Button>
       </form>
-      <p className={`text text_type_main-default text_color_inactive ${styles.text}`}>
+      <p className={cn(`text text_type_main-default text_color_inactive ${styles.text}`)}>
         Вспомнили пароль?
-        <NavLink className={styles.link} to={{ pathname: '/login' }}>
+        <NavLink className={cn(styles.link)} to={{ pathname: '/login' }}>
           Войти
         </NavLink>
       </p>

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
+import cn from 'classnames';
 import styles from './Modal.module.css';
 import { createPortal } from 'react-dom';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
@@ -20,11 +21,11 @@ const Modal = ({ children, title, onClose }) => {
   }, [onClose]);
 
   return createPortal(
-    <div className={styles.window}>
+    <div className={cn(styles.window)}>
       <ModalOverlay onClose={onClose} />
-      <div className={styles.container}>
-        <h2 className={`${styles.title} text text_type_main-large`}>{title}</h2>
-        <button className={styles.button} onClick={() => onClose()}>
+      <div className={cn(styles.container)}>
+        <h2 className={cn(`${styles.title} text text_type_main-large`)}>{title}</h2>
+        <button className={cn(styles.button)} onClick={() => onClose()}>
           <CloseIcon />
         </button>
         {children}

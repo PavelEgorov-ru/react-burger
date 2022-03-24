@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import cn from 'classnames';
 import styles from './BurgerConstructor.module.css';
 import {
   ConstructorElement,
@@ -55,7 +56,7 @@ const BurgerConstructor = React.memo(() => {
   const boxShadow = isHover ? '0 0 20px #6434db' : null;
 
   return (
-    <section className={`pt-25 + ${styles.container}`}>
+    <section className={cn(`pt-25 + ${styles.container}`)}>
       <div className={styles.bun} ref={dropBunRef}>
         <ConstructorElement
           type="top"

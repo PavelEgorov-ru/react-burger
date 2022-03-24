@@ -4,23 +4,21 @@ import BurgerIngredients from '../../component/BurgerIngredients/BurgerIngredien
 import BurgerConstructor from '../../component/BurgerConstructor/BurgerConstructor';
 import BurgerContainer from '../../component/BurgerContainer/BurgerContainer';
 import { useSelector } from 'react-redux';
+import cn from 'classnames';
 import styles from './home.module.css';
 
-
-
 export const HomePage = () => {
-  const {isIngredients} = useSelector(store => store.ingredients);
-  const {isElements} = useSelector(store => store.elements);
+  const { isIngredients } = useSelector((store) => store.ingredients);
+  const { isElements } = useSelector((store) => store.elements);
 
   return (
     isIngredients && (
-        <DndProvider backend={HTML5Backend}>
-            <main className={styles.main}>
-              <BurgerIngredients/>
-              { isElements ? <BurgerConstructor /> : <BurgerContainer />}
-            </main>
-        </DndProvider>
-          )
-   
-  )
-} 
+      <DndProvider backend={HTML5Backend}>
+        <main className={cn(styles.main)}>
+          <BurgerIngredients />
+          {isElements ? <BurgerConstructor /> : <BurgerContainer />}
+        </main>
+      </DndProvider>
+    )
+  );
+};

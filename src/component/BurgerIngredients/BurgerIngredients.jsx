@@ -1,5 +1,6 @@
 import React, { useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import cn from 'classnames';
 import styles from './BurgerIngredients.module.css';
 import TabContainer from '../TabContainer/TabContainer';
 import ItemsContainer from '../ItemsContainer/ItemsContainer';
@@ -51,10 +52,10 @@ const BurgerIngredients = () => {
   }, [ingredients]);
 
   return (
-    <section className={styles.sectionSize}>
-      <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
+    <section className={cn(styles.sectionSize)}>
+      <h1 className={cn('text text_type_main-large mt-10 mb-5')}>Соберите бургер</h1>
       <TabContainer current={current} handleCurrent={handleCurrent} />
-      <div className={styles.container} onScroll={onScroll}>
+      <div className={cn(styles.container)} onScroll={onScroll}>
         <ItemsContainer key={1} data={buns} ref={bunsSectoin}>
           {' '}
           Булки{' '}

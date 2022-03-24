@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
+import cn from 'classnames';
 import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getCookie } from '../../utils/cookie';
@@ -47,10 +48,10 @@ export const RegisterPage = () => {
   // }, [history]);
 
   return (
-    <main className={styles.main}>
-      <form className={styles.form} onSubmit={submitForm}>
-        <p className="text text_type_main-medium">Регистрация</p>
-        <div className={styles.input}>
+    <main className={cn(styles.main)}>
+      <form className={cn(styles.form)} onSubmit={submitForm}>
+        <p className={cn('text text_type_main-medium')}>Регистрация</p>
+        <div className={cn(styles.input)}>
           <Input
             placeholder={'Имя'}
             type={'text'}
@@ -63,7 +64,7 @@ export const RegisterPage = () => {
             size={'default'}
           />
         </div>
-        <div className={styles.input}>
+        <div className={cn(styles.input)}>
           <Input
             placeholder={'Email'}
             type={'email'}
@@ -76,7 +77,7 @@ export const RegisterPage = () => {
             size={'default'}
           />
         </div>
-        <div className={styles.input}>
+        <div className={cn(styles.input)}>
           <Input
             placeholder={'Пароль'}
             icon={visibleIcon ? 'ShowIcon' : 'HideIcon'}
@@ -95,9 +96,9 @@ export const RegisterPage = () => {
           Зарегистрироваться
         </Button>
       </form>
-      <p className={`text text_type_main-default text_color_inactive ${styles.text}`}>
+      <p className={cn(`text text_type_main-default text_color_inactive ${styles.text}`)}>
         Уже зарегитсрированны?
-        <NavLink className={styles.link} to={{ pathname: '/login' }}>
+        <NavLink className={cn(styles.link)} to={{ pathname: '/login' }}>
           Войти
         </NavLink>
       </p>
