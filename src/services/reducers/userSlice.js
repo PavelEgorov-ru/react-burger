@@ -17,11 +17,9 @@ const initialState = {
 export const fetchNewUser = createAsyncThunk(
   'user/fetchNewUser',
   async (info, { rejectWithValue }) => {
-    console.log('запрос');
     try {
       const response = await auth.registration(info);
       const responseData = await response.json();
-      console.log(responseData);
       if (!response.ok) {
         return rejectWithValue(responseData.message);
       }
@@ -34,7 +32,6 @@ export const fetchNewUser = createAsyncThunk(
 
 export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejectWithValue }) => {
   try {
-    console.log(info);
     const response = await auth.authorization(info, getCookie('token'));
     const responseData = await response.json();
     if (!response.ok) {
