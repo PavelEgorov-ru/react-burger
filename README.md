@@ -1,48 +1,35 @@
-# Getting Started with Create React App
+# "Космическая бургерная"
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Проект создан с помощью CRA. Дополнительно установлен TypeScript для последующей миграции.
 
-## Available Scripts
+Посмотреть приложение в браузере можно по этой ссылке [https://pavelegorov-ru.github.io/react-burger/](https://pavelegorov-ru.github.io/react-burger/)
 
-In the project directory, you can run:
+Разработка ведется в отдельных ветках. После проверки PR ревьюером, код попадает в основную ветку `main`.
 
-### `npm start`
+Если кто-то захочет взять его за основу своего проекта, установите зависимости с помощью команды `npm ci`. Во время разработки использовалась Node версии 16.14.2
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Развернуть приложение локально командой `npm run start`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Текущий стек
 
-### `npm test`
+React, React.PropTypes, Redux-Toolkit, REST API, CSS modules
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Текущая функциональность
 
-### `npm run build`
+При загрузке приложения с севрвера приходят игредиенты для бургера. В проекте возможно перетаскивать элементы в конструктор бургера. Приложение не адаптированно под мобильные устройства и планшеты.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Особенности работы:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Создавать бургер без выбора булочки нельзя. Если булочка уже выбрана, ее можно заменить на другую в любой момент;
+- Начинка может быть в любом количестве. Каждый элемент имеет счетчик текущего количества в бургере. Он появляется, когда его хоть раз выбрали.
+- Изначально начинка располагается в порядке добавления. С помощью перетаскивания порядок начинки внутри бургера можно менять.
+- При нажатии на кнопку "Оформить заказ", состав бургера отправляется на сервер, в ответ приходит уникальный номер заказа с оповещением о начале готовки.
+- При клике на ингредиент в меню, всплывает попап с его описанием и составом. Попап можно закрыть нажав на крестик, оверлей или клавишей ESC;
+- Для удобной навигации работает меню переключения между булочками, соусами и мясом.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## В процессе разработки
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-Проверка
+1. Миграция на TypeScript;
+2. Подключение WebSocket для постоянного обмена данными;
+3. Авторизация и регистрация пользователя;
+4. Роутинг между страницами;
