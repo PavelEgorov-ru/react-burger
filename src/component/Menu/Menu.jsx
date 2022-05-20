@@ -15,9 +15,10 @@ const Menu = () => {
         <NavLink
           activeClassName={cn(styles.activeContainer)}
           className={cn(`p-5 mt-4 mb-4 ${styles.container}`)}
+          exact
           to={{ pathname: '/' }}
         >
-          <BurgerIcon type="secondary" />
+          <BurgerIcon type="secondary" className={cn(styles.iconActive)} />
           <p className={cn('text text_type_main-default pl-2')}>Конструктор</p>
         </NavLink>
         <NavLink
