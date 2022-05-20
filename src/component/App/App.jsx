@@ -1,60 +1,69 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import styles from './App.module.css'
+import cn from 'classnames';
+import styles from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import BurgerContainer from '../BurgerContainer/BurgerContainer'
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers'
+import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers';
+import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage } from '../../pages';
 
-  const App = () => {
-  const {isIngredients} = useSelector(store => store.ingredients);
-  const {isElements} = useSelector(store => store.elements);
-  const {isOpenModal} = useSelector(store => store.ingredient)
-  const {isOrder} = useSelector(store => store.order)
+const App = () => {
+  const { isOpenModal } = useSelector((store) => store.ingredient);
+  const { isOrder } = useSelector((store) => store.order);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onClose = () => {
-    isOpenModal
-    ? dispatch(ingredientActions.closeModal())
-    : dispatch(orderActions.closeModal())  
-  } 
+    isOpenModal ? dispatch(ingredientActions.closeModal()) : dispatch(orderActions.closeModal());
+  };
 
   useEffect(() => {
-    dispatch(fetchIngredients())
-  }, [])
-  
+    dispatch(fetchIngredients());
+  }, []);
+
   return (
-    <div className={styles.app}>
-      {isOpenModal
-      && (<Modal title = "Детали заказа" onClose={onClose}>
-            <IngredientDetails />
-          </Modal>)}
+    <div className={cn(styles.app)}>
+      {isOpenModal && (
+        <Modal title="Детали заказа" onClose={onClose}>
+          <IngredientDetails />
+        </Modal>
+      )}
 
-      {isOrder
-       && (<Modal onClose={onClose}>
-            <OrderDetails/>
-          </Modal>)}
+      {isOrder && (
+        <Modal onClose={onClose}>
+          <OrderDetails />
+        </Modal>
+      )}
 
-      <AppHeader/>
-      {isIngredients
-      && (
-        <DndProvider backend={HTML5Backend}>
-            <main className={styles.main}>
-              <BurgerIngredients/>
-              { isElements ? <BurgerConstructor /> : <BurgerContainer />}
-            </main>
-        </DndProvider>
-          )}
+      <Router>
+        <AppHeader />
+        <Switch>
+          <Route path="/" exact={true}>
+            <HomePage />
+          </Route>
+          <Route path="/register" exact={true}>
+            <RegisterPage />
+          </Route>
+          <Route path="/login" exact={true}>
+            <LoginPage />
+          </Route>
+          <Route path="/forgot-password" exact={true}>
+            <ForgotPage />
+          </Route>
+          <Route path="/reset-password" exact={true}>
+            <ResetPage />
+          </Route>
+          <Route path="/profile" exact={true}>
+            <ProfilePage />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
-}
+};
 
 export default App;
