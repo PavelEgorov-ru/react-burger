@@ -42,23 +42,23 @@ const App = () => {
       <Router>
         <AppHeader />
         <Switch>
-          <Route path="/" exact={true}>
-            <HomePage />
-          </Route>
-          <Route path="/register" exact={true}>
+          <Route path="/register">
             <RegisterPage />
           </Route>
-          <Route path="/login" exact={true}>
+          <Route path="/login">
             <LoginPage />
           </Route>
-          <Route path="/forgot-password" exact={true}>
+          <Route path="/forgot-password">
             <ForgotPage />
           </Route>
-          <Route path="/reset-password" exact={true}>
+          <Route path="/reset-password">
             <ResetPage />
           </Route>
-          <Route path="/profile" exact={true}>
+          <Route path="/profile">
             <ProfilePage />
+          </Route>
+          <Route path="/" exact={true}>
+            <HomePage />
           </Route>
         </Switch>
       </Router>
