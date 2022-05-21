@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useRef, useCallback } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import styles from './reset.module.css';
@@ -9,7 +9,10 @@ export const ResetPage = () => {
     code: '',
     password: '',
   });
+
   const inputRef = useRef();
+  const history = useHistory();
+
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
     alert(`Ваш пароль: ${formState.password}`);
@@ -25,6 +28,10 @@ export const ResetPage = () => {
       [name]: value,
     });
   };
+
+  const save = useCallback(() => {
+    history.replace({ pathname: '/login' });
+  }, [history]);
 
   return (
     <main className={cn(styles.main)}>
@@ -58,7 +65,7 @@ export const ResetPage = () => {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={save}>
           Сохранить
         </Button>
       </form>

@@ -13,6 +13,7 @@ export const LoginPage = () => {
     password: '',
   });
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -37,6 +38,10 @@ export const LoginPage = () => {
       [name]: value,
     });
   };
+
+  const login = useCallback(() => {
+    history.replace({ pathname: '/' });
+  }, [history]);
 
   return (
     <main className={cn(styles.main)}>
@@ -70,7 +75,7 @@ export const LoginPage = () => {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={login}>
           Войти
         </Button>
       </form>

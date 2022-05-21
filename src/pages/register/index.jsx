@@ -43,9 +43,9 @@ export const RegisterPage = () => {
     });
   };
 
-  // const login = useCallback(() => {
-  //   history.replace({ pathname: '/login' });
-  // }, [history]);
+  const registration = useCallback(() => {
+    history.replace({ pathname: '/login' });
+  }, [history]);
 
   return (
     <main className={cn(styles.main)}>
@@ -92,7 +92,7 @@ export const RegisterPage = () => {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={registration}>
           Зарегистрироваться
         </Button>
       </form>
