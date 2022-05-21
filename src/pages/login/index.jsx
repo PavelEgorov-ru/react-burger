@@ -15,8 +15,6 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
 
   const submitForm = (e) => {
-    console.log(1111);
-    console.log(formState);
     e.preventDefault();
     dispatch(fetchAuth(formState));
     setFormState({
@@ -25,10 +23,8 @@ export const LoginPage = () => {
     });
   };
   const inputRef = useRef();
-  // const history = useHistory();
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
-    alert(`Ваш пароль: ${formState.password}`);
   };
 
   const handleInputChange = (event) => {
@@ -41,10 +37,6 @@ export const LoginPage = () => {
       [name]: value,
     });
   };
-
-  // const login = useCallback(() => {
-  //   history.replace({ pathname: '/' });
-  // }, [history]);
 
   return (
     <main className={cn(styles.main)}>

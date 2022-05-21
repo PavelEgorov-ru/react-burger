@@ -3,15 +3,7 @@ import auth from '../../utils/auth';
 import { getCookie, setCookie } from '../../utils/cookie';
 
 const initialState = {
-  user: {
-    email: '',
-    password: '',
-    name: '',
-  },
-  successReg: false,
-  successAuth: false,
   error: '',
-  loader: false,
 };
 
 export const fetchNewUser = createAsyncThunk(
@@ -53,11 +45,6 @@ const userSlice = createSlice({
         state.loader = true;
       })
       .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
-        state.loader = false;
-        state.successReg = payload.success;
-        state.user.email = payload.user.email;
-        state.user.name = payload.user.name;
-        state.user.password = payload.user.password;
         setCookie('token', payload.accessToken);
         localStorage.setItem('reftoken', payload.refreshToken);
       })
@@ -70,7 +57,6 @@ const userSlice = createSlice({
       })
       .addCase(fetchAuth.fulfilled, (state, { payload }) => {
         state.loader = false;
-        state.successAuth = true;
         setCookie('token', payload.accessToken);
         localStorage.setItem('reftoken', payload.refreshToken);
       })
