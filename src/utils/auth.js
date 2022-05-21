@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCookie } from '../../utils/cookie';
+import { getCookie } from './cookie';
 export const BASE_URL = 'https://norma.nomoreparties.space/api/auth';
 
 class Auth extends React.Component {
@@ -9,12 +9,11 @@ class Auth extends React.Component {
   }
 
   _request(method, endpoint, info) {
-    console.log(token);
     const pattern = {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer' + getCookie('burgerToken'),
+        Authorization: getCookie('burgerToken'),
       },
     };
 
@@ -24,12 +23,12 @@ class Auth extends React.Component {
     );
   }
 
-  login() {
-    return this._request('POST', 'login');
+  login(info) {
+    return this._request('POST', 'login', info);
   }
 
-  register() {
-    return this._request('POST', 'register');
+  register(info) {
+    return this._request('POST', 'register', info);
   }
 
   logout() {

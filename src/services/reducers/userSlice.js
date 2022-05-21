@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '../../utils/auth';
-import { getCookie, setCookie } from '../../utils/cookie';
+import { setCookie } from '../../utils/cookie';
 
 const initialState = {
   error: '',
@@ -10,20 +10,11 @@ export const fetchNewUser = createAsyncThunk(
   'user/fetchNewUser',
   async (info, { rejectWithValue }) => {
     try {
-      const response = await auth.registration(info);
-      const responseData = await response.json();
-      let burgerToken;
+      const response = await auth.register(info);
       if (!response.ok) {
         return rejectWithValue(responseData.message);
       }
-      responseData.headers.forEach((header) => {
-        if (header.indexOf('Bearer') === 0) {
-          burgerToken = header.split('Bearer ')[1];
-        }
-      });
-      if (authToken) {
-        setCookie('burgerToken', burgerToken);
-      }
+      const responseData = await response.json();
       return responseData;
     } catch (res) {
       console.log({ res });
@@ -33,17 +24,8 @@ export const fetchNewUser = createAsyncThunk(
 
 export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejectWithValue }) => {
   try {
-    const response = await auth.authorization(info, getCookie('token'));
+    const response = await auth.login(info);
     const responseData = await response.json();
-    let burgerToken;
-    responseData.headers.forEach((header) => {
-      if (header.indexOf('Bearer') === 0) {
-        burgerToken = header.split('Bearer ')[1];
-      }
-    });
-    if (authToken) {
-      setCookie('burgerToken', burgerToken);
-    }
     if (!response.ok) {
       console.log(responseData.message);
       return rejectWithValue(responseData.message);
@@ -63,18 +45,23 @@ const userSlice = createSlice({
         state.loader = true;
       })
       .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
+        console.log(payload.accessToken);
+        setCookie('burgerToken', payload.accessToken);
         localStorage.setItem('refBurgerToken', payload.refreshToken);
       })
       .addCase(fetchNewUser.rejected, (state, { payload }) => {
+        console.log(payload);
         state.error = payload;
       })
       .addCase(fetchAuth.pending, (state) => {
         state.loader = true;
       })
       .addCase(fetchAuth.fulfilled, (state, { payload }) => {
+        console.log(payload);
         state.loader = false;
       })
       .addCase(fetchAuth.rejected, (state, { payload }) => {
+        console.log(payload);
         state.error = payload;
       });
   },

@@ -30,28 +30,43 @@ export const RegisterPage = () => {
     });
   };
 
-  const submitForm = (e) => {
-    e.preventDefault();
-    // dispatch(fetchNewUser(formState));
-    setFormState({
-      email: '',
-      password: '',
-      name: '',
-    });
-  };
+  // const submitForm = (event) => {
+  //   console.log(formState);
+  //   event.preventDefault();
+  //   dispatch(fetchNewUser(formState));
+  //   // setFormState({
+  //   //   email: '',
+  //   //   password: '',
+  //   //   name: '',
+  //   // });
+  // };
 
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
     setIsActiveIcon(!isActiveIcon);
   };
 
-  const registration = useCallback(() => {
-    history.replace({ pathname: '/login' });
-  }, [history]);
+  // const registration = (e) => {
+  //   e.preventDefault();
+  //   console.log(formState);
+  // };
+
+  const registration = useCallback(
+    (e) => {
+      e.preventDefault();
+      console.log(formState);
+      dispatch(fetchNewUser(formState));
+      // history.replace({ pathname: '/login' });
+    },
+    [formState, history]
+  );
+
+  // console.log(getCookie('burgerToken'));
+  // console.log(localStorage.getItem('refBurgerToken'));
 
   return (
     <main className={cn(styles.main)}>
-      <form className={cn(styles.form)} onSubmit={submitForm}>
+      <form className={cn(styles.form)}>
         <p className={cn('text text_type_main-medium')}>Регистрация</p>
         <div className={cn(styles.input)}>
           <Input
