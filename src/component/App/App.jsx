@@ -8,6 +8,7 @@ import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers';
 import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage } from '../../pages';
 
@@ -57,9 +58,9 @@ const App = () => {
           <Route path="/profile">
             <ProfilePage />
           </Route>
-          <Route path="/" exact={true}>
+          <ProtectedRoute path="/" exact={true}>
             <HomePage />
-          </Route>
+          </ProtectedRoute>
         </Switch>
       </Router>
     </div>
