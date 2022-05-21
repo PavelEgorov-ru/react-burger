@@ -1,4 +1,5 @@
 import React from 'react';
+import { getCookie } from '../../utils/cookie';
 export const BASE_URL = 'https://norma.nomoreparties.space/api/auth';
 
 class Auth extends React.Component {
@@ -7,13 +8,13 @@ class Auth extends React.Component {
     this.baseUrl = baseUrl;
   }
 
-  _request(method, endpoint, info, token) {
+  _request(method, endpoint, info) {
     console.log(token);
     const pattern = {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        authorization: `${token}`,
+        Authorization: 'Bearer' + getCookie('burgerToken'),
       },
     };
 
@@ -23,21 +24,20 @@ class Auth extends React.Component {
     );
   }
 
-  registration(info) {
-    return this._request('POST', 'register', info);
+  login() {
+    return this._request('POST', 'login');
   }
 
-  authorization(info, token) {
-    console.log(token);
-    return this._request('POST', 'login', info, token);
+  register() {
+    return this._request('POST', 'register');
   }
 
-  logOut(info) {
-    return this._request('POST', 'logout', info);
+  logout() {
+    return this._request('POST', 'logout');
   }
 
-  newToken(info) {
-    return this._request('POST', 'token', info);
+  token() {
+    return this._request('POST', 'token');
   }
 }
 

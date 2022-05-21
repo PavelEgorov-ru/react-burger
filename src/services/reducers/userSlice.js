@@ -12,8 +12,17 @@ export const fetchNewUser = createAsyncThunk(
     try {
       const response = await auth.registration(info);
       const responseData = await response.json();
+      let burgerToken;
       if (!response.ok) {
         return rejectWithValue(responseData.message);
+      }
+      responseData.headers.forEach((header) => {
+        if (header.indexOf('Bearer') === 0) {
+          burgerToken = header.split('Bearer ')[1];
+        }
+      });
+      if (authToken) {
+        setCookie('burgerToken', burgerToken);
       }
       return responseData;
     } catch (res) {
@@ -26,6 +35,15 @@ export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejec
   try {
     const response = await auth.authorization(info, getCookie('token'));
     const responseData = await response.json();
+    let burgerToken;
+    responseData.headers.forEach((header) => {
+      if (header.indexOf('Bearer') === 0) {
+        burgerToken = header.split('Bearer ')[1];
+      }
+    });
+    if (authToken) {
+      setCookie('burgerToken', burgerToken);
+    }
     if (!response.ok) {
       console.log(responseData.message);
       return rejectWithValue(responseData.message);
@@ -45,11 +63,9 @@ const userSlice = createSlice({
         state.loader = true;
       })
       .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
-        setCookie('token', payload.accessToken);
-        localStorage.setItem('reftoken', payload.refreshToken);
+        localStorage.setItem('refBurgerToken', payload.refreshToken);
       })
       .addCase(fetchNewUser.rejected, (state, { payload }) => {
-        console.log(payload);
         state.error = payload;
       })
       .addCase(fetchAuth.pending, (state) => {
@@ -57,8 +73,6 @@ const userSlice = createSlice({
       })
       .addCase(fetchAuth.fulfilled, (state, { payload }) => {
         state.loader = false;
-        setCookie('token', payload.accessToken);
-        localStorage.setItem('reftoken', payload.refreshToken);
       })
       .addCase(fetchAuth.rejected, (state, { payload }) => {
         state.error = payload;
