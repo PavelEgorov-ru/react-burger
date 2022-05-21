@@ -8,29 +8,16 @@ import { getCookie } from '../../utils/cookie';
 import { fetchNewUser } from '../../services/reducers';
 
 export const RegisterPage = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
   const [formState, setFormState] = useState({
     email: '',
     password: '',
     name: '',
   });
-  const submitForm = (e) => {
-    e.preventDefault();
-    dispatch(fetchNewUser(formState));
-    setFormState({
-      email: '',
-      password: '',
-      name: '',
-    });
-  };
+  const [isActiveIcon, setIsActiveIcon] = useState(false);
 
-  const [visibleIcon, setVisibleIcon] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
   const inputRef = useRef();
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    setVisibleIcon(!visibleIcon);
-  };
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -41,6 +28,21 @@ export const RegisterPage = () => {
       ...formState,
       [name]: value,
     });
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    // dispatch(fetchNewUser(formState));
+    setFormState({
+      email: '',
+      password: '',
+      name: '',
+    });
+  };
+
+  const onIconClick = () => {
+    setTimeout(() => inputRef.current.focus(), 0);
+    setIsActiveIcon(!isActiveIcon);
   };
 
   const registration = useCallback(() => {
@@ -80,8 +82,8 @@ export const RegisterPage = () => {
         <div className={cn(styles.input)}>
           <Input
             placeholder={'Пароль'}
-            icon={visibleIcon ? 'ShowIcon' : 'HideIcon'}
-            type={visibleIcon ? 'text' : 'password'}
+            icon={isActiveIcon ? 'ShowIcon' : 'HideIcon'}
+            type={isActiveIcon ? 'text' : 'password'}
             onChange={handleInputChange}
             value={formState.password}
             name={'password'}

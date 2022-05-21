@@ -22,13 +22,21 @@ export const ForgotPage = () => {
     });
   };
 
+  const submitForm = (e) => {
+    e.preventDefault();
+    // dispatch(fetchNewUser(formState));
+    setFormState({
+      email: '',
+    });
+  };
+
   const sendMail = useCallback(() => {
     history.replace({ pathname: '/reset-password' });
   }, [history]);
 
   return (
     <main className={cn(styles.main)}>
-      <form className={cn(styles.form)}>
+      <form className={cn(styles.form)} onSubmit={submitForm}>
         <p className={cn('text text_type_main-medium')}>Восстановление пароля</p>
         <div className={cn(styles.input)}>
           <Input

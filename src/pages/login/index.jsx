@@ -12,21 +12,11 @@ export const LoginPage = () => {
     email: '',
     password: '',
   });
+  const [isActiveIcon, setIsActiveIcon] = useState(false);
+
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const submitForm = (e) => {
-    e.preventDefault();
-    dispatch(fetchAuth(formState));
-    setFormState({
-      email: '',
-      password: '',
-    });
-  };
   const inputRef = useRef();
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
-  };
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -37,6 +27,20 @@ export const LoginPage = () => {
       ...formState,
       [name]: value,
     });
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    // dispatch(fetchAuth(formState));
+    setFormState({
+      email: '',
+      password: '',
+    });
+  };
+
+  const onIconClick = () => {
+    setTimeout(() => inputRef.current.focus(), 0);
+    setIsActiveIcon(!isActiveIcon);
   };
 
   const login = useCallback(() => {
@@ -63,8 +67,8 @@ export const LoginPage = () => {
         <div className={cn(styles.input)}>
           <Input
             placeholder={'Пароль'}
-            icon={'HideIcon'}
-            type={'password'}
+            icon={isActiveIcon ? 'ShowIcon' : 'HideIcon'}
+            type={isActiveIcon ? 'text' : 'password'}
             onChange={handleInputChange}
             value={formState.password}
             name={'password'}

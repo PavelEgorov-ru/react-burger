@@ -9,13 +9,14 @@ export const ResetPage = () => {
     code: '',
     password: '',
   });
+  const [isActiveIcon, setIsActiveIcon] = useState(false);
 
   const inputRef = useRef();
   const history = useHistory();
 
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
-    alert(`Ваш пароль: ${formState.password}`);
+    setIsActiveIcon(!isActiveIcon);
   };
 
   const handleInputChange = (event) => {
@@ -29,19 +30,28 @@ export const ResetPage = () => {
     });
   };
 
+  const submitForm = (e) => {
+    e.preventDefault();
+    // dispatch(fetchNewUser(formState));
+    setFormState({
+      code: '',
+      password: '',
+    });
+  };
+
   const save = useCallback(() => {
     history.replace({ pathname: '/login' });
   }, [history]);
 
   return (
     <main className={cn(styles.main)}>
-      <form className={cn(styles.form)}>
+      <form className={cn(styles.form)} onSubmit={submitForm}>
         <p className={cn('text text_type_main-medium')}>Восстановление пароля</p>
         <div className={cn(styles.input)}>
           <Input
             placeholder={'Введите новый пароль'}
-            icon={'HideIcon'}
-            type={'password'}
+            icon={isActiveIcon ? 'ShowIcon' : 'HideIcon'}
+            type={isActiveIcon ? 'text' : 'password'}
             onChange={handleInputChange}
             value={formState.password}
             name={'password'}
