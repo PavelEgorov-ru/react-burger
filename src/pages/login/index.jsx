@@ -29,27 +29,24 @@ export const LoginPage = () => {
     });
   };
 
-  const submitForm = (e) => {
-    e.preventDefault();
-    // dispatch(fetchAuth(formState));
-    setFormState({
-      email: '',
-      password: '',
-    });
-  };
-
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
     setIsActiveIcon(!isActiveIcon);
   };
 
-  const login = useCallback(() => {
+  const login = (e) => {
+    e.preventDefault();
+    dispatch(fetchAuth(formState));
+    setFormState({
+      email: '',
+      password: '',
+    });
     history.replace({ pathname: '/' });
-  }, [history]);
+  };
 
   return (
     <main className={cn(styles.main)}>
-      <form className={cn(styles.form)} onSubmit={submitForm}>
+      <form className={cn(styles.form)} onSubmit={login}>
         <p className="text text_type_main-medium">Вход</p>
         <div className={cn(styles.input)}>
           <Input
@@ -79,7 +76,7 @@ export const LoginPage = () => {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium" onClick={login}>
+        <Button type="primary" htmlType="submit" size="medium">
           Войти
         </Button>
       </form>

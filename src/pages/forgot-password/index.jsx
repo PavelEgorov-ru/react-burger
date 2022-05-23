@@ -1,5 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchNewUser } from '../../services/reducers';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import styles from './forgot.module.css';
@@ -10,6 +12,7 @@ export const ForgotPage = () => {
   });
   const inputRef = useRef();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -24,15 +27,12 @@ export const ForgotPage = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    // dispatch(fetchNewUser(formState));
+    dispatch(fetchNewUser(formState));
     setFormState({
       email: '',
     });
-  };
-
-  const sendMail = useCallback(() => {
     history.replace({ pathname: '/reset-password' });
-  }, [history]);
+  };
 
   return (
     <main className={cn(styles.main)}>
@@ -51,7 +51,7 @@ export const ForgotPage = () => {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium" onClick={sendMail}>
+        <Button type="primary" htmlType="submit" size="medium">
           Восстановить
         </Button>
       </form>

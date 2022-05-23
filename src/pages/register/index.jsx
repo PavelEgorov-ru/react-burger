@@ -46,27 +46,19 @@ export const RegisterPage = () => {
     setIsActiveIcon(!isActiveIcon);
   };
 
-  // const registration = (e) => {
-  //   e.preventDefault();
-  //   console.log(formState);
-  // };
-
-  const registration = useCallback(
-    (e) => {
-      e.preventDefault();
-      console.log(formState);
-      dispatch(fetchNewUser(formState));
-      // history.replace({ pathname: '/login' });
-    },
-    [formState, history]
-  );
+  const registration = (e) => {
+    e.preventDefault();
+    console.log(formState);
+    dispatch(fetchNewUser(formState));
+    history.replace({ pathname: '/login' });
+  };
 
   // console.log(getCookie('burgerToken'));
   // console.log(localStorage.getItem('refBurgerToken'));
 
   return (
     <main className={cn(styles.main)}>
-      <form className={cn(styles.form)}>
+      <form className={cn(styles.form)} onSubmit={registration}>
         <p className={cn('text text_type_main-medium')}>Регистрация</p>
         <div className={cn(styles.input)}>
           <Input
@@ -109,7 +101,7 @@ export const RegisterPage = () => {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium" onClick={registration}>
+        <Button type="primary" htmlType="submit" size="medium">
           Зарегистрироваться
         </Button>
       </form>
