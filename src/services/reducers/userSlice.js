@@ -3,7 +3,12 @@ import auth from '../../utils/auth';
 import { setCookie } from '../../utils/cookie';
 
 const initialState = {
-  error: '',
+  isAuth: false,
+  loader: false,
+  userName: '',
+  userEmail: '',
+  userPassword: '',
+  errorMessage: '',
 };
 
 export const fetchNewUser = createAsyncThunk(
@@ -51,7 +56,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchNewUser.rejected, (state, { payload }) => {
         console.log(payload);
-        state.error = payload;
+        state.errorMessage = payload;
       })
       .addCase(fetchAuth.pending, (state) => {
         state.loader = true;
@@ -62,7 +67,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchAuth.rejected, (state, { payload }) => {
         console.log(payload);
-        state.error = payload;
+        state.errorMessage = payload;
       });
   },
 });
