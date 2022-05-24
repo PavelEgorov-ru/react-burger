@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,22 +9,41 @@ import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers';
+import {
+  ingredientActions,
+  orderActions,
+  fetchIngredients,
+  fetchCheckUser,
+} from '../../services/reducers';
 import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage } from '../../pages';
+import { getCookie } from '../../utils/cookie';
 
 const App = () => {
   const { isOpenModal } = useSelector((store) => store.ingredient);
   const { isOrder } = useSelector((store) => store.order);
+  const { isAuth } = useSelector((store) => store.user);
+  const [isAuthUser, setIsAuthUser] = useState(false);
 
   const dispatch = useDispatch();
+  // setIsAuthUser(true);
 
   const onClose = () => {
     isOpenModal ? dispatch(ingredientActions.closeModal()) : dispatch(orderActions.closeModal());
   };
 
+  const auth = () => {
+    if (getCookie('burgerToken')) {
+      dispatch(fetchCheckUser());
+      // setIsAuthUser(true);
+    }
+  };
+
   useEffect(() => {
     dispatch(fetchIngredients());
+    auth();
   }, []);
+
+  console.log(isAuth);
 
   return (
     <div className={cn(styles.app)}>
@@ -58,7 +77,7 @@ const App = () => {
           <Route path="/profile">
             <ProfilePage />
           </Route>
-          <ProtectedRoute path="/" exact={true}>
+          <ProtectedRoute path="/" isAuth={isAuthUser} exact={true}>
             <HomePage />
           </ProtectedRoute>
         </Switch>
