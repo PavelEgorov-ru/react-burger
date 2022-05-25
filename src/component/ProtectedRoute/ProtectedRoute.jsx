@@ -34,6 +34,7 @@ export function ProtectedRoute({ children, ...rest }) {
               <Redirect
                 to={{
                   pathname: '/',
+                  state: { from: location },
                 }}
               />
             );
