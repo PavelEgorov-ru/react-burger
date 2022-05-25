@@ -9,12 +9,7 @@ import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import {
-  ingredientActions,
-  orderActions,
-  fetchIngredients,
-  fetchCheckUser,
-} from '../../services/reducers';
+import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers';
 import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage } from '../../pages';
 import { getCookie } from '../../utils/cookie';
 

@@ -2,7 +2,7 @@ import { Route, Redirect } from 'react-router';
 import { getCookie, setCookie } from '../../utils/cookie';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCheckUser } from '../../services/reducers';
+import { fetchCheckUser, userActions } from '../../services/reducers';
 
 export function ProtectedRoute({ children, ...rest }) {
   const dispatch = useDispatch();
@@ -11,6 +11,8 @@ export function ProtectedRoute({ children, ...rest }) {
   const auth = () => {
     if (getCookie('burgerToken')) {
       dispatch(fetchCheckUser());
+    } else {
+      dispatch(userActions.endLoader());
     }
   };
 
@@ -24,11 +26,17 @@ export function ProtectedRoute({ children, ...rest }) {
     isLoader && (
       <Route
         {...rest}
-        render={() => {
+        render={({ location }) => {
           if (isAuth) {
             return children;
           } else {
-            return <Redirect to="/login" />;
+            return (
+              <Redirect
+                to={{
+                  pathname: '/',
+                }}
+              />
+            );
           }
         }}
       />

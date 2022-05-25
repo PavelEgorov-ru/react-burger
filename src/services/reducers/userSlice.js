@@ -54,6 +54,11 @@ export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async () =
 const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
+  reducers: {
+    endLoader(state) {
+      state.isLoader = true;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchNewUser.pending, (state) => {
@@ -83,7 +88,9 @@ const userSlice = createSlice({
         state.isLoader = true;
         state.isAuth = payload.success;
       })
-      .addCase(fetchCheckUser.rejected, (state, { payload }) => {});
+      .addCase(fetchCheckUser.rejected, (state, { payload }) => {
+        state.isLoader = true;
+      });
   },
 });
 
