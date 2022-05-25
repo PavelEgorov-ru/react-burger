@@ -19,31 +19,17 @@ import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage }
 import { getCookie } from '../../utils/cookie';
 
 const App = () => {
+  const dispatch = useDispatch();
   const { isOpenModal } = useSelector((store) => store.ingredient);
   const { isOrder } = useSelector((store) => store.order);
-  const { isAuth } = useSelector((store) => store.user);
-  const [isAuthUser, setIsAuthUser] = useState(false);
-
-  const dispatch = useDispatch();
-  // setIsAuthUser(true);
 
   const onClose = () => {
     isOpenModal ? dispatch(ingredientActions.closeModal()) : dispatch(orderActions.closeModal());
   };
 
-  const auth = () => {
-    if (getCookie('burgerToken')) {
-      dispatch(fetchCheckUser());
-      // setIsAuthUser(true);
-    }
-  };
-
   useEffect(() => {
     dispatch(fetchIngredients());
-    auth();
   }, []);
-
-  console.log(isAuth);
 
   return (
     <div className={cn(styles.app)}>
@@ -77,7 +63,7 @@ const App = () => {
           <Route path="/profile">
             <ProfilePage />
           </Route>
-          <ProtectedRoute path="/" isAuth={isAuthUser} exact={true}>
+          <ProtectedRoute path="/" exact={true}>
             <HomePage />
           </ProtectedRoute>
         </Switch>

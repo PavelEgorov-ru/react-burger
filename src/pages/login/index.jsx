@@ -35,7 +35,6 @@ export const LoginPage = () => {
   };
 
   const login = (e) => {
-    e.preventDefault();
     dispatch(fetchAuth(formState));
     console.log(formState);
     setFormState({

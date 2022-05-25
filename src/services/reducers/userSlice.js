@@ -4,7 +4,7 @@ import { setCookie } from '../../utils/cookie';
 
 const initialState = {
   isAuth: false,
-  loader: false,
+  isLoader: false,
   userName: '',
   userEmail: '',
   userPassword: '',
@@ -44,11 +44,7 @@ export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejec
 export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async () => {
   try {
     const response = await auth.checkUser();
-    // console.log(response);
     const responseData = response.json();
-    // if (!response.ok) {
-    //   return rejectWithValue(responseData.message);
-    // }
     return responseData;
   } catch (res) {
     console.log({ res });
@@ -61,42 +57,33 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchNewUser.pending, (state) => {
-        state.loader = true;
+        state.isLoader = true;
       })
       .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
-        // console.log(payload);
         setCookie('burgerToken', payload.accessToken);
         localStorage.setItem('refBurgerToken', payload.refreshToken);
       })
       .addCase(fetchNewUser.rejected, (state, { payload }) => {
-        // console.log(payload);
         state.errorMessage = payload;
       })
       .addCase(fetchAuth.pending, (state) => {
-        state.loader = true;
+        state.isLoader = true;
       })
       .addCase(fetchAuth.fulfilled, (state, { payload }) => {
-        // console.log(payload);
-        state.loader = false;
-        // state.isAuth = true;
+        state.isLoader = false;
       })
       .addCase(fetchAuth.rejected, (state, { payload }) => {
-        // console.log(payload);
         state.errorMessage = payload;
-        state.loader = false;
+        state.isLoader = false;
       })
       .addCase(fetchCheckUser.pending, (state, { payload }) => {
-        state.loader = true;
+        state.isLoader = false;
       })
       .addCase(fetchCheckUser.fulfilled, (state, { payload }) => {
-        // console.log(payload);
-        state.loader = false;
+        state.isLoader = true;
         state.isAuth = payload.success;
       })
-      .addCase(fetchCheckUser.rejected, (state, { payload }) => {
-        // console.log(payload);
-        state.loader = true;
-      });
+      .addCase(fetchCheckUser.rejected, (state, { payload }) => {});
   },
 });
 
