@@ -32,7 +32,6 @@ export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejec
     const response = await auth.login(info);
     const responseData = response.json();
     if (!response.ok) {
-      // console.log(responseData.message);
       return rejectWithValue(responseData.message);
     }
     return responseData;
@@ -62,24 +61,27 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchNewUser.pending, (state) => {
-        state.isLoader = true;
+        state.isLoader = false;
       })
       .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
         setCookie('burgerToken', payload.accessToken);
         localStorage.setItem('refBurgerToken', payload.refreshToken);
+        state.isLoader = true;
+        state.isAuth = payload.success;
       })
       .addCase(fetchNewUser.rejected, (state, { payload }) => {
         state.errorMessage = payload;
       })
       .addCase(fetchAuth.pending, (state) => {
-        state.isLoader = true;
+        // state.isLoader = false;
       })
       .addCase(fetchAuth.fulfilled, (state, { payload }) => {
-        state.isLoader = false;
+        // state.isLoader = true;
+        state.isAuth = payload.success;
       })
       .addCase(fetchAuth.rejected, (state, { payload }) => {
         state.errorMessage = payload;
-        state.isLoader = false;
+        // state.isLoader = false;
       })
       .addCase(fetchCheckUser.pending, (state, { payload }) => {
         state.isLoader = false;

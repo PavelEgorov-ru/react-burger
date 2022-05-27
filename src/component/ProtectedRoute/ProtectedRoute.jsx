@@ -17,9 +17,9 @@ export function ProtectedRoute({ children, ...rest }) {
     }
   };
 
-  useEffect(() => {
-    auth();
-  }, []);
+  // useEffect(() => {
+  //   auth();
+  // }, []);
 
   if (!isLoader) return <div>загрузка данных</div>;
 

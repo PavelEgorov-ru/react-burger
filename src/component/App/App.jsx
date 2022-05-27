@@ -18,11 +18,13 @@ import {
 } from '../../services/reducers';
 import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage } from '../../pages';
 import { getCookie } from '../../utils/cookie';
+import { store } from '../../services';
 
 const App = () => {
   const dispatch = useDispatch();
   const { isOpenModal } = useSelector((store) => store.ingredient);
   const { isOrder } = useSelector((store) => store.order);
+  const { isRegistration } = useSelector((store) => store.user);
 
   const onClose = () => {
     isOpenModal ? dispatch(ingredientActions.closeModal()) : dispatch(orderActions.closeModal());
@@ -37,6 +39,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    console.log('сработал юзэффект');
     dispatch(fetchIngredients());
     auth();
   }, []);
