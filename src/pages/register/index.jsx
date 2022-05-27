@@ -15,7 +15,7 @@ export const RegisterPage = () => {
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
 
-  const { isAuth } = useSelector((store) => store.user);
+  const { isAuth, isLoader } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const history = useHistory();
   const inputRef = useRef();
@@ -45,6 +45,8 @@ export const RegisterPage = () => {
   if (isAuth) {
     return <Redirect to="/" />;
   }
+
+  if (!isLoader) return <div>загрузка данных</div>;
 
   return (
     <main className={cn(styles.main)}>
