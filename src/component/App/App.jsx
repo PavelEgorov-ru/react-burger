@@ -76,9 +76,9 @@ const App = () => {
           <ProtectedRoute path="/profile">
             <ProfilePage />
           </ProtectedRoute>
-          <ProtectedRoute path="/" exact={true}>
+          <Route path="/" exact={true}>
             <HomePage />
-          </ProtectedRoute>
+          </Route>
         </Switch>
       </Router>
     </div>
