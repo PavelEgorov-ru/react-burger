@@ -43,7 +43,6 @@ export const RegisterPage = () => {
   };
 
   if (isAuth) {
-    console.log(isAuth);
     return <Redirect to="/" />;
   }
 

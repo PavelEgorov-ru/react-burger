@@ -3,7 +3,7 @@ import { NavLink, useHistory, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getCookie } from '../../utils/cookie';
-import { fetchAuth, fetchCheckUser, userActions } from '../../services/reducers';
+import { fetchAuth } from '../../services/reducers';
 import cn from 'classnames';
 import styles from './login.module.css';
 
@@ -18,18 +18,6 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const inputRef = useRef();
-
-  const auth = () => {
-    if (getCookie('burgerToken')) {
-      dispatch(fetchCheckUser());
-    } else {
-      dispatch(userActions.endLoader());
-    }
-  };
-
-  useEffect(() => {
-    auth();
-  }, []);
 
   const handleInputChange = (event) => {
     const target = event.target;

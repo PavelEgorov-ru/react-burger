@@ -9,7 +9,13 @@ import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers';
+import {
+  ingredientActions,
+  orderActions,
+  userActions,
+  fetchIngredients,
+  fetchCheckUser,
+} from '../../services/reducers';
 import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage } from '../../pages';
 import { getCookie } from '../../utils/cookie';
 
@@ -22,8 +28,17 @@ const App = () => {
     isOpenModal ? dispatch(ingredientActions.closeModal()) : dispatch(orderActions.closeModal());
   };
 
+  const auth = () => {
+    if (getCookie('burgerToken')) {
+      dispatch(fetchCheckUser());
+    } else {
+      dispatch(userActions.endLoader());
+    }
+  };
+
   useEffect(() => {
     dispatch(fetchIngredients());
+    auth();
   }, []);
 
   return (
