@@ -1,10 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, Redirect, useHistory } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import cn from 'classnames';
 import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getCookie } from '../../utils/cookie';
 import { fetchNewUser } from '../../services/reducers';
 
 export const RegisterPage = () => {
@@ -17,7 +16,6 @@ export const RegisterPage = () => {
 
   const { isAuth, isLoader } = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const history = useHistory();
   const inputRef = useRef();
 
   const handleInputChange = (event) => {
@@ -39,7 +37,6 @@ export const RegisterPage = () => {
   const registration = (e) => {
     console.log(formState);
     dispatch(fetchNewUser(formState));
-    history.replace({ pathname: '/' });
   };
 
   if (isAuth) {

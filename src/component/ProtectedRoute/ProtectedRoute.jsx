@@ -8,16 +8,11 @@ export function ProtectedRoute({ children, ...rest }) {
 
   if (!isLoader) return <div>загрузка данных</div>;
 
-  if (isAuth) {
-    // return <Redirect to={location.state?.from || '/'} />;
-  }
-
   return (
     isLoader && (
       <Route
         {...rest}
         render={({ location }) => {
-          console.log('локация', location);
           if (isAuth) {
             return children;
           } else {

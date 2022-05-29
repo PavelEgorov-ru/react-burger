@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { NavLink, useHistory, Redirect } from 'react-router-dom';
+import { NavLink, useHistory, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getCookie } from '../../utils/cookie';
@@ -18,6 +18,7 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const inputRef = useRef();
+  const location = useLocation();
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -42,12 +43,12 @@ export const LoginPage = () => {
       email: '',
       password: '',
     });
-    history.replace({ pathname: '/' });
+    // history.replace({ pathname: '/' });
   };
 
   if (isAuth) {
-    console.log(isAuth);
-    return <Redirect to="/" />;
+    console.log(location.state);
+    return <Redirect to={location.state?.from || '/'} />;
   }
 
   if (!isLoader) return <div>загрузка данных</div>;
