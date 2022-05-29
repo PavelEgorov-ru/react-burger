@@ -9,12 +9,13 @@ class Auth extends React.Component {
   }
 
   _request(method, endpoint, info) {
+    const token = getCookie('burgerToken');
     const pattern = {
       method: method,
       headers: {
         'Content-Type': 'application/json',
         // Authorization: faceToken,
-        Authorization: getCookie('burgerToken'),
+        Authorization: token ? token : null,
       },
     };
 

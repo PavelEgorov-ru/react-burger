@@ -110,6 +110,8 @@ const userSlice = createSlice({
         state.isLoader = false;
       })
       .addCase(fetchCheckUser.fulfilled, (state, { payload }) => {
+        payload.accessToken && setCookie('burgerToken', payload.accessToken);
+        payload.refreshToken && localStorage.setItem('refBurgerToken', payload.refreshToken);
         state.isLoader = true;
         state.isAuth = payload.success;
       })
