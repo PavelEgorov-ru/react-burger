@@ -1,9 +1,9 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { NavLink, useHistory, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { fetchAuth } from '../../services/reducers';
 import { getCookie } from '../../utils/cookie';
+import { fetchAuth } from '../../services/reducers';
 import cn from 'classnames';
 import styles from './login.module.css';
 
@@ -13,6 +13,7 @@ export const LoginPage = () => {
     password: '',
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
+  const { isAuth, isLoader } = useSelector((store) => store.user);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -35,7 +36,6 @@ export const LoginPage = () => {
   };
 
   const login = (e) => {
-    e.preventDefault();
     dispatch(fetchAuth(formState));
     console.log(formState);
     setFormState({
@@ -44,6 +44,13 @@ export const LoginPage = () => {
     });
     history.replace({ pathname: '/' });
   };
+
+  if (isAuth) {
+    console.log(isAuth);
+    return <Redirect to="/" />;
+  }
+
+  if (!isLoader) return <div>загрузка данных</div>;
 
   return (
     <main className={cn(styles.main)}>

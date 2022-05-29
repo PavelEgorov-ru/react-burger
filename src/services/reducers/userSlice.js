@@ -4,7 +4,7 @@ import { setCookie } from '../../utils/cookie';
 
 const initialState = {
   isAuth: false,
-  loader: false,
+  isLoader: false,
   userName: '',
   userEmail: '',
   userPassword: '',
@@ -32,7 +32,6 @@ export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejec
     const response = await auth.login(info);
     const responseData = response.json();
     if (!response.ok) {
-      // console.log(responseData.message);
       return rejectWithValue(responseData.message);
     }
     return responseData;
@@ -44,59 +43,92 @@ export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejec
 export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async () => {
   try {
     const response = await auth.checkUser();
-    // console.log(response);
-    const responseData = response.json();
-    // if (!response.ok) {
-    //   return rejectWithValue(responseData.message);
-    // }
-    return responseData;
+    if (response.status === 403) {
+      console.log('токен обновился, проверка успешная');
+      const response = await auth.newToken({ token: localStorage.getItem('refBurgerToken') });
+      const responseData = response.json();
+      return responseData;
+    } else {
+      console.log('проверка успешная');
+      const responseData = response.json();
+      return responseData;
+    }
   } catch (res) {
     console.log({ res });
   }
 });
 
+export const fetchNewToken = createAsyncThunk(
+  'user/fetchNewToken',
+  async (info, { rejectWithValue }) => {
+    try {
+      const response = await auth.newToken(info);
+      const responseData = response.json();
+      if (!response.ok) {
+        return rejectWithValue(responseData.message);
+      }
+      console.log('токен обновился');
+      return responseData;
+    } catch (res) {
+      console.log({ res });
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
+  reducers: {
+    endLoader(state) {
+      state.isLoader = true;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchNewUser.pending, (state) => {
-        state.loader = true;
+        state.isLoader = false;
       })
       .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
-        // console.log(payload);
         setCookie('burgerToken', payload.accessToken);
         localStorage.setItem('refBurgerToken', payload.refreshToken);
+        state.isLoader = true;
+        state.isAuth = payload.success;
       })
       .addCase(fetchNewUser.rejected, (state, { payload }) => {
-        // console.log(payload);
         state.errorMessage = payload;
       })
       .addCase(fetchAuth.pending, (state) => {
-        state.loader = true;
+        state.isLoader = false;
       })
       .addCase(fetchAuth.fulfilled, (state, { payload }) => {
-        // console.log(payload);
-        state.loader = false;
-        // state.isAuth = true;
+        setCookie('burgerToken', payload.accessToken);
+        localStorage.setItem('refBurgerToken', payload.refreshToken);
+        state.isLoader = true;
+        state.isAuth = payload.success;
       })
       .addCase(fetchAuth.rejected, (state, { payload }) => {
-        // console.log(payload);
         state.errorMessage = payload;
-        state.loader = false;
       })
       .addCase(fetchCheckUser.pending, (state, { payload }) => {
-        state.loader = true;
+        state.isLoader = false;
       })
       .addCase(fetchCheckUser.fulfilled, (state, { payload }) => {
-        // console.log(payload);
-        state.loader = false;
+        state.isLoader = true;
         state.isAuth = payload.success;
       })
       .addCase(fetchCheckUser.rejected, (state, { payload }) => {
-        // console.log(payload);
-        state.loader = true;
-      });
+        state.isLoader = true;
+      })
+      .addCase(fetchNewToken.pending, (state, { payload }) => {
+        state.isLoader = false;
+      })
+      .addCase(fetchNewToken.fulfilled, (state, { payload }) => {
+        setCookie('burgerToken', payload.accessToken);
+        localStorage.setItem('refBurgerToken', payload.refreshToken);
+        state.isLoader = true;
+        state.isAuth = true;
+      })
+      .addCase(fetchNewToken.rejected, (state, { payload }) => {});
   },
 });
 

@@ -1,56 +1,54 @@
-import { Route, Redirect } from 'react-router';
+import { Route, Redirect, useLocation } from 'react-router';
 import { getCookie, setCookie } from '../../utils/cookie';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCheckUser } from '../../services/reducers';
+import { fetchCheckUser, fetchNewToken, userActions } from '../../services/reducers';
 
-export function ProtectedRoute({ children, isAuth, ...rest }) {
-  console.log(isAuth);
-  useEffect(() => {
-    console.log('монтирование');
-  }, []);
+export function ProtectedRoute({ children, ...rest }) {
+  const dispatch = useDispatch();
+  // const location = useLocation();
+  const { isAuth, isLoader } = useSelector((store) => store.user);
 
-  useEffect(() => {
-    console.log('изменение флага');
-  }, [isAuth]);
+  // const auth = () => {
+  //   if (getCookie('burgerToken')) {
+  //     dispatch(fetchCheckUser());
+  //   } else if (localStorage.getItem('refBurgerToken')) {
+  //     dispatch(fetchNewToken({ token: localStorage.getItem('refBurgerToken') }));
+  //     auth();
+  //   } else {
+  //     dispatch(userActions.endLoader());
+  //   }
+  // };
+
+  if (!isLoader) return <div>загрузка данных</div>;
+
+  if (isAuth) {
+    // return <Redirect to={location.state?.from || '/'} />;
+  }
 
   return (
-    <Route
-      {...rest}
-      render={() => {
-        if (isAuth) {
-          console.log(isAuth);
-          return { children };
-        } else {
-          console.log(isAuth);
-          return <Redirect to="/login" />;
-        }
-      }}
-    />
+    isLoader && (
+      <Route
+        {...rest}
+        render={({ location }) => {
+          console.log('локация', location);
+          if (isAuth) {
+            // return location.state?.form ? <Redirect to="/" /> : children;
+            return children;
+          } else {
+            return (
+              <Redirect
+                to={{
+                  pathname: '/login',
+                  state: { from: location },
+                }}
+              />
+            );
+          }
+        }}
+      />
+    )
   );
 }
 
 export default ProtectedRoute;
-
-// const dispatch = useDispatch();
-
-// const { isAuth } = useSelector((store) => store.user);
-// const [isAuthUser, setIsAuthUser] = useState(false);
-// dispatch(fetchCheckUser());
-// console.log('1111');
-// const auth = () => {
-//   if (getCookie('burgerToken')) {
-//     // console.log(!!getCookie('burgerToken'));
-//     dispatch(fetchCheckUser());
-//     // setIsAuthUser(true);
-//   }
-// };
-
-// console.log(isAuthUser);
-
-// useEffect(() => {
-//   // console.log('вызвался запрос юзера');
-//   auth();
-// }, []);
-
-// console.log(isAuth);

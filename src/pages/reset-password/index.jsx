@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { NavLink, Redirect, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchNewUser } from '../../services/reducers';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
@@ -13,6 +13,7 @@ export const ResetPage = () => {
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
 
+  const { isAuth, isLoader } = useSelector((store) => store.user);
   const inputRef = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -42,6 +43,12 @@ export const ResetPage = () => {
     });
     history.replace({ pathname: '/login' });
   };
+
+  if (isAuth) {
+    return <Redirect to="/" />;
+  }
+
+  if (!isLoader) return <div>загрузка данных</div>;
 
   return (
     <main className={cn(styles.main)}>

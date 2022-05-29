@@ -12,38 +12,45 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import {
   ingredientActions,
   orderActions,
+  userActions,
   fetchIngredients,
   fetchCheckUser,
+  fetchNewToken,
 } from '../../services/reducers';
 import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage } from '../../pages';
 import { getCookie } from '../../utils/cookie';
+import { store } from '../../services';
 
 const App = () => {
+  const dispatch = useDispatch();
   const { isOpenModal } = useSelector((store) => store.ingredient);
   const { isOrder } = useSelector((store) => store.order);
-  const { isAuth } = useSelector((store) => store.user);
-  const [isAuthUser, setIsAuthUser] = useState(false);
-
-  const dispatch = useDispatch();
-  // setIsAuthUser(true);
+  const { isRegistration } = useSelector((store) => store.user);
 
   const onClose = () => {
     isOpenModal ? dispatch(ingredientActions.closeModal()) : dispatch(orderActions.closeModal());
   };
 
-  const auth = () => {
-    if (getCookie('burgerToken')) {
+  const checkAuth = () => {
+    const token = getCookie('burgerToken');
+    const refToken = localStorage.getItem('refBurgerToken');
+    if (token !== undefined) {
+      console.log('111');
       dispatch(fetchCheckUser());
-      // setIsAuthUser(true);
+    } else if (token === undefined && refToken !== null) {
+      console.log('222');
+      dispatch(fetchNewToken({ token: refToken }));
+    } else {
+      console.log('333');
+      dispatch(userActions.endLoader());
     }
   };
 
   useEffect(() => {
+    console.log('сработал юзэффект');
     dispatch(fetchIngredients());
-    auth();
+    checkAuth();
   }, []);
-
-  console.log(isAuth);
 
   return (
     <div className={cn(styles.app)}>
@@ -74,12 +81,12 @@ const App = () => {
           <Route path="/reset-password">
             <ResetPage />
           </Route>
-          <Route path="/profile">
+          <ProtectedRoute path="/profile">
             <ProfilePage />
-          </Route>
-          <ProtectedRoute path="/" isAuth={isAuthUser} exact={true}>
-            <HomePage />
           </ProtectedRoute>
+          <Route path="/" exact={true}>
+            <HomePage />
+          </Route>
         </Switch>
       </Router>
     </div>

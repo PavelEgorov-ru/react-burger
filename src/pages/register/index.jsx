@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, Redirect, useHistory } from 'react-router-dom';
 import cn from 'classnames';
 import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -15,6 +15,7 @@ export const RegisterPage = () => {
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
 
+  const { isAuth, isLoader } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const history = useHistory();
   const inputRef = useRef();
@@ -30,31 +31,22 @@ export const RegisterPage = () => {
     });
   };
 
-  // const submitForm = (event) => {
-  //   console.log(formState);
-  //   event.preventDefault();
-  //   dispatch(fetchNewUser(formState));
-  //   // setFormState({
-  //   //   email: '',
-  //   //   password: '',
-  //   //   name: '',
-  //   // });
-  // };
-
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
     setIsActiveIcon(!isActiveIcon);
   };
 
   const registration = (e) => {
-    e.preventDefault();
     console.log(formState);
     dispatch(fetchNewUser(formState));
-    history.replace({ pathname: '/login' });
+    history.replace({ pathname: '/' });
   };
 
-  // console.log(getCookie('burgerToken'));
-  // console.log(localStorage.getItem('refBurgerToken'));
+  if (isAuth) {
+    return <Redirect to="/" />;
+  }
+
+  if (!isLoader) return <div>загрузка данных</div>;
 
   return (
     <main className={cn(styles.main)}>

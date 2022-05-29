@@ -13,6 +13,7 @@ class Auth extends React.Component {
       method: method,
       headers: {
         'Content-Type': 'application/json',
+        // Authorization: faceToken,
         Authorization: getCookie('burgerToken'),
       },
     };
@@ -42,7 +43,14 @@ class Auth extends React.Component {
   checkUser() {
     return this._request('GET', 'user');
   }
+
+  newToken(info) {
+    return this._request('POST', 'token', info);
+  }
 }
+
+const faceToken =
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTMyZDYwZmE3NDdlMDAxYmQ0YjBkYiIsImlhdCI6MTY1MzgyNjI5OSwiZXhwIjoxNjUzODI3NDk5fQ.CWJTLn_g1CDh9S5iAtFbIYfttQ0maGxEDgd6L2Cvk55';
 
 const auth = new Auth({
   baseUrl: BASE_URL,
