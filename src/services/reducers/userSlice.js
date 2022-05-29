@@ -43,12 +43,37 @@ export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejec
 export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async () => {
   try {
     const response = await auth.checkUser();
-    const responseData = response.json();
-    return responseData;
+    if (response.status === 403) {
+      console.log('токен обновился, проверка успешная');
+      const response = await auth.newToken({ token: localStorage.getItem('refBurgerToken') });
+      const responseData = response.json();
+      return responseData;
+    } else {
+      console.log('проверка успешная');
+      const responseData = response.json();
+      return responseData;
+    }
   } catch (res) {
     console.log({ res });
   }
 });
+
+export const fetchNewToken = createAsyncThunk(
+  'user/fetchNewToken',
+  async (info, { rejectWithValue }) => {
+    try {
+      const response = await auth.newToken(info);
+      const responseData = response.json();
+      if (!response.ok) {
+        return rejectWithValue(responseData.message);
+      }
+      console.log('токен обновился');
+      return responseData;
+    } catch (res) {
+      console.log({ res });
+    }
+  }
+);
 
 const userSlice = createSlice({
   name: 'user',
@@ -73,15 +98,16 @@ const userSlice = createSlice({
         state.errorMessage = payload;
       })
       .addCase(fetchAuth.pending, (state) => {
-        // state.isLoader = false;
+        state.isLoader = false;
       })
       .addCase(fetchAuth.fulfilled, (state, { payload }) => {
-        // state.isLoader = true;
+        setCookie('burgerToken', payload.accessToken);
+        localStorage.setItem('refBurgerToken', payload.refreshToken);
+        state.isLoader = true;
         state.isAuth = payload.success;
       })
       .addCase(fetchAuth.rejected, (state, { payload }) => {
         state.errorMessage = payload;
-        // state.isLoader = false;
       })
       .addCase(fetchCheckUser.pending, (state, { payload }) => {
         state.isLoader = false;
@@ -92,7 +118,17 @@ const userSlice = createSlice({
       })
       .addCase(fetchCheckUser.rejected, (state, { payload }) => {
         state.isLoader = true;
-      });
+      })
+      .addCase(fetchNewToken.pending, (state, { payload }) => {
+        state.isLoader = false;
+      })
+      .addCase(fetchNewToken.fulfilled, (state, { payload }) => {
+        setCookie('burgerToken', payload.accessToken);
+        localStorage.setItem('refBurgerToken', payload.refreshToken);
+        state.isLoader = true;
+        state.isAuth = true;
+      })
+      .addCase(fetchNewToken.rejected, (state, { payload }) => {});
   },
 });
 
