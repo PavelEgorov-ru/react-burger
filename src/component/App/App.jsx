@@ -19,13 +19,11 @@ import {
 } from '../../services/reducers';
 import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage } from '../../pages';
 import { getCookie } from '../../utils/cookie';
-import { store } from '../../services';
 
 const App = () => {
   const dispatch = useDispatch();
   const { isOpenModal } = useSelector((store) => store.ingredient);
   const { isOrder } = useSelector((store) => store.order);
-  const { isRegistration } = useSelector((store) => store.user);
 
   const onClose = () => {
     isOpenModal ? dispatch(ingredientActions.closeModal()) : dispatch(orderActions.closeModal());
@@ -35,19 +33,15 @@ const App = () => {
     const token = getCookie('burgerToken');
     const refToken = localStorage.getItem('refBurgerToken');
     if (token !== undefined) {
-      console.log('111');
       dispatch(fetchCheckUser());
     } else if (token === undefined && refToken !== null) {
-      console.log('222');
       dispatch(fetchNewToken({ token: refToken }));
     } else {
-      console.log('333');
       dispatch(userActions.endLoader());
     }
   };
 
   useEffect(() => {
-    console.log('сработал юзэффект');
     dispatch(fetchIngredients());
     checkAuth();
   }, []);

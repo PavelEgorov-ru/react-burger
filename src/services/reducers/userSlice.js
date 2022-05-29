@@ -44,12 +44,10 @@ export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async () =
   try {
     const response = await auth.checkUser();
     if (response.status === 403) {
-      console.log('токен обновился, проверка успешная');
       const response = await auth.newToken({ token: localStorage.getItem('refBurgerToken') });
       const responseData = response.json();
       return responseData;
     } else {
-      console.log('проверка успешная');
       const responseData = response.json();
       return responseData;
     }
@@ -67,7 +65,6 @@ export const fetchNewToken = createAsyncThunk(
       if (!response.ok) {
         return rejectWithValue(responseData.message);
       }
-      console.log('токен обновился');
       return responseData;
     } catch (res) {
       console.log({ res });
