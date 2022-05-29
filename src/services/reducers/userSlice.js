@@ -56,6 +56,22 @@ export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async () =
   }
 });
 
+export const fetchEditUser = createAsyncThunk(
+  'user/fetchEditUser',
+  async (info, { rejectWithValue }) => {
+    try {
+      const response = await auth.editUser(info);
+      const responseData = response.json();
+      if (!response.ok) {
+        return rejectWithValue(responseData.message);
+      }
+      return responseData;
+    } catch (res) {
+      console.log({ res });
+    }
+  }
+);
+
 export const fetchNewToken = createAsyncThunk(
   'user/fetchNewToken',
   async (info, { rejectWithValue }) => {
@@ -121,6 +137,17 @@ const userSlice = createSlice({
         state.isAuth = payload.success;
       })
       .addCase(fetchCheckUser.rejected, (state, { payload }) => {
+        state.isLoader = true;
+      })
+      .addCase(fetchEditUser.pending, (state, { payload }) => {
+        state.isLoader = false;
+      })
+      .addCase(fetchEditUser.fulfilled, (state, { payload }) => {
+        state.userName = payload.user.name;
+        state.userEmail = payload.user.email;
+        state.isLoader = true;
+      })
+      .addCase(fetchEditUser.rejected, (state, { payload }) => {
         state.isLoader = true;
       })
       .addCase(fetchNewToken.pending, (state, { payload }) => {

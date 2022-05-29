@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile.module.css';
 import { NavLink } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { fetchEditUser } from '../../services/reducers';
 import cn from 'classnames';
 
 export const ProfilePage = () => {
@@ -72,7 +73,8 @@ export const ProfilePage = () => {
     });
   };
 
-  const warningMessenge = () => {
+  const warningMessenge = (e) => {
+    console.log(e);
     alert('Для изменения значения нажмите иконку редактирования');
   };
 
@@ -90,8 +92,7 @@ export const ProfilePage = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-
-    console.log(formState);
+    dispatch(fetchEditUser(formState));
     setEditEmail(false);
     setEditPassword(false);
     setEditName(false);

@@ -11,7 +11,14 @@ export { elementsActions } from './elementsSlice';
 export { ingredientActions } from './ingredientSlice';
 export { ingredientsActions, fetchIngredients } from './ingredientsSlice';
 export { orderActions, fetchOrder } from './orderSlice';
-export { userActions, fetchNewUser, fetchAuth, fetchCheckUser, fetchNewToken } from './userSlice';
+export {
+  userActions,
+  fetchNewUser,
+  fetchAuth,
+  fetchCheckUser,
+  fetchEditUser,
+  fetchNewToken,
+} from './userSlice';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducers,

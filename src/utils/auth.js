@@ -41,12 +41,16 @@ class Auth extends React.Component {
     return this._request('POST', 'token');
   }
 
+  newToken(info) {
+    return this._request('POST', 'token', info);
+  }
+
   checkUser() {
     return this._request('GET', 'user');
   }
 
-  newToken(info) {
-    return this._request('POST', 'token', info);
+  editUser(info) {
+    return this._request('PATCH', 'user', info);
   }
 }
 
