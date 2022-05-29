@@ -34,7 +34,7 @@ export const RegisterPage = () => {
     setIsActiveIcon(!isActiveIcon);
   };
 
-  const registration = (e) => {
+  const submitForm = (e) => {
     console.log(formState);
     dispatch(fetchNewUser(formState));
   };
@@ -47,7 +47,7 @@ export const RegisterPage = () => {
 
   return (
     <main className={cn(styles.main)}>
-      <form className={cn(styles.form)} onSubmit={registration}>
+      <form className={cn(styles.form)} onSubmit={submitForm}>
         <p className={cn('text text_type_main-medium')}>Регистрация</p>
         <div className={cn(styles.input)}>
           <Input

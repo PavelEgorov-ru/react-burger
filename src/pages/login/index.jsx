@@ -36,7 +36,7 @@ export const LoginPage = () => {
     setIsActiveIcon(!isActiveIcon);
   };
 
-  const login = (e) => {
+  const submitForm = (e) => {
     dispatch(fetchAuth(formState));
     console.log(formState);
     setFormState({
@@ -55,7 +55,7 @@ export const LoginPage = () => {
 
   return (
     <main className={cn(styles.main)}>
-      <form className={cn(styles.form)} onSubmit={login}>
+      <form className={cn(styles.form)} onSubmit={submitForm}>
         <p className="text text_type_main-medium">Вход</p>
         <div className={cn(styles.input)}>
           <Input

@@ -1,19 +1,64 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile.module.css';
 import { NavLink } from 'react-router-dom';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 
 export const ProfilePage = () => {
+  const { userName, userEmail, userPassword } = useSelector((store) => store.user);
   const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    password: '',
+    name: userName,
+    email: userEmail,
+    password: userPassword,
   });
-  const inputRef = useRef();
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    alert(`Ваш пароль: ${formState.password}`);
+
+  const [isEditName, setEditName] = useState(false);
+  const [isEditEmail, setEditEmail] = useState(false);
+  const [isEditPassword, setEditPassword] = useState(false);
+
+  const inputNameRef = useRef();
+  const inputEmailRef = useRef();
+  const inputPasswordRef = useRef();
+  const dispatch = useDispatch();
+
+  const onClickNameIcon = () => {
+    setTimeout(() => inputNameRef.current.focus(), 0);
+    setEditName(!isEditName);
+    setEditEmail(false);
+    setEditPassword(false);
+    if (isEditName) {
+      setFormState({
+        ...formState,
+        name: userName,
+      });
+    }
+  };
+
+  const onClickEmailIcon = () => {
+    setTimeout(() => inputEmailRef.current.focus(), 0);
+    setEditEmail(!isEditEmail);
+    setEditName(false);
+    setEditPassword(false);
+    if (isEditEmail) {
+      setFormState({
+        ...formState,
+        email: userEmail,
+      });
+    }
+  };
+
+  const onClickPasswordEmail = () => {
+    setTimeout(() => inputPasswordRef.current.focus(), 0);
+    setEditPassword(!isEditPassword);
+    setEditEmail(false);
+    setEditName(false);
+    if (isEditPassword) {
+      setFormState({
+        ...formState,
+        password: userPassword,
+      });
+    }
   };
 
   const handleInputChange = (event) => {
@@ -25,6 +70,31 @@ export const ProfilePage = () => {
       ...formState,
       [name]: value,
     });
+  };
+
+  const warningMessenge = () => {
+    alert('Для изменения значения нажмите иконку редактирования');
+  };
+
+  const cancelSend = (e) => {
+    e.preventDefault();
+    setFormState({
+      name: userName,
+      email: userEmail,
+      password: userPassword,
+    });
+    setEditEmail(false);
+    setEditPassword(false);
+    setEditName(false);
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+
+    console.log(formState);
+    setEditEmail(false);
+    setEditPassword(false);
+    setEditName(false);
   };
 
   return (
@@ -43,52 +113,74 @@ export const ProfilePage = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-      <form className={cn(styles.form)}>
-        <div className={cn(styles.input)}>
+      <form className={cn(styles.form)} onSubmit={submitForm}>
+        <div
+          className={cn(styles.input, {
+            [styles.activeInput]: isEditName,
+          })}
+        >
           <Input
             placeholder={'Имя'}
-            icon={'EditIcon'}
+            icon={isEditName ? 'CloseIcon' : 'EditIcon'}
             type={'text'}
-            onChange={handleInputChange}
+            onChange={isEditName ? handleInputChange : warningMessenge}
             value={formState.name}
             name={'name'}
             error={false}
-            ref={inputRef}
-            onIconClick={onIconClick}
+            ref={inputNameRef}
+            onIconClick={onClickNameIcon}
             errorText={'Ошибка'}
             size={'default'}
           />
         </div>
-        <div className={cn(styles.input)}>
+        <div
+          className={cn(styles.input, {
+            [styles.activeInput]: isEditEmail,
+          })}
+        >
           <Input
             placeholder={'Логин'}
-            icon={'EditIcon'}
+            icon={isEditEmail ? 'CloseIcon' : 'EditIcon'}
             type={'email'}
-            onChange={handleInputChange}
+            onChange={isEditEmail ? handleInputChange : warningMessenge}
             value={formState.email}
             name={'email'}
             error={false}
-            ref={inputRef}
-            onIconClick={onIconClick}
+            ref={inputEmailRef}
+            onIconClick={onClickEmailIcon}
             errorText={'Ошибка'}
             size={'default'}
           />
         </div>
-        <div className={cn(styles.input)}>
+        <div
+          className={cn(styles.input, {
+            [styles.activeInput]: isEditPassword,
+          })}
+        >
           <Input
             placeholder={'Пароль'}
-            icon={'EditIcon'}
+            icon={isEditPassword ? 'CloseIcon' : 'EditIcon'}
             type={'password'}
-            onChange={handleInputChange}
+            onChange={isEditPassword ? handleInputChange : warningMessenge}
             value={formState.password}
             name={'password'}
             error={false}
-            ref={inputRef}
-            onIconClick={onIconClick}
+            ref={inputPasswordRef}
+            onIconClick={onClickPasswordEmail}
             errorText={'Ошибка'}
             size={'default'}
           />
         </div>
+        {(isEditName || isEditEmail || isEditPassword) && (
+          <div className={cn(styles.buttons)}>
+            <Button type="secondary" size="medium" onClick={cancelSend}>
+              Отмена
+            </Button>
+            <Button type="primary" size="medium">
+              Сохранить
+            </Button>
+          </div>
+        )}
       </form>
     </main>
   );

@@ -88,6 +88,9 @@ const userSlice = createSlice({
       .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
         setCookie('burgerToken', payload.accessToken);
         localStorage.setItem('refBurgerToken', payload.refreshToken);
+        state.userName = payload.user.name;
+        state.userEmail = payload.user.email;
+        state.userPassword = payload.user.password;
         state.isLoader = true;
         state.isAuth = payload.success;
       })
@@ -112,6 +115,8 @@ const userSlice = createSlice({
       .addCase(fetchCheckUser.fulfilled, (state, { payload }) => {
         payload.accessToken && setCookie('burgerToken', payload.accessToken);
         payload.refreshToken && localStorage.setItem('refBurgerToken', payload.refreshToken);
+        state.userName = payload.user.name;
+        state.userEmail = payload.user.email;
         state.isLoader = true;
         state.isAuth = payload.success;
       })
