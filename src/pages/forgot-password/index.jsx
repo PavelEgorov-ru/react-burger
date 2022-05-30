@@ -5,13 +5,14 @@ import { fetchForgotPassword } from '../../services/reducers';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import styles from './forgot.module.css';
+import { reduceEachTrailingCommentRange } from 'typescript';
 
 export const ForgotPage = () => {
   const [formState, setFormState] = useState({
     email: '',
   });
 
-  const { isForgot, isLoader } = useSelector((store) => store.user);
+  const { isForgot, isLoader, isAuth } = useSelector((store) => store.user);
   const inputRef = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -33,6 +34,10 @@ export const ForgotPage = () => {
       email: '',
     });
   };
+
+  if (isAuth) {
+    return <Redirect to="/" />;
+  }
 
   if (isForgot) {
     return <Redirect to="/reset-password" />;

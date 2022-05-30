@@ -48,7 +48,6 @@ export const LoginPage = () => {
       email: '',
       password: '',
     });
-    // history.replace({ pathname: '/' });
   };
 
   if (isAuth) {
