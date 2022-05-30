@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '../../utils/auth';
+import resetApi from '../../utils/resetApi';
 import { setCookie, deleteCookie } from '../../utils/cookie';
 
 const initialState = {
   isAuth: false,
   isLoader: false,
+  isForgot: false,
+  isReset: false,
   userName: '',
   userEmail: '',
   userPassword: '',
@@ -104,12 +107,47 @@ export const fetchNewToken = createAsyncThunk(
   }
 );
 
+export const fetchForgotPassword = createAsyncThunk(
+  'user/fetchForgotPassword',
+  async (info, { rejectWithValue }) => {
+    try {
+      const response = await resetApi.forgotPassword(info);
+      const responseData = response.json();
+      if (!response.ok) {
+        return rejectWithValue(responseData.message);
+      }
+      return responseData;
+    } catch (res) {
+      console.log({ res });
+    }
+  }
+);
+
+export const fetchResetPassword = createAsyncThunk(
+  'user/fetchResetPassword',
+  async (info, { rejectWithValue }) => {
+    try {
+      const response = await resetApi.resetPassword(info);
+      const responseData = response.json();
+      if (!response.ok) {
+        return rejectWithValue(responseData.message);
+      }
+      return responseData;
+    } catch (res) {
+      console.log({ res });
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
     endLoader(state) {
       state.isLoader = true;
+    },
+    defaultReset(state) {
+      state.isReset = false;
     },
   },
   extraReducers: (builder) => {
@@ -193,7 +231,28 @@ const userSlice = createSlice({
         state.isLoader = true;
         state.isAuth = true;
       })
-      .addCase(fetchNewToken.rejected, (state, { payload }) => {});
+      .addCase(fetchNewToken.rejected, (state, { payload }) => {})
+      .addCase(fetchForgotPassword.pending, (state, { payload }) => {
+        state.isLoader = false;
+      })
+      .addCase(fetchForgotPassword.fulfilled, (state, { payload }) => {
+        state.isLoader = true;
+        state.isForgot = true;
+      })
+      .addCase(fetchForgotPassword.rejected, (state, { payload }) => {
+        state.isLoader = true;
+      })
+      .addCase(fetchResetPassword.pending, (state, { payload }) => {
+        state.isLoader = false;
+      })
+      .addCase(fetchResetPassword.fulfilled, (state, { payload }) => {
+        state.isLoader = true;
+        state.isReset = true;
+        state.isForgot = false;
+      })
+      .addCase(fetchResetPassword.rejected, (state, { payload }) => {
+        state.isLoader = true;
+      });
   },
 });
 

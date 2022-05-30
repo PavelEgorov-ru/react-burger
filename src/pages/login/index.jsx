@@ -3,7 +3,7 @@ import { NavLink, useHistory, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getCookie } from '../../utils/cookie';
-import { fetchAuth } from '../../services/reducers';
+import { fetchAuth, userActions } from '../../services/reducers';
 import cn from 'classnames';
 import styles from './login.module.css';
 
@@ -13,12 +13,13 @@ export const LoginPage = () => {
     password: '',
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
-  const { isAuth, isLoader } = useSelector((store) => store.user);
+  const { isAuth, isLoader, isReset } = useSelector((store) => store.user);
 
   const dispatch = useDispatch();
   const history = useHistory();
   const inputRef = useRef();
   const location = useLocation();
+  // const action = userActions();
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -30,6 +31,10 @@ export const LoginPage = () => {
       [name]: value,
     });
   };
+
+  if (isReset) {
+    dispatch(userActions.defaultReset());
+  }
 
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);

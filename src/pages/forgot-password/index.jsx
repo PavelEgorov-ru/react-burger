@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { NavLink, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNewUser } from '../../services/reducers';
+import { fetchForgotPassword } from '../../services/reducers';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import styles from './forgot.module.css';
@@ -11,7 +11,7 @@ export const ForgotPage = () => {
     email: '',
   });
 
-  const { isAuth, isLoader } = useSelector((store) => store.user);
+  const { isForgot, isLoader } = useSelector((store) => store.user);
   const inputRef = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -27,17 +27,15 @@ export const ForgotPage = () => {
     });
   };
 
-  const submitForm = (e) => {
-    e.preventDefault();
-    dispatch(fetchNewUser(formState));
+  const submitForm = () => {
+    dispatch(fetchForgotPassword(formState));
     setFormState({
       email: '',
     });
-    history.replace({ pathname: '/reset-password' });
   };
 
-  if (isAuth) {
-    return <Redirect to="/" />;
+  if (isForgot) {
+    return <Redirect to="/reset-password" />;
   }
 
   if (!isLoader) return <div>загрузка данных</div>;

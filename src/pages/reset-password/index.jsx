@@ -1,19 +1,19 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { NavLink, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNewUser } from '../../services/reducers';
+import { fetchResetPassword } from '../../services/reducers';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import styles from './reset.module.css';
 
 export const ResetPage = () => {
   const [formState, setFormState] = useState({
-    code: '',
     password: '',
+    token: '',
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
 
-  const { isAuth, isLoader } = useSelector((store) => store.user);
+  const { isReset, isLoader } = useSelector((store) => store.user);
   const inputRef = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -36,16 +36,15 @@ export const ResetPage = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    dispatch(fetchNewUser(formState));
+    dispatch(fetchResetPassword(formState));
     setFormState({
-      code: '',
       password: '',
+      token: '',
     });
-    history.replace({ pathname: '/login' });
   };
 
-  if (isAuth) {
-    return <Redirect to="/" />;
+  if (isReset) {
+    return <Redirect to="/login" />;
   }
 
   if (!isLoader) return <div>загрузка данных</div>;
@@ -75,7 +74,7 @@ export const ResetPage = () => {
             type={'text'}
             onChange={handleInputChange}
             value={formState.name}
-            name={'code'}
+            name={'token'}
             error={false}
             ref={inputRef}
             errorText={'Ошибка'}

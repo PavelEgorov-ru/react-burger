@@ -19,6 +19,8 @@ export {
   fetchEditUser,
   fetchNewToken,
   fetchLogout,
+  fetchForgotPassword,
+  fetchResetPassword,
 } from './userSlice';
 
 export const rootReducer = combineReducers({
