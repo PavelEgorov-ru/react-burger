@@ -73,11 +73,6 @@ export const ProfilePage = () => {
     });
   };
 
-  const warningMessenge = (e) => {
-    console.log(e);
-    alert('Для изменения значения нажмите иконку редактирования');
-  };
-
   const cancelSend = (e) => {
     e.preventDefault();
     setFormState({
@@ -124,7 +119,7 @@ export const ProfilePage = () => {
             placeholder={'Имя'}
             icon={isEditName ? 'CloseIcon' : 'EditIcon'}
             type={'text'}
-            onChange={isEditName ? handleInputChange : warningMessenge}
+            onChange={handleInputChange}
             value={formState.name}
             name={'name'}
             error={false}
@@ -132,6 +127,7 @@ export const ProfilePage = () => {
             onIconClick={onClickNameIcon}
             errorText={'Ошибка'}
             size={'default'}
+            disabled={isEditName ? false : true}
           />
         </div>
         <div
@@ -143,7 +139,7 @@ export const ProfilePage = () => {
             placeholder={'Логин'}
             icon={isEditEmail ? 'CloseIcon' : 'EditIcon'}
             type={'email'}
-            onChange={isEditEmail ? handleInputChange : warningMessenge}
+            onChange={handleInputChange}
             value={formState.email}
             name={'email'}
             error={false}
@@ -151,6 +147,7 @@ export const ProfilePage = () => {
             onIconClick={onClickEmailIcon}
             errorText={'Ошибка'}
             size={'default'}
+            disabled={isEditEmail ? false : true}
           />
         </div>
         <div
@@ -162,7 +159,7 @@ export const ProfilePage = () => {
             placeholder={'Пароль'}
             icon={isEditPassword ? 'CloseIcon' : 'EditIcon'}
             type={'password'}
-            onChange={isEditPassword ? handleInputChange : warningMessenge}
+            onChange={handleInputChange}
             value={formState.password}
             name={'password'}
             error={false}
@@ -170,6 +167,7 @@ export const ProfilePage = () => {
             onIconClick={onClickPasswordEmail}
             errorText={'Ошибка'}
             size={'default'}
+            disabled={isEditPassword ? false : true}
           />
         </div>
         {(isEditName || isEditEmail || isEditPassword) && (
