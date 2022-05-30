@@ -33,12 +33,8 @@ class Auth extends React.Component {
     return this._request('POST', 'register', info);
   }
 
-  logout() {
-    return this._request('POST', 'logout');
-  }
-
-  token() {
-    return this._request('POST', 'token');
+  logout(info) {
+    return this._request('POST', 'logout', info);
   }
 
   newToken(info) {

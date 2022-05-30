@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '../../utils/auth';
-import { setCookie } from '../../utils/cookie';
+import { setCookie, deleteCookie } from '../../utils/cookie';
 
 const initialState = {
   isAuth: false,
@@ -39,6 +39,22 @@ export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejec
     console.log({ res });
   }
 });
+
+export const fetchLogout = createAsyncThunk(
+  'user/fetchLogout',
+  async (info, { rejectWithValue }) => {
+    try {
+      const response = await auth.logout(info);
+      const responseData = response.json();
+      if (!response.ok) {
+        return rejectWithValue(responseData.message);
+      }
+      return responseData;
+    } catch (res) {
+      console.log({ res });
+    }
+  }
+);
 
 export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async () => {
   try {
@@ -121,8 +137,26 @@ const userSlice = createSlice({
         localStorage.setItem('refBurgerToken', payload.refreshToken);
         state.isLoader = true;
         state.isAuth = payload.success;
+        state.userName = payload.user.name;
+        state.userEmail = payload.user.email;
+        state.userPassword = payload.user.password;
       })
       .addCase(fetchAuth.rejected, (state, { payload }) => {
+        state.errorMessage = payload;
+      })
+      .addCase(fetchLogout.pending, (state) => {
+        state.isLoader = false;
+      })
+      .addCase(fetchLogout.fulfilled, (state, { payload }) => {
+        deleteCookie('burgerToken');
+        localStorage.removeItem('refBurgerToken');
+        state.isLoader = true;
+        state.isAuth = false;
+        state.userName = '';
+        state.userEmail = '';
+        state.userPassword = '';
+      })
+      .addCase(fetchLogout.rejected, (state, { payload }) => {
         state.errorMessage = payload;
       })
       .addCase(fetchCheckUser.pending, (state, { payload }) => {

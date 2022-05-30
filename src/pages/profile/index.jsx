@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile.module.css';
 import { NavLink } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { fetchEditUser } from '../../services/reducers';
+import { fetchEditUser, fetchLogout } from '../../services/reducers';
 import cn from 'classnames';
 
 export const ProfilePage = () => {
@@ -93,6 +93,12 @@ export const ProfilePage = () => {
     setEditName(false);
   };
 
+  const logout = () => {
+    const refToken = localStorage.getItem('refBurgerToken');
+    console.log('вышел из системы');
+    dispatch(fetchLogout({ token: refToken }));
+  };
+
   return (
     <main className={cn(styles.main)}>
       <nav className={cn(styles.nav)}>
@@ -102,7 +108,7 @@ export const ProfilePage = () => {
         <NavLink className={styles.link} to={{ pathname: '/' }}>
           <p className={cn('text text_type_main-medium')}>История заказов</p>
         </NavLink>
-        <NavLink className={styles.link} to={{ pathname: '/login' }}>
+        <NavLink className={styles.link} to={{ pathname: '/login' }} onClick={logout}>
           <p className={cn('text text_type_main-medium')}>Выход</p>
         </NavLink>
         <p className={cn(`text text_type_main-small text_color_inactive ${styles.text}`)}>

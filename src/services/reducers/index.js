@@ -18,6 +18,7 @@ export {
   fetchCheckUser,
   fetchEditUser,
   fetchNewToken,
+  fetchLogout,
 } from './userSlice';
 
 export const rootReducer = combineReducers({
