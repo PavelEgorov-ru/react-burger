@@ -7,7 +7,7 @@ import cn from 'classnames';
 
 const MenuProfile = () => {
   const { url } = useRouteMatch();
-  console.log(url);
+  // console.log(url);
   const dispatch = useDispatch();
   const logout = () => {
     const refToken = localStorage.getItem('refBurgerToken');
@@ -20,15 +20,14 @@ const MenuProfile = () => {
       <NavLink
         activeClassName={styles.link_active}
         className={styles.link}
-        exact
-        to={{ pathname: '/' }}
+        to={{ pathname: '/profile/*' }}
       >
         <p className={cn('text text_type_main-medium')}>Профиль</p>
       </NavLink>
       <NavLink
         activeClassName={styles.link_active}
         className={styles.link}
-        to={{ pathname: `${url}/order` }}
+        to={{ pathname: '/profile/order' }}
       >
         <p className={cn('text text_type_main-medium')}>История заказов</p>
       </NavLink>

@@ -1,30 +1,44 @@
+import React from 'react';
 import styles from './profile.module.css';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import cn from 'classnames';
 import MenuProfile from '../../component/MenuProfile/MenuProfile';
 import FormProfile from '../../component/FormProfile/FormProfile';
 import { OrderPage } from '../../pages';
+import { useEffect } from 'react';
 
-export const ProfilePage = () => {
-  const { url, path } = useRouteMatch();
-  // console.log(url);
-
+export const ProfilePage = React.memo(() => {
+  useEffect(() => {
+    console.log('рендер');
+  });
+  const { url } = useRouteMatch();
+  console.log(url);
   return (
     <main className={cn(styles.main)}>
       <MenuProfile />
-      <Switch>
-        {/* <Route to={`${path}/order`} component={ <OrderPage />}} />
-        <Route to={`${path}`} exact={true} render={() => <FormProfile />} /> */}
+      {/* первый вариант */}
+      {url === '/profile/*' && <FormProfile />}
+      {url === '/profile/order' && <OrderPage />}
 
-        {/* <Route to={`${path}/order`} component={OrderPage} />
-        <Route to={`${path}`} exact={true} component={FormProfile} /> */}
-        <Route to="">
+      {/* второй вариант */}
+      {/* <Switch>
+        <Route to={url === '/profile/*' && `${url}`}>
           <FormProfile />
         </Route>
-        <Route to="/order" component={<OrderPage />} />
-        {/* <OrderPage />
-        </Route> */}
-      </Switch>
+        <Route to={url === '/profile/order' && `${url}`}>
+          <OrderPage />
+        </Route>
+      </Switch> */}
+
+      {/* третий вариант */}
+      {/* <Switch>
+        <Route to="/profile/*">
+          <FormProfile />
+        </Route>
+        <Route to="/profile/order">
+          <OrderPage />
+        </Route>
+      </Switch> */}
     </main>
   );
-};
+});

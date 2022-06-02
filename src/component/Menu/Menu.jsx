@@ -35,7 +35,7 @@ const Menu = () => {
         <NavLink
           activeClassName={cn(styles.activeContainer)}
           className={cn(`p-5 mt-4 mb-4 ${styles.container}`)}
-          to={{ pathname: '/profile' }}
+          to={{ pathname: '/profile/*' }}
         >
           <ProfileIcon type="secondary" />
           <p className={cn('text text_type_main-default pl-2')}>Личный кабинет</p>
