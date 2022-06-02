@@ -17,7 +17,15 @@ import {
   fetchCheckUser,
   fetchNewToken,
 } from '../../services/reducers';
-import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage } from '../../pages';
+import {
+  RegisterPage,
+  HomePage,
+  LoginPage,
+  ForgotPage,
+  ResetPage,
+  ProfilePage,
+  OrderPage,
+} from '../../pages';
 import { getCookie } from '../../utils/cookie';
 
 const App = () => {
@@ -78,6 +86,9 @@ const App = () => {
           <ProtectedRoute path="/profile">
             <ProfilePage />
           </ProtectedRoute>
+          <Route path="/profile/order">
+            <OrderPage />
+          </Route>
           <Route path="/" exact={true}>
             <HomePage />
           </Route>

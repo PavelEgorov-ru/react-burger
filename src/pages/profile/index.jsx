@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Switch, Route } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { fetchEditUser, fetchLogout } from '../../services/reducers';
 import cn from 'classnames';
+import { OrderPage } from '../../pages';
 
 export const ProfilePage = () => {
   const { userName, userEmail, userPassword } = useSelector((store) => store.user);
@@ -102,15 +103,29 @@ export const ProfilePage = () => {
   return (
     <main className={cn(styles.main)}>
       <nav className={cn(styles.nav)}>
-        <NavLink className={styles.link_active} to={{ pathname: '/' }}>
+        <NavLink
+          activeClassName={styles.link_active}
+          className={styles.link}
+          to={{ pathname: '/profile' }}
+        >
           <p className={cn('text text_type_main-medium')}>Профиль</p>
         </NavLink>
-        <NavLink className={styles.link} to={{ pathname: '/' }}>
+        <NavLink
+          activeClassName={styles.link_active}
+          className={styles.link}
+          to={{ pathname: '/profile/order' }}
+        >
           <p className={cn('text text_type_main-medium')}>История заказов</p>
         </NavLink>
-        <NavLink className={styles.link} to={{ pathname: '/login' }} onClick={logout}>
+        <NavLink
+          activeClassName={styles.link_active}
+          className={styles.link}
+          to={{ pathname: '/login' }}
+          onClick={logout}
+        >
           <p className={cn('text text_type_main-medium')}>Выход</p>
         </NavLink>
+
         <p className={cn(`text text_type_main-small text_color_inactive ${styles.text}`)}>
           В этом разделе вы можете изменить свои персональные данные
         </p>
@@ -187,6 +202,11 @@ export const ProfilePage = () => {
           </div>
         )}
       </form>
+      {/* <Switch>
+        <Route to="/profile/order" exact>
+          <OrderPage />
+        </Route>
+      </Switch> */}
     </main>
   );
 };
