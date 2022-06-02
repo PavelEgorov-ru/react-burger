@@ -7,6 +7,7 @@ import { useState, useRef } from 'react';
 import cn from 'classnames';
 
 const FormProfile = () => {
+  console.log('111');
   const { userName, userEmail, userPassword } = useSelector((store) => store.user);
   const [formState, setFormState] = useState({
     name: userName,

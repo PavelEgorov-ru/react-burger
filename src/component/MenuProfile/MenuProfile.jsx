@@ -1,22 +1,34 @@
 import styles from './MenuProfile.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchLogout } from '../../services/reducers';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 
-const MenuProfile = ({ logout }) => {
+const MenuProfile = () => {
+  const { url } = useRouteMatch();
+  console.log(url);
+  const dispatch = useDispatch();
+  const logout = () => {
+    const refToken = localStorage.getItem('refBurgerToken');
+    console.log('вышел из системы');
+    dispatch(fetchLogout({ token: refToken }));
+  };
+
   return (
     <nav className={cn(styles.nav)}>
       <NavLink
         activeClassName={styles.link_active}
         className={styles.link}
-        to={{ pathname: '/profile' }}
+        exact
+        to={{ pathname: '/' }}
       >
         <p className={cn('text text_type_main-medium')}>Профиль</p>
       </NavLink>
       <NavLink
         activeClassName={styles.link_active}
         className={styles.link}
-        to={{ pathname: '/profile/order' }}
+        to={{ pathname: `${url}/order` }}
       >
         <p className={cn('text text_type_main-medium')}>История заказов</p>
       </NavLink>

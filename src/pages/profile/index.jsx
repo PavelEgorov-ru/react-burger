@@ -1,30 +1,30 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile.module.css';
-import { NavLink, Switch, Route } from 'react-router-dom';
-import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { fetchEditUser, fetchLogout } from '../../services/reducers';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import cn from 'classnames';
 import MenuProfile from '../../component/MenuProfile/MenuProfile';
 import FormProfile from '../../component/FormProfile/FormProfile';
 import { OrderPage } from '../../pages';
 
 export const ProfilePage = () => {
-  const logout = () => {
-    const refToken = localStorage.getItem('refBurgerToken');
-    console.log('вышел из системы');
-    // dispatch(fetchLogout({ token: refToken }));
-  };
+  const { url, path } = useRouteMatch();
+  // console.log(url);
+
   return (
     <main className={cn(styles.main)}>
-      <MenuProfile logout={logout} />
-      <FormProfile />
+      <MenuProfile />
+      <Switch>
+        {/* <Route to={`${path}/order`} component={ <OrderPage />}} />
+        <Route to={`${path}`} exact={true} render={() => <FormProfile />} /> */}
 
-      {/* <Switch>
-        <Route to="/profile/order" exact>
-          <OrderPage />
+        {/* <Route to={`${path}/order`} component={OrderPage} />
+        <Route to={`${path}`} exact={true} component={FormProfile} /> */}
+        <Route to="">
+          <FormProfile />
         </Route>
-      </Switch> */}
+        <Route to="/order" component={<OrderPage />} />
+        {/* <OrderPage />
+        </Route> */}
+      </Switch>
     </main>
   );
 };
