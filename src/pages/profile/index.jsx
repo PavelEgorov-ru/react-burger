@@ -5,6 +5,7 @@ import { NavLink, Switch, Route } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { fetchEditUser, fetchLogout } from '../../services/reducers';
 import cn from 'classnames';
+import MenuProfile from '../../component/MenuProfile/MenuProfile';
 import { OrderPage } from '../../pages';
 
 export const ProfilePage = () => {
@@ -102,34 +103,7 @@ export const ProfilePage = () => {
 
   return (
     <main className={cn(styles.main)}>
-      <nav className={cn(styles.nav)}>
-        <NavLink
-          activeClassName={styles.link_active}
-          className={styles.link}
-          to={{ pathname: '/profile' }}
-        >
-          <p className={cn('text text_type_main-medium')}>Профиль</p>
-        </NavLink>
-        <NavLink
-          activeClassName={styles.link_active}
-          className={styles.link}
-          to={{ pathname: '/profile/order' }}
-        >
-          <p className={cn('text text_type_main-medium')}>История заказов</p>
-        </NavLink>
-        <NavLink
-          activeClassName={styles.link_active}
-          className={styles.link}
-          to={{ pathname: '/login' }}
-          onClick={logout}
-        >
-          <p className={cn('text text_type_main-medium')}>Выход</p>
-        </NavLink>
-
-        <p className={cn(`text text_type_main-small text_color_inactive ${styles.text}`)}>
-          В этом разделе вы можете изменить свои персональные данные
-        </p>
-      </nav>
+      <MenuProfile logout={logout} />
       <form className={cn(styles.form)} onSubmit={submitForm}>
         <div
           className={cn(styles.input, {
