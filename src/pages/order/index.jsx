@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const OrderPage = () => {
   const { url, path } = useRouteMatch();
-  console.log('профиль: ', url, path);
 
   const dispatch = useDispatch();
   const logout = () => {
@@ -22,7 +21,7 @@ export const OrderPage = () => {
         <NavLink className={styles.link} to={{ pathname: '/profile' }}>
           <p className={cn('text text_type_main-medium')}>Профиль</p>
         </NavLink>
-        <NavLink className={styles.link} to={{ pathname: `${url}` }}>
+        <NavLink className={styles.link_active} to={{ pathname: `${url}` }}>
           <p className={cn('text text_type_main-medium')}>История заказов</p>
         </NavLink>
         <NavLink className={styles.link} to={{ pathname: '/login' }} onClick={logout}>
