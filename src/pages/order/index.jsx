@@ -1,11 +1,14 @@
 import React from 'react';
 import cn from 'classnames';
 import styles from './order.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import { fetchEditUser, fetchLogout } from '../../services/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const OrderPage = () => {
+  const { url, path } = useRouteMatch();
+  console.log('профиль: ', url, path);
+
   const dispatch = useDispatch();
   const logout = () => {
     const refToken = localStorage.getItem('refBurgerToken');
@@ -16,26 +19,13 @@ export const OrderPage = () => {
   return (
     <main className={cn(styles.main)}>
       <nav className={cn(styles.nav)}>
-        <NavLink
-          activeClassName={styles.link_active}
-          className={styles.link}
-          to={{ pathname: '/profile' }}
-        >
+        <NavLink className={styles.link} to={{ pathname: '/profile' }}>
           <p className={cn('text text_type_main-medium')}>Профиль</p>
         </NavLink>
-        <NavLink
-          activeClassName={styles.link_active}
-          className={styles.link}
-          to={{ pathname: '/order' }}
-        >
+        <NavLink className={styles.link} to={{ pathname: `${url}` }}>
           <p className={cn('text text_type_main-medium')}>История заказов</p>
         </NavLink>
-        <NavLink
-          activeClassName={styles.link_active}
-          className={styles.link}
-          to={{ pathname: '/login' }}
-          onClick={logout}
-        >
+        <NavLink className={styles.link} to={{ pathname: '/login' }} onClick={logout}>
           <p className={cn('text text_type_main-medium')}>Выход</p>
         </NavLink>
 
@@ -44,11 +34,6 @@ export const OrderPage = () => {
         </p>
       </nav>
       <div className={cn(styles.form)}>страница с итсориями заказов</div>
-      {/* <Switch>
-        <Route to="/profile/order" exact>
-          <OrderPage />
-        </Route>
-      </Switch> */}
     </main>
   );
 };

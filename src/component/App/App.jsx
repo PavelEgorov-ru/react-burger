@@ -83,10 +83,10 @@ const App = () => {
           <Route path="/reset-password">
             <ResetPage />
           </Route>
-          <ProtectedRoute path="/profile">
+          <ProtectedRoute path="/profile" exact={true}>
             <ProfilePage />
           </ProtectedRoute>
-          <Route path="/profile/order">
+          <Route path="/profile/order" exact={true}>
             <OrderPage />
           </Route>
           <Route path="/" exact={true}>

@@ -1,13 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile.module.css';
-import { NavLink, Switch, Route } from 'react-router-dom';
+import { NavLink, Switch, Route, useRouteMatch } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { fetchEditUser, fetchLogout } from '../../services/reducers';
 import cn from 'classnames';
 import { OrderPage } from '../../pages';
 
 export const ProfilePage = () => {
+  const { url, path } = useRouteMatch();
+  console.log('профиль: ', url, path);
+
   const { userName, userEmail, userPassword } = useSelector((store) => store.user);
   const [formState, setFormState] = useState({
     name: userName,
@@ -106,14 +109,14 @@ export const ProfilePage = () => {
         <NavLink
           activeClassName={styles.link_active}
           className={styles.link}
-          to={{ pathname: '/profile' }}
+          to={{ pathname: `${url}` }}
         >
           <p className={cn('text text_type_main-medium')}>Профиль</p>
         </NavLink>
         <NavLink
           activeClassName={styles.link_active}
           className={styles.link}
-          to={{ pathname: '/profile/order' }}
+          to={{ pathname: `${url}/order` }}
         >
           <p className={cn('text text_type_main-medium')}>История заказов</p>
         </NavLink>
@@ -202,11 +205,6 @@ export const ProfilePage = () => {
           </div>
         )}
       </form>
-      {/* <Switch>
-        <Route to="/profile/order" exact>
-          <OrderPage />
-        </Route>
-      </Switch> */}
     </main>
   );
 };
