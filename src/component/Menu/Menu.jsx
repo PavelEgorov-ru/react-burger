@@ -1,5 +1,6 @@
 import styles from './Menu.module.css';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import {
   Logo,
@@ -9,6 +10,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const Menu = () => {
+  const { userName } = useSelector((store) => store.user);
+
   return (
     <nav>
       <ul className={cn(styles.list)}>
@@ -38,7 +41,9 @@ const Menu = () => {
           to={{ pathname: '/profile' }}
         >
           <ProfileIcon type="secondary" />
-          <p className={cn('text text_type_main-default pl-2')}>Личный кабинет</p>
+          <p className={cn('text text_type_main-default pl-2')}>
+            {userName !== '' ? userName : 'Личный кабинет'}
+          </p>
         </NavLink>
       </ul>
     </nav>
