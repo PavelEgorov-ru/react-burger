@@ -148,6 +148,7 @@ const userSlice = createSlice({
     },
     defaultReset(state) {
       state.isReset = false;
+      state.isForgot = false;
     },
   },
   extraReducers: (builder) => {

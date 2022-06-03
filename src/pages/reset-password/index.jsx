@@ -13,7 +13,7 @@ export const ResetPage = () => {
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
 
-  const { isReset, isLoader } = useSelector((store) => store.user);
+  const { isReset, isLoader, isAuth, isForgot } = useSelector((store) => store.user);
   const inputRef = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -42,6 +42,10 @@ export const ResetPage = () => {
       token: '',
     });
   };
+
+  if (isAuth || !isForgot) {
+    return <Redirect to="/" />;
+  }
 
   if (isReset) {
     return <Redirect to="/login" />;

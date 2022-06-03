@@ -17,7 +17,15 @@ import {
   fetchCheckUser,
   fetchNewToken,
 } from '../../services/reducers';
-import { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage } from '../../pages';
+import {
+  RegisterPage,
+  HomePage,
+  LoginPage,
+  ForgotPage,
+  ResetPage,
+  ProfilePage,
+  OrderPage,
+} from '../../pages';
 import { getCookie } from '../../utils/cookie';
 
 const App = () => {
@@ -75,9 +83,12 @@ const App = () => {
           <Route path="/reset-password">
             <ResetPage />
           </Route>
-          <ProtectedRoute path="/profile">
+          <ProtectedRoute path="/profile" exact={true}>
             <ProfilePage />
           </ProtectedRoute>
+          <Route path="/profile/order" exact={true}>
+            <OrderPage />
+          </Route>
           <Route path="/" exact={true}>
             <HomePage />
           </Route>
