@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
@@ -29,6 +30,9 @@ import {
 import { getCookie } from '../../utils/cookie';
 
 const App = () => {
+  const location = useLocation();
+  const background = location.state?.background;
+  console.log(location.state);
   const dispatch = useDispatch();
   const { isOpenModal } = useSelector((store) => store.ingredient);
   const { isOrder } = useSelector((store) => store.order);
@@ -56,12 +60,6 @@ const App = () => {
 
   return (
     <div className={cn(styles.app)}>
-      {isOpenModal && (
-        <Modal title="Детали заказа" onClose={onClose}>
-          <IngredientDetails />
-        </Modal>
-      )}
-
       {isOrder && (
         <Modal onClose={onClose}>
           <OrderDetails />
@@ -70,7 +68,7 @@ const App = () => {
 
       <Router>
         <AppHeader />
-        <Switch>
+        <Switch location={background || location}>
           <Route path="/register">
             <RegisterPage />
           </Route>
@@ -92,10 +90,27 @@ const App = () => {
           <Route path="/" exact={true}>
             <HomePage />
           </Route>
+          <Route exact path="/ingredients/:id">
+            <div className={styles.app__ingredientContainer}>
+              <IngredientDetails />
+            </div>
+          </Route>
         </Switch>
       </Router>
+
+      {background && (
+        <Switch>
+          <Route path="/ingredients/:id" exact={true}>
+            <Modal onClose={onClose}>
+              <IngredientDetails />
+            </Modal>
+          </Route>
+        </Switch>
+      )}
     </div>
   );
 };
 
 export default App;
+
+//location={background || location}
