@@ -10,7 +10,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Item = ({ item }) => {
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
 
   const { bun } = useSelector((store) => store.elements);
   const { elements } = useSelector((store) => store.elements);
@@ -45,7 +45,7 @@ const Item = ({ item }) => {
   return (
     <li
       className={cn(styles.item)}
-      onClick={() => openModal(item)}
+      // onClick={() => openModal(item)}
       draggable
       ref={dragRef}
       style={{ boxShadow }}
