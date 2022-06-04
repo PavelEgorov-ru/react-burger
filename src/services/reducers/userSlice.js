@@ -59,19 +59,63 @@ export const fetchLogout = createAsyncThunk(
   }
 );
 
-export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async () => {
+// export const fetchCheckUser = createAsyncThunk(
+//   'user/fetchCheckUser',
+//   async (refToken, { rejectWithValue }) => {
+//     try {
+//       const response = await auth.checkUser();
+//       if (!response.ok) {
+//         const message = rejectWithValue(responseData.message);
+//         console.log(message);
+//         if (message === 'jwt expired') {
+//           const check = await auth.newToken({ token: refToken });
+//           const checkData = await check.json();
+//           setCookie('burgerToken', checkData.accessToken);
+//           localStorage.setItem('refBurgerToken', checkData.refreshToken);
+//           console.log(checkData);
+//           if (checkData.success === true) {
+//             const response = await auth.checkUser();
+//             const newResponseData = await response.json();
+//             return newResponseData;
+//           }
+//         } else return rejectWithValue(responseData.message);
+//       }
+//       const responseData = await response.json();
+//       return responseData;
+//     } catch (res) {
+//       // console.log('111');
+//       // if (res.message === 'jwt expired') {
+//       //   console.log('222');
+//       //   const check = await auth.newToken();
+//       //   if (check.status === 200) {
+//       //     const response = await auth.checkUser();
+//       //     const responseData = response.json();
+//       //     return responseData;
+//       //   }
+//       // }
+//     }
+//   }
+// );
+
+export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async (refToken) => {
   try {
     const response = await auth.checkUser();
-    if (response.status === 403) {
-      const response = await auth.newToken({ token: localStorage.getItem('refBurgerToken') });
-      const responseData = response.json();
-      return responseData;
-    } else {
-      const responseData = response.json();
-      return responseData;
+    const responseData = await response.json();
+    if (responseData.message === 'jwt expired') {
+      const check = await auth.newToken({ token: refToken });
+      const checkData = await check.json();
+      setCookie('burgerToken', checkData.accessToken);
+      localStorage.setItem('refBurgerToken', checkData.refreshToken);
+      console.log(checkData);
+      if (checkData.success === true) {
+        const response = await auth.checkUser();
+        const newResponseData = await response.json();
+        return newResponseData;
+      }
     }
+    return responseData;
   } catch (res) {
-    console.log({ res });
+    console.log(res);
   }
 });
 
@@ -80,22 +124,6 @@ export const fetchEditUser = createAsyncThunk(
   async (info, { rejectWithValue }) => {
     try {
       const response = await auth.editUser(info);
-      const responseData = response.json();
-      if (!response.ok) {
-        return rejectWithValue(responseData.message);
-      }
-      return responseData;
-    } catch (res) {
-      console.log({ res });
-    }
-  }
-);
-
-export const fetchNewToken = createAsyncThunk(
-  'user/fetchNewToken',
-  async (info, { rejectWithValue }) => {
-    try {
-      const response = await auth.newToken(info);
       const responseData = response.json();
       if (!response.ok) {
         return rejectWithValue(responseData.message);
@@ -202,8 +230,7 @@ const userSlice = createSlice({
         state.isLoader = false;
       })
       .addCase(fetchCheckUser.fulfilled, (state, { payload }) => {
-        payload.accessToken && setCookie('burgerToken', payload.accessToken);
-        payload.refreshToken && localStorage.setItem('refBurgerToken', payload.refreshToken);
+        console.log(payload);
         state.userName = payload.user.name;
         state.userEmail = payload.user.email;
         state.isLoader = true;
@@ -223,16 +250,6 @@ const userSlice = createSlice({
       .addCase(fetchEditUser.rejected, (state, { payload }) => {
         state.isLoader = true;
       })
-      .addCase(fetchNewToken.pending, (state, { payload }) => {
-        state.isLoader = false;
-      })
-      .addCase(fetchNewToken.fulfilled, (state, { payload }) => {
-        setCookie('burgerToken', payload.accessToken);
-        localStorage.setItem('refBurgerToken', payload.refreshToken);
-        state.isLoader = true;
-        state.isAuth = true;
-      })
-      .addCase(fetchNewToken.rejected, (state, { payload }) => {})
       .addCase(fetchForgotPassword.pending, (state, { payload }) => {
         state.isLoader = false;
       })

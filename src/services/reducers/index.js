@@ -17,7 +17,7 @@ export {
   fetchAuth,
   fetchCheckUser,
   fetchEditUser,
-  fetchNewToken,
+  // fetchNewToken,
   fetchLogout,
   fetchForgotPassword,
   fetchResetPassword,
