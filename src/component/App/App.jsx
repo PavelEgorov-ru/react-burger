@@ -40,12 +40,8 @@ const App = () => {
   const checkAuth = () => {
     const token = getCookie('burgerToken');
     const refToken = localStorage.getItem('refBurgerToken');
-    if (token !== undefined) {
-      dispatch(fetchCheckUser());
-    } else if (token === undefined && refToken !== null) {
-      dispatch(fetchNewToken({ token: refToken }));
-    } else {
-      dispatch(userActions.endLoader());
+    if (token) {
+      dispatch(fetchCheckUser(refToken));
     }
   };
 
