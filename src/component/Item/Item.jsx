@@ -6,8 +6,12 @@ import typeIndegrient from '../../utils/types';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { ingredientActions } from '../../services/reducers/index';
+import { Link, useLocation } from 'react-router-dom';
 
 const Item = ({ item }) => {
+  const location = useLocation();
+  // console.log(location);
+
   const { bun } = useSelector((store) => store.elements);
   const { elements } = useSelector((store) => store.elements);
 
@@ -32,6 +36,7 @@ const Item = ({ item }) => {
   });
 
   const openModal = (item) => {
+    console.log('111');
     dispatch(ingredientActions.openModal(item));
   };
 
@@ -40,18 +45,26 @@ const Item = ({ item }) => {
   return (
     <li
       className={cn(styles.item)}
-      onClick={() => openModal(item)}
+      // onClick={() => openModal(item)}
       draggable
       ref={dragRef}
       style={{ boxShadow }}
     >
-      {count !== 0 && <Counter count={count} size="default" />}
-      <img className={cn(`${styles.image} mb-2`)} src={item.image} alt="картинка индигрента" />
-      <div className={cn(`${styles.price} mb-2`)}>
-        <p className={cn('text text_type_digits-default mr-2')}>{item.price}</p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className={cn(`${styles.description} text text_type_main-default mb-10`)}>{item.name}</p>
+      <Link
+        to={{
+          pathname: `/ingredients/${item._id}`,
+          state: { background: location },
+        }}
+        className={styles.item__link}
+      >
+        {count !== 0 && <Counter count={count} size="default" />}
+        <img className={cn(`${styles.image} mb-2`)} src={item.image} alt="картинка индигрента" />
+        <div className={cn(`${styles.price} mb-2`)}>
+          <p className={cn('text text_type_digits-default mr-2')}>{item.price}</p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <p className={cn(`${styles.description} text text_type_main-default mb-10`)}>{item.name}</p>
+      </Link>
     </li>
   );
 };

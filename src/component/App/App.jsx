@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useLocation, useHistory } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
@@ -27,14 +28,22 @@ import {
   OrderPage,
 } from '../../pages';
 import { getCookie } from '../../utils/cookie';
+import { hydrate } from 'react-dom';
 
 const App = () => {
+  const location = useLocation();
+  const background = location.state && location.state.background;
+  const history = useHistory();
   const dispatch = useDispatch();
   const { isOpenModal } = useSelector((store) => store.ingredient);
   const { isOrder } = useSelector((store) => store.order);
 
-  const onClose = () => {
-    isOpenModal ? dispatch(ingredientActions.closeModal()) : dispatch(orderActions.closeModal());
+  const onCloseOrder = () => {
+    dispatch(orderActions.closeModal());
+  };
+
+  const onCloseIngredient = () => {
+    history.goBack();
   };
 
   const checkAuth = () => {
@@ -56,46 +65,57 @@ const App = () => {
 
   return (
     <div className={cn(styles.app)}>
-      {isOpenModal && (
-        <Modal title="Детали заказа" onClose={onClose}>
-          <IngredientDetails />
-        </Modal>
-      )}
-
       {isOrder && (
-        <Modal onClose={onClose}>
+        <Modal onClose={onCloseOrder}>
           <OrderDetails />
         </Modal>
       )}
 
-      <Router>
-        <AppHeader />
-        <Switch>
-          <Route path="/register">
-            <RegisterPage />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Route path="/forgot-password">
-            <ForgotPage />
-          </Route>
-          <Route path="/reset-password">
-            <ResetPage />
-          </Route>
-          <ProtectedRoute path="/profile" exact={true}>
-            <ProfilePage />
-          </ProtectedRoute>
-          <Route path="/profile/order" exact={true}>
-            <OrderPage />
-          </Route>
-          <Route path="/" exact={true}>
-            <HomePage />
-          </Route>
-        </Switch>
-      </Router>
+      {/* <Router> */}
+      <AppHeader />
+      <Switch location={background || location}>
+        <Route path="/register" exact={true}>
+          <RegisterPage />
+        </Route>
+        <Route path="/login" exact={true}>
+          <LoginPage />
+        </Route>
+        <Route path="/forgot-password" exact={true}>
+          <ForgotPage />
+        </Route>
+        <Route path="/reset-password" exact={true}>
+          <ResetPage />
+        </Route>
+        <ProtectedRoute path="/profile" exact={true}>
+          <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/order" exact={true}>
+          <OrderPage />
+        </ProtectedRoute>
+        <Route path="/" exact={true}>
+          <HomePage />
+        </Route>
+        <Route exact={true} path="/ingredients/:id">
+          <div className={styles.app__ingredientContainer}>
+            <IngredientDetails />
+          </div>
+        </Route>
+      </Switch>
+      {/* </Router> */}
+
+      {background && (
+        // <Switch>
+        <Route path="/ingredients/:id" exact={true}>
+          <Modal onClose={onCloseIngredient}>
+            <IngredientDetails />
+          </Modal>
+        </Route>
+        // </Switch>
+      )}
     </div>
   );
 };
 
 export default App;
+
+//location={background || location}

@@ -9,7 +9,6 @@ import { OrderPage } from '../../pages';
 
 export const ProfilePage = () => {
   const { url, path } = useRouteMatch();
-  console.log('профиль: ', url, path);
 
   const { userName, userEmail, userPassword } = useSelector((store) => store.user);
   const [formState, setFormState] = useState({
@@ -106,26 +105,13 @@ export const ProfilePage = () => {
   return (
     <main className={cn(styles.main)}>
       <nav className={cn(styles.nav)}>
-        <NavLink
-          activeClassName={styles.link_active}
-          className={styles.link}
-          to={{ pathname: `${url}` }}
-        >
+        <NavLink className={styles.link_active} to={{ pathname: `${url}` }}>
           <p className={cn('text text_type_main-medium')}>Профиль</p>
         </NavLink>
-        <NavLink
-          activeClassName={styles.link_active}
-          className={styles.link}
-          to={{ pathname: `${url}/order` }}
-        >
+        <NavLink className={styles.link} to={{ pathname: `${url}/order` }}>
           <p className={cn('text text_type_main-medium')}>История заказов</p>
         </NavLink>
-        <NavLink
-          activeClassName={styles.link_active}
-          className={styles.link}
-          to={{ pathname: '/login' }}
-          onClick={logout}
-        >
+        <NavLink className={styles.link} to={{ pathname: '/login' }} onClick={logout}>
           <p className={cn('text text_type_main-medium')}>Выход</p>
         </NavLink>
 
