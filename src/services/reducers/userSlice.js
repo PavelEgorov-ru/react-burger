@@ -62,16 +62,29 @@ export const fetchLogout = createAsyncThunk(
 export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async () => {
   try {
     const response = await auth.checkUser();
-    if (response.status === 403) {
-      const response = await auth.newToken({ token: localStorage.getItem('refBurgerToken') });
-      const responseData = response.json();
-      return responseData;
-    } else {
-      const responseData = response.json();
-      return responseData;
+    const responseData = response.json();
+    if (responseData.message === 'jwt expired') {
+      console.log('222');
+      const check = await auth.newToken();
+      const checkData = check.json();
+      if (checkData.status === 200) {
+        const response = await auth.checkUser();
+        const newResponseData = response.json();
+        return newResponseData;
+      }
     }
+    return responseData;
   } catch (res) {
-    console.log({ res });
+    // console.log('111');
+    // if (res.message === 'jwt expired') {
+    //   console.log('222');
+    //   const check = await auth.newToken();
+    //   if (check.status === 200) {
+    //     const response = await auth.checkUser();
+    //     const responseData = response.json();
+    //     return responseData;
+    //   }
+    // }
   }
 });
 
@@ -204,8 +217,8 @@ const userSlice = createSlice({
       .addCase(fetchCheckUser.fulfilled, (state, { payload }) => {
         payload.accessToken && setCookie('burgerToken', payload.accessToken);
         payload.refreshToken && localStorage.setItem('refBurgerToken', payload.refreshToken);
-        state.userName = payload.user.name;
-        state.userEmail = payload.user.email;
+        // state.userName = payload.user.name;
+        // state.userEmail = payload.user.email;
         state.isLoader = true;
         state.isAuth = payload.success;
       })
