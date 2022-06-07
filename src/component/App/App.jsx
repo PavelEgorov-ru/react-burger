@@ -10,14 +10,7 @@ import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import {
-  ingredientActions,
-  orderActions,
-  userActions,
-  fetchIngredients,
-  fetchCheckUser,
-  fetchNewToken,
-} from '../../services/reducers';
+import { orderActions, fetchIngredients, fetchCheckUser } from '../../services/reducers';
 import {
   RegisterPage,
   HomePage,
@@ -28,7 +21,6 @@ import {
   OrderPage,
 } from '../../pages';
 import { getCookie } from '../../utils/cookie';
-import { hydrate } from 'react-dom';
 
 const App = () => {
   const location = useLocation();

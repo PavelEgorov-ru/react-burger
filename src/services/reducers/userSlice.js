@@ -5,7 +5,7 @@ import { setCookie, deleteCookie } from '../../utils/cookie';
 
 const initialState = {
   isAuth: false,
-  isLoader: false,
+  isLoader: true,
   isForgot: false,
   isReset: false,
   userName: '',
