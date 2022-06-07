@@ -1,6 +1,7 @@
 import React from 'react';
 import { getCookie } from './cookie';
-export const BASE_URL = 'https://norma.nomoreparties.space/api/auth';
+import { BASE_URL } from './constants';
+export const BASE_URL_AUTH = `${BASE_URL}/auth`;
 
 class Auth extends React.Component {
   constructor({ baseUrl }) {
@@ -50,11 +51,8 @@ class Auth extends React.Component {
   }
 }
 
-const faceToken =
-  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTMyZDYwZmE3NDdlMDAxYmQ0YjBkYiIsImlhdCI6MTY1MzgyNjI5OSwiZXhwIjoxNjUzODI3NDk5fQ.CWJTLn_g1CDh9S5iAtFbIYfttQ0maGxEDgd6L2Cvk55';
-
 const auth = new Auth({
-  baseUrl: BASE_URL,
+  baseUrl: BASE_URL_AUTH,
 });
 
 export default auth;

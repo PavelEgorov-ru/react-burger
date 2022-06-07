@@ -1,5 +1,5 @@
 import React from 'react';
-const BASE_URL = 'https://norma.nomoreparties.space/api';
+import { BASE_URL } from './constants';
 
 class Api extends React.Component {
   constructor({ baseUrl }) {
