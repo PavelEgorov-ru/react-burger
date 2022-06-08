@@ -2,7 +2,7 @@
 
 Проект создан с помощью CRA. Дополнительно установлен TypeScript для последующей миграции.
 
-Посмотреть приложение в браузере можно по этой ссылке [https://pavelegorov-ru.github.io/react-burger/](https://pavelegorov-ru.github.io/react-burger/)
+Посмотреть приложение в браузере можно по этой ссылке [https://pavelegorov-ru.github.io/react-burger](https://pavelegorov-ru.github.io/react-burger)
 
 Разработка ведется в отдельных ветках. После проверки PR ревьюером, код попадает в основную ветку `main`.
 
