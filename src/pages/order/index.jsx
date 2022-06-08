@@ -1,17 +1,15 @@
-import React from 'react';
 import cn from 'classnames';
 import styles from './order.module.css';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import { fetchEditUser, fetchLogout } from '../../services/reducers';
+import { fetchLogout } from '../../services/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const OrderPage = () => {
-  const { url, path } = useRouteMatch();
+  const { url } = useRouteMatch();
 
   const dispatch = useDispatch();
   const logout = () => {
     const refToken = localStorage.getItem('refBurgerToken');
-    console.log('вышел из системы');
     dispatch(fetchLogout({ token: refToken }));
   };
 

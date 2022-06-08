@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Redirect } from 'react-router-dom';
 import cn from 'classnames';
@@ -35,7 +35,6 @@ export const RegisterPage = () => {
   };
 
   const submitForm = (e) => {
-    console.log(formState);
     dispatch(fetchNewUser(formState));
   };
 

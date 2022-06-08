@@ -57,16 +57,13 @@ const BurgerIngredients = () => {
       <TabContainer current={current} handleCurrent={handleCurrent} />
       <div className={cn(styles.container)} onScroll={onScroll}>
         <ItemsContainer key={1} data={buns} ref={bunsSectoin}>
-          {' '}
-          Булки{' '}
+          Булки
         </ItemsContainer>
         <ItemsContainer key={2} data={sauces} ref={saucesSection}>
-          {' '}
-          Соусы{' '}
+          Соусы
         </ItemsContainer>
         <ItemsContainer key={3} data={mains} ref={mainsSection}>
-          {' '}
-          Мясо{' '}
+          Мясо
         </ItemsContainer>
       </div>
     </section>

@@ -1,14 +1,13 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile.module.css';
-import { NavLink, Switch, Route, useRouteMatch } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { fetchEditUser, fetchLogout } from '../../services/reducers';
 import cn from 'classnames';
-import { OrderPage } from '../../pages';
 
 export const ProfilePage = () => {
-  const { url, path } = useRouteMatch();
+  const { url } = useRouteMatch();
 
   const { userName, userEmail, userPassword } = useSelector((store) => store.user);
   const [formState, setFormState] = useState({
@@ -98,7 +97,6 @@ export const ProfilePage = () => {
 
   const logout = () => {
     const refToken = localStorage.getItem('refBurgerToken');
-    console.log('вышел из системы');
     dispatch(fetchLogout({ token: refToken }));
   };
 

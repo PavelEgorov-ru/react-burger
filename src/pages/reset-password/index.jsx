@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import { NavLink, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchResetPassword } from '../../services/reducers';
@@ -15,7 +15,6 @@ export const ResetPage = () => {
 
   const { isReset, isLoader, isAuth, isForgot } = useSelector((store) => store.user);
   const inputRef = useRef();
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const onIconClick = () => {

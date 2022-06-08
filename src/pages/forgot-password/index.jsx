@@ -1,11 +1,10 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { NavLink, Redirect, useHistory } from 'react-router-dom';
+import { useState, useRef } from 'react';
+import { NavLink, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchForgotPassword } from '../../services/reducers';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import styles from './forgot.module.css';
-import { reduceEachTrailingCommentRange } from 'typescript';
 
 export const ForgotPage = () => {
   const [formState, setFormState] = useState({
@@ -14,7 +13,6 @@ export const ForgotPage = () => {
 
   const { isForgot, isLoader, isAuth } = useSelector((store) => store.user);
   const inputRef = useRef();
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const handleInputChange = (event) => {

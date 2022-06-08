@@ -27,7 +27,6 @@ const BurgerConstructor = React.memo(() => {
 
   const onClick = (arrayElements) => {
     if (!isAuth) {
-      console.log('111');
       history.replace({ pathname: '/login' });
     } else {
       const arrayId = arrayElements.map(function (element) {
@@ -105,8 +104,7 @@ const BurgerConstructor = React.memo(() => {
           <CurrencyIcon type="primary" />
         </div>
         <Button type="primary" size="medium" onClick={() => onClick(arrayElements)}>
-          {' '}
-          Оформить заказ{' '}
+          Оформить заказ
         </Button>
       </div>
     </section>

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, useLocation, useHistory } from 'react-router-dom';
-// import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
@@ -27,7 +26,6 @@ const App = () => {
   const background = location.state && location.state.background;
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isOpenModal } = useSelector((store) => store.ingredient);
   const { isOrder } = useSelector((store) => store.order);
 
   const onCloseOrder = () => {
@@ -59,7 +57,6 @@ const App = () => {
         </Modal>
       )}
 
-      {/* <Router> */}
       <AppHeader />
       <Switch location={background || location}>
         <Route path="/register" exact={true}>
@@ -89,21 +86,16 @@ const App = () => {
           </div>
         </Route>
       </Switch>
-      {/* </Router> */}
 
       {background && (
-        // <Switch>
         <Route path="/ingredients/:id" exact={true}>
           <Modal onClose={onCloseIngredient}>
             <IngredientDetails />
           </Modal>
         </Route>
-        // </Switch>
       )}
     </div>
   );
 };
 
 export default App;
-
-//location={background || location}

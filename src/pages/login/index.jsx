@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { NavLink, useHistory, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getCookie } from '../../utils/cookie';
 import { fetchAuth, userActions } from '../../services/reducers';
 import cn from 'classnames';
 import styles from './login.module.css';
@@ -16,10 +15,8 @@ export const LoginPage = () => {
   const { isAuth, isLoader, isReset } = useSelector((store) => store.user);
 
   const dispatch = useDispatch();
-  const history = useHistory();
   const inputRef = useRef();
   const location = useLocation();
-  // const action = userActions();
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -43,7 +40,6 @@ export const LoginPage = () => {
 
   const submitForm = (e) => {
     dispatch(fetchAuth(formState));
-    console.log(formState);
     setFormState({
       email: '',
       password: '',
@@ -51,7 +47,6 @@ export const LoginPage = () => {
   };
 
   if (isAuth) {
-    console.log(location.state);
     return <Redirect to={location.state?.from || '/'} />;
   }
 

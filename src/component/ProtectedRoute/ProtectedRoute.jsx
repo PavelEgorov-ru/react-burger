@@ -1,9 +1,8 @@
-import { Route, Redirect, useLocation } from 'react-router';
+import { Route, Redirect } from 'react-router';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { fetchCheckUser, fetchNewToken, userActions } from '../../services/reducers';
 
 export function ProtectedRoute({ children, ...rest }) {
-  // const location = useLocation();
   const { isAuth, isLoader } = useSelector((store) => store.user);
 
   if (!isLoader) return <div>загрузка данных</div>;
@@ -30,5 +29,9 @@ export function ProtectedRoute({ children, ...rest }) {
     )
   );
 }
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.element,
+};
 
 export default ProtectedRoute;
