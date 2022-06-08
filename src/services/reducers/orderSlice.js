@@ -10,16 +10,12 @@ const initialStateOrder = {
 export const fetchOrder = createAsyncThunk(
   'order/fetchOrder',
   async (info, { rejectWithValue }) => {
-    try {
-      const response = await newApi.postOrders(info);
-      const responseData = await response.json();
-      if (!response.ok) {
-        return rejectWithValue(responseData.message);
-      }
-      return responseData.order;
-    } catch (res) {
-      console.log({ res });
+    const response = await newApi.postOrders(info);
+    const responseData = await response.json();
+    if (!response.ok) {
+      return rejectWithValue(responseData.message);
     }
+    return responseData.order;
   }
 );
 

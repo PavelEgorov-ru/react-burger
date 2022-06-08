@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import cn from 'classnames';
 import styles from './BurgerConstructor.module.css';
@@ -10,11 +11,14 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Element from '../Element/Element';
 import { elementsActions, fetchOrder } from '../../services/reducers';
+import { store } from '../../services';
 
 const BurgerConstructor = React.memo(() => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { bun } = useSelector((store) => store.elements);
   const { elements } = useSelector((store) => store.elements);
+  const { isAuth } = useSelector((store) => store.user);
 
   const arrayElements = [bun, ...elements];
   const count = arrayElements.reduce((acc, item) => {
@@ -22,10 +26,15 @@ const BurgerConstructor = React.memo(() => {
   }, 0);
 
   const onClick = (arrayElements) => {
-    const arrayId = arrayElements.map(function (element) {
-      return element._id;
-    });
-    dispatch(fetchOrder({ ingredients: arrayId }));
+    if (!isAuth) {
+      console.log('111');
+      history.replace({ pathname: '/login' });
+    } else {
+      const arrayId = arrayElements.map(function (element) {
+        return element._id;
+      });
+      dispatch(fetchOrder({ ingredients: arrayId }));
+    }
   };
 
   const moveCard = (dragIndex, hoverIndex) => {

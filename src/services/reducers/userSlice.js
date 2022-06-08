@@ -17,45 +17,33 @@ const initialState = {
 export const fetchNewUser = createAsyncThunk(
   'user/fetchNewUser',
   async (info, { rejectWithValue }) => {
-    try {
-      const response = await auth.register(info);
-      const responseData = response.json();
-      if (!response.ok) {
-        return rejectWithValue(responseData.message);
-      }
-      return responseData;
-    } catch (res) {
-      console.log({ res });
-    }
-  }
-);
-
-export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejectWithValue }) => {
-  try {
-    const response = await auth.login(info);
+    const response = await auth.register(info);
     const responseData = response.json();
     if (!response.ok) {
       return rejectWithValue(responseData.message);
     }
     return responseData;
-  } catch (res) {
-    console.log({ res });
   }
+);
+
+export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejectWithValue }) => {
+  const response = await auth.login(info);
+  const responseData = response.json();
+  if (!response.ok) {
+    return rejectWithValue(responseData.message);
+  }
+  return responseData;
 });
 
 export const fetchLogout = createAsyncThunk(
   'user/fetchLogout',
   async (info, { rejectWithValue }) => {
-    try {
-      const response = await auth.logout(info);
-      const responseData = response.json();
-      if (!response.ok) {
-        return rejectWithValue(responseData.message);
-      }
-      return responseData;
-    } catch (res) {
-      console.log({ res });
+    const response = await auth.logout(info);
+    const responseData = response.json();
+    if (!response.ok) {
+      return rejectWithValue(responseData.message);
     }
+    return responseData;
   }
 );
 
@@ -98,72 +86,56 @@ export const fetchLogout = createAsyncThunk(
 // );
 
 export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async (refToken) => {
-  try {
-    const response = await auth.checkUser();
-    const responseData = await response.json();
-    if (responseData.message === 'jwt expired') {
-      const check = await auth.newToken({ token: refToken });
-      const checkData = await check.json();
-      setCookie('burgerToken', checkData.accessToken);
-      localStorage.setItem('refBurgerToken', checkData.refreshToken);
-      console.log(checkData);
-      if (checkData.success === true) {
-        const response = await auth.checkUser();
-        const newResponseData = await response.json();
-        return newResponseData;
-      }
+  const response = await auth.checkUser();
+  const responseData = await response.json();
+  if (responseData.message === 'jwt expired') {
+    const check = await auth.newToken({ token: refToken });
+    const checkData = await check.json();
+    setCookie('burgerToken', checkData.accessToken);
+    localStorage.setItem('refBurgerToken', checkData.refreshToken);
+    console.log(checkData);
+    if (checkData.success === true) {
+      const response = await auth.checkUser();
+      const newResponseData = await response.json();
+      return newResponseData;
     }
-    return responseData;
-  } catch (res) {
-    console.log(res);
   }
+  return responseData;
 });
 
 export const fetchEditUser = createAsyncThunk(
   'user/fetchEditUser',
   async (info, { rejectWithValue }) => {
-    try {
-      const response = await auth.editUser(info);
-      const responseData = response.json();
-      if (!response.ok) {
-        return rejectWithValue(responseData.message);
-      }
-      return responseData;
-    } catch (res) {
-      console.log({ res });
+    const response = await auth.editUser(info);
+    const responseData = response.json();
+    if (!response.ok) {
+      return rejectWithValue(responseData.message);
     }
+    return responseData;
   }
 );
 
 export const fetchForgotPassword = createAsyncThunk(
   'user/fetchForgotPassword',
   async (info, { rejectWithValue }) => {
-    try {
-      const response = await resetApi.forgotPassword(info);
-      const responseData = response.json();
-      if (!response.ok) {
-        return rejectWithValue(responseData.message);
-      }
-      return responseData;
-    } catch (res) {
-      console.log({ res });
+    const response = await resetApi.forgotPassword(info);
+    const responseData = response.json();
+    if (!response.ok) {
+      return rejectWithValue(responseData.message);
     }
+    return responseData;
   }
 );
 
 export const fetchResetPassword = createAsyncThunk(
   'user/fetchResetPassword',
   async (info, { rejectWithValue }) => {
-    try {
-      const response = await resetApi.resetPassword(info);
-      const responseData = response.json();
-      if (!response.ok) {
-        return rejectWithValue(responseData.message);
-      }
-      return responseData;
-    } catch (res) {
-      console.log({ res });
+    const response = await resetApi.resetPassword(info);
+    const responseData = response.json();
+    if (!response.ok) {
+      return rejectWithValue(responseData.message);
     }
+    return responseData;
   }
 );
 
@@ -209,7 +181,7 @@ const userSlice = createSlice({
         state.userPassword = payload.user.password;
       })
       .addCase(fetchAuth.rejected, (state, { payload }) => {
-        state.errorMessage = payload;
+        state.isLoader = true;
       })
       .addCase(fetchLogout.pending, (state) => {
         state.isLoader = false;
@@ -224,7 +196,7 @@ const userSlice = createSlice({
         state.userPassword = '';
       })
       .addCase(fetchLogout.rejected, (state, { payload }) => {
-        state.errorMessage = payload;
+        state.isLoader = true;
       })
       .addCase(fetchCheckUser.pending, (state, { payload }) => {
         state.isLoader = false;

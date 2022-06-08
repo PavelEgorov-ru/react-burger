@@ -7,13 +7,9 @@ const initialStateIgredients = {
 };
 
 export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients', async () => {
-  try {
-    const response = await newApi.getIdegrients();
-    const responseData = await response.json();
-    return responseData.data;
-  } catch (res) {
-    console.log({ res });
-  }
+  const response = await newApi.getIdegrients();
+  const responseData = await response.json();
+  return responseData.data;
 });
 
 const ingredientsSlice = createSlice({
