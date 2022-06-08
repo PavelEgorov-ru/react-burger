@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-.main {
-  display: flex;
-  gap: 40px;
+.app__ingredientContainer {
+  box-sizing: border-box;
+  padding: 120px;
 }

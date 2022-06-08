@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import styles from './ModalOverlay.module.css';
 
-const ModalOverlay = ({onClose}) => {
-  return (
-    <div className={styles.container} onClick={onClose}></div>
-  )
+const ModalOverlay = ({ onClose }) => {
+  return <div className={cn(styles.container)} onClick={onClose}></div>;
 };
 
 ModalOverlay.propTypes = {

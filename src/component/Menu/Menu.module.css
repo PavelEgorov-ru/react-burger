@@ -5,3 +5,31 @@
   flex-direction: row;
   max-height: 88px;
 }
+
+.container {
+  color: #8585ad;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.container:hover {
+  transition: all 0.6s linear;
+  color: white;
+}
+
+.activeContainer {
+  color: white;
+}
+
+.logo {
+  margin-right: 288px;
+  margin-left: 132px;
+}
+
+.activeContainer svg {
+  transition: all 0.6s linear;
+  fill: white;
+}

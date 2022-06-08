@@ -1,60 +1,101 @@
-import React, {useEffect} from 'react';
+import { useEffect } from 'react';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import styles from './App.module.css'
+import cn from 'classnames';
+import styles from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import BurgerContainer from '../BurgerContainer/BurgerContainer'
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { ingredientActions, orderActions, fetchIngredients } from '../../services/reducers'
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { orderActions, fetchIngredients, fetchCheckUser } from '../../services/reducers';
+import {
+  RegisterPage,
+  HomePage,
+  LoginPage,
+  ForgotPage,
+  ResetPage,
+  ProfilePage,
+  OrderPage,
+} from '../../pages';
+import { getCookie } from '../../utils/cookie';
 
-  const App = () => {
-  const {isIngredients} = useSelector(store => store.ingredients);
-  const {isElements} = useSelector(store => store.elements);
-  const {isOpenModal} = useSelector(store => store.ingredient)
-  const {isOrder} = useSelector(store => store.order)
+const App = () => {
+  const location = useLocation();
+  const background = location.state && location.state.background;
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { isOrder } = useSelector((store) => store.order);
 
-  const dispatch = useDispatch()
+  const onCloseOrder = () => {
+    dispatch(orderActions.closeModal());
+  };
 
-  const onClose = () => {
-    isOpenModal
-    ? dispatch(ingredientActions.closeModal())
-    : dispatch(orderActions.closeModal())  
-  } 
+  const onCloseIngredient = () => {
+    history.goBack();
+  };
+
+  const checkAuth = () => {
+    const token = getCookie('burgerToken');
+    const refToken = localStorage.getItem('refBurgerToken');
+    if (token) {
+      dispatch(fetchCheckUser(refToken));
+    }
+  };
 
   useEffect(() => {
-    dispatch(fetchIngredients())
-  }, [])
-  
+    dispatch(fetchIngredients());
+    checkAuth();
+  }, []);
+
   return (
-    <div className={styles.app}>
-      {isOpenModal
-      && (<Modal title = "Детали заказа" onClose={onClose}>
+    <div className={cn(styles.app)}>
+      {isOrder && (
+        <Modal onClose={onCloseOrder}>
+          <OrderDetails />
+        </Modal>
+      )}
+
+      <AppHeader />
+      <Switch location={background || location}>
+        <Route path="/register" exact={true}>
+          <RegisterPage />
+        </Route>
+        <Route path="/login" exact={true}>
+          <LoginPage />
+        </Route>
+        <Route path="/forgot-password" exact={true}>
+          <ForgotPage />
+        </Route>
+        <Route path="/reset-password" exact={true}>
+          <ResetPage />
+        </Route>
+        <ProtectedRoute path="/profile" exact={true}>
+          <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/order" exact={true}>
+          <OrderPage />
+        </ProtectedRoute>
+        <Route path="/" exact={true}>
+          <HomePage />
+        </Route>
+        <Route exact={true} path="/ingredients/:id">
+          <div className={styles.app__ingredientContainer}>
             <IngredientDetails />
-          </Modal>)}
+          </div>
+        </Route>
+      </Switch>
 
-      {isOrder
-       && (<Modal onClose={onClose}>
-            <OrderDetails/>
-          </Modal>)}
-
-      <AppHeader/>
-      {isIngredients
-      && (
-        <DndProvider backend={HTML5Backend}>
-            <main className={styles.main}>
-              <BurgerIngredients/>
-              { isElements ? <BurgerConstructor /> : <BurgerContainer />}
-            </main>
-        </DndProvider>
-          )}
+      {background && (
+        <Route path="/ingredients/:id" exact={true}>
+          <Modal onClose={onCloseIngredient}>
+            <IngredientDetails />
+          </Modal>
+        </Route>
+      )}
     </div>
   );
-}
+};
 
 export default App;

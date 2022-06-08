@@ -1,7 +1,7 @@
 import React from 'react';
-import { BASE_URL } from './constants';
+export const BASE_URL = 'https://norma.nomoreparties.space/api';
 
-class Api extends React.Component {
+class ResetApi extends React.Component {
   constructor({ baseUrl }) {
     super(baseUrl);
     this.baseUrl = baseUrl;
@@ -21,17 +21,17 @@ class Api extends React.Component {
     );
   }
 
-  getIdegrients() {
-    return this._request('GET', 'ingredients');
+  forgotPassword(info) {
+    return this._request('POST', 'password-reset', info);
   }
 
-  postOrders(info) {
-    return this._request('POST', 'orders', info);
+  resetPassword(info) {
+    return this._request('POST', 'password-reset/reset', info);
   }
 }
 
-const newApi = new Api({
+const resetApi = new ResetApi({
   baseUrl: BASE_URL,
 });
 
-export default newApi;
+export default resetApi;

@@ -1,34 +1,50 @@
+import cn from 'classnames';
 import styles from './IngredientDetails.module.css';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const IngredientDetails = () => {
-  const {ingredient} = useSelector(store => store.ingredient);
+  const { ingredients } = useSelector((store) => store.ingredients);
+  const router = useParams();
+  const id = router.id;
+  console.log(router);
+  const ingredient = ingredients.find((el) => el._id === id);
+  console.log(ingredient);
 
-  return(
-    <>      
-      <img src = {ingredient.image_large} alt={ingredient.name}></img>
-      <p className='text text_type_main-medium mt-4 mb-8'>{ingredient.name}</p>
-      <ul className={styles.description}>
-        <li className={styles.li}>
-          <p className='text text_type_main-default text_color_inactive'>Калории, калл</p>
-          <p className='text text_type_digits-default text_color_inactive'>{ingredient.calories}</p>
+  if (!ingredient) return <div>загрузка</div>;
+
+  return (
+    <>
+      <img src={ingredient.image_large} alt={ingredient.name}></img>
+      <p className={cn('text text_type_main-medium mt-4 mb-8')}>{ingredient.name}</p>
+      <ul className={cn(styles.description)}>
+        <li className={cn(styles.li)}>
+          <p className={cn('text text_type_main-default text_color_inactive')}>Калории, калл</p>
+          <p className={cn('text text_type_digits-default text_color_inactive')}>
+            {ingredient.calories}
+          </p>
         </li>
-        <li className={styles.li}>
-          <p className='text text_type_main-default text_color_inactive'>Белки, г</p>
-          <p className='text text_type_digits-default text_color_inactive'>{ingredient.proteins}</p>
+        <li className={cn(styles.li)}>
+          <p className={cn('text text_type_main-default text_color_inactive')}>Белки, г</p>
+          <p className={cn('text text_type_digits-default text_color_inactive')}>
+            {ingredient.proteins}
+          </p>
         </li>
-        <li className={styles.li}>
-          <p className='text text_type_main-default text_color_inactive'>Жиры, г</p>
-          <p className='text text_type_digits-default text_color_inactive'>{ingredient.fat}</p>
+        <li className={cn(styles.li)}>
+          <p className={cn('text text_type_main-default text_color_inactive')}>Жиры, г</p>
+          <p className={cn('text text_type_digits-default text_color_inactive')}>
+            {ingredient.fat}
+          </p>
         </li>
-        <li className={styles.li}>
-          <p className='text text_type_main-default text_color_inactive'>Углеводы, г</p>
-          <p className='text text_type_digits-default text_color_inactive'>{ingredient.carbohydrates}</p>
+        <li className={cn(styles.li)}>
+          <p className={cn('text text_type_main-default text_color_inactive')}>Углеводы, г</p>
+          <p className={cn('text text_type_digits-default text_color_inactive')}>
+            {ingredient.carbohydrates}
+          </p>
         </li>
       </ul>
     </>
-  )
-}
+  );
+};
 
-
-export default IngredientDetails
+export default IngredientDetails;
