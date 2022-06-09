@@ -10,7 +10,9 @@ const FeedList = () => {
     <section className={cn(styles.sectionSize)}>
       <h1 className={cn('text text_type_main-large mt-10 mb-5')}>Лента заказов</h1>
       <div className={cn(styles.container)}>
-        <FeedCard />
+        {dataTest.orders.map((card) => (
+          <FeedCard {...card} key={card.createdAt} />
+        ))}
       </div>
     </section>
   );
