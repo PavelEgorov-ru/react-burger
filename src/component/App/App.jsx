@@ -18,6 +18,7 @@ import {
   ResetPage,
   ProfilePage,
   OrderPage,
+  FeedPage,
 } from '../../pages';
 import { getCookie } from '../../utils/cookie';
 
@@ -79,6 +80,9 @@ const App = () => {
         </ProtectedRoute>
         <Route path="/" exact={true}>
           <HomePage />
+        </Route>
+        <Route path="/feed" exact={true}>
+          <FeedPage />
         </Route>
         <Route exact={true} path="/ingredients/:id">
           <div className={styles.app__ingredientContainer}>
