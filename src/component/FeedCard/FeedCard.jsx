@@ -2,7 +2,7 @@ import styles from './FeedCard.module.css';
 import { useSelector } from 'react-redux';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const FeedCard = ({ ingredients, _id, status, number, createdAt, updatedAt }) => {
+const FeedCard = ({ ingredients, _id, createdAt }) => {
   const data = useSelector((store) => store.ingredients);
 
   const ingredientsOrder = [];
@@ -10,7 +10,6 @@ const FeedCard = ({ ingredients, _id, status, number, createdAt, updatedAt }) =>
     const element = data.ingredients.find((item) => item._id === ingredients[i]);
     ingredientsOrder.push(element);
   }
-  console.log(ingredientsOrder);
 
   let shiftValue = -40;
   let positionIndex = 6;
@@ -21,7 +20,6 @@ const FeedCard = ({ ingredients, _id, status, number, createdAt, updatedAt }) =>
     nameOrder = `${nameOrder} ` + `${element.name}`;
     price = price + element.price;
   });
-  // console.log(count);
 
   return (
     <div className={styles.card}>

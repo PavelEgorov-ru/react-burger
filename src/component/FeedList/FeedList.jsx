@@ -1,5 +1,3 @@
-import React, { useMemo, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import styles from './FeedList.module.css';
 import { dataTest } from '../../utils/constants';
