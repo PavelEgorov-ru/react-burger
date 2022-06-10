@@ -1,5 +1,6 @@
 import styles from './FeedCard.module.css';
 import { useSelector } from 'react-redux';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const FeedCard = ({ ingredients, _id, status, number, createdAt, updatedAt }) => {
   const data = useSelector((store) => store.ingredients);
@@ -15,12 +16,12 @@ const FeedCard = ({ ingredients, _id, status, number, createdAt, updatedAt }) =>
   let positionIndex = 6;
 
   let nameOrder = '';
-  let count = 0;
+  let price = 0;
   ingredientsOrder.forEach((element) => {
     nameOrder = `${nameOrder} ` + `${element.name}`;
-    count = count + element.price;
+    price = price + element.price;
   });
-  console.log(count);
+  // console.log(count);
 
   return (
     <div className={styles.card}>
@@ -48,6 +49,10 @@ const FeedCard = ({ ingredients, _id, status, number, createdAt, updatedAt }) =>
               );
             } else return;
           })}
+        </div>
+        <div className={styles.price}>
+          <p className="text text_type_digits-default mr-2">{price}</p>
+          <CurrencyIcon type="primary" />
         </div>
       </div>
     </div>
