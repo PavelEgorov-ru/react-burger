@@ -1,9 +1,11 @@
 import styles from './FeedCard.module.css';
 import { useSelector } from 'react-redux';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import cn from 'classnames';
 
-const FeedCard = ({ ingredients, _id, createdAt }) => {
+const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage }) => {
   const data = useSelector((store) => store.ingredients);
+  console.log(status);
 
   const ingredientsOrder = [];
   for (let i = 0; i < ingredients.length; i++) {
@@ -27,7 +29,18 @@ const FeedCard = ({ ingredients, _id, createdAt }) => {
         <p className="text text_type_digits-default">{`#${_id}`}</p>
         <p className="text text_type_digits-default text_color_inactive">{createdAt}</p>
       </div>
-      <p className={`${styles.description} text text_type_main-medium`}>{nameOrder}</p>
+      <div className={styles.nameContainer}>
+        <p className={`${styles.description} text text_type_main-medium`}>{nameOrder}</p>
+        {isOrderPage ? (
+          <p
+            className={cn(`text text_type_main-default mt-2`, {
+              [styles.color]: status === 'done',
+            })}
+          >
+            {status === 'done' ? 'Выполнено' : status === 'created' ? 'Создан' : 'Готовится'}
+          </p>
+        ) : null}
+      </div>
       <div className={styles.footer}>
         <div className={styles.imageContainer}>
           {ingredientsOrder.map((element, index) => {
