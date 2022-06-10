@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { dataTest } from '../../utils/constants';
 
 const FeedInfo = () => {
+  console.log(dataTest);
   const items = dataTest.orders;
 
   const ordersDone = [];
@@ -46,6 +47,14 @@ const FeedInfo = () => {
             })}
           </div>
         </div>
+      </div>
+      <div className={styles.info}>
+        <p className="text text_type_main-medium">Выполнено за все время:</p>
+        <p className="text text_type_digits-large">{dataTest.total}</p>
+      </div>
+      <div className={styles.info}>
+        <p className="text text_type_main-medium">Выполнено за сегодня:</p>
+        <p className="text text_type_digits-large">{dataTest.totalToday}</p>
       </div>
     </section>
   );
