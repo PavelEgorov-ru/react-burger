@@ -494,6 +494,6 @@ export const dataTest = {
       updatedAt: '2021-06-23T14:43:22.603Z',
     },
   ],
-  total: 15,
-  totalToday: 15,
+  total: 150,
+  totalToday: 13455,
 };
