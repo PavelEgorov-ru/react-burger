@@ -1,7 +1,8 @@
 .card {
   background-color: #1c1c21;
   border-radius: 30px;
-  width: 550px;
+  /* width: 550px; */
+  width: calc(100% - 70px);
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -40,4 +41,8 @@
   background-position: center;
   background-size: cover;
   background-color: #1c1c21;
+}
+
+.color {
+  color: #00cccc;
 }

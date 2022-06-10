@@ -1,11 +1,14 @@
 import cn from 'classnames';
 import styles from './order.module.css';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink, useLocation, useRouteMatch } from 'react-router-dom';
 import { fetchLogout } from '../../services/reducers';
 import { useDispatch, useSelector } from 'react-redux';
+import { dataTest } from '../../utils/constants';
+import FeedCard from '../../component/FeedCard/FeedCard';
 
 export const OrderPage = () => {
-  const { url } = useRouteMatch();
+  const { url, path } = useRouteMatch();
+  const isOrderPage = true;
 
   const dispatch = useDispatch();
   const logout = () => {
@@ -30,7 +33,13 @@ export const OrderPage = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-      <div className={cn(styles.form)}>страница с итсориями заказов</div>
+      <section className={cn(styles.sectionSize)}>
+        <div className={cn(styles.container)}>
+          {dataTest.orders.map((card) => (
+            <FeedCard {...card} key={card.createdAt} isOrderPage={isOrderPage} />
+          ))}
+        </div>
+      </section>
     </main>
   );
 };
