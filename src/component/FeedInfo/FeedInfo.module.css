@@ -1,0 +1,36 @@
+.sectionSize {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.statusSection {
+  display: flex;
+  gap: 36px;
+}
+
+.statusDone {
+  min-width: 300px;
+}
+
+.statusCreated {
+  min-width: 300px;
+}
+
+.number {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 320px;
+}
+
+.title {
+  margin-bottom: 24px;
+}
+
+.order {
+  color: #00cccc;
+}

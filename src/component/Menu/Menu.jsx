@@ -27,7 +27,7 @@ const Menu = () => {
         <NavLink
           activeClassName={cn(styles.activeContainer)}
           className={cn(`p-5 mt-4 mb-4 ml-2 ${styles.container}`)}
-          to={{ pathname: '/2' }}
+          to={{ pathname: '/feed' }}
         >
           <ListIcon type="secondary" />
           <p className={cn('text text_type_main-default pl-2')}>Лента заказов</p>

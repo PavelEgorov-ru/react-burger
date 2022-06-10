@@ -5,5 +5,15 @@ import { ForgotPage } from './forgot-password';
 import { ResetPage } from './reset-password';
 import { ProfilePage } from './profile';
 import { OrderPage } from './order';
+import { FeedPage } from './feed';
 
-export { RegisterPage, HomePage, LoginPage, ForgotPage, ResetPage, ProfilePage, OrderPage };
+export {
+  RegisterPage,
+  HomePage,
+  LoginPage,
+  ForgotPage,
+  ResetPage,
+  ProfilePage,
+  OrderPage,
+  FeedPage,
+};
