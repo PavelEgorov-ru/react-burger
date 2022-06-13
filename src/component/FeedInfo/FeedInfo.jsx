@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { dataTest } from '../../utils/constants';
 
 const FeedInfo = () => {
-  console.log(dataTest);
   const items = dataTest.orders;
 
   const ordersDone = [];
@@ -16,9 +15,6 @@ const FeedInfo = () => {
       ordersCreated.push(item);
     } else return;
   });
-
-  console.log(ordersDone);
-  console.log(ordersCreated);
 
   return (
     <section className={styles.sectionSize}>

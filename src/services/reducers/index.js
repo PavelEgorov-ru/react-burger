@@ -5,7 +5,7 @@ import { elementsReducers } from './elementsSlice';
 import { ingredientReducers } from './ingredientSlice';
 import { orderReducers } from './orderSlice';
 import { userReducers } from './userSlice';
-import { wsActions, wsReducers } from './wsSlice';
+import { wsReducers } from './wsSlice';
 
 //экшены
 export { elementsActions } from './elementsSlice';

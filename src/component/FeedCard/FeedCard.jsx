@@ -5,7 +5,6 @@ import cn from 'classnames';
 
 const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage }) => {
   const data = useSelector((store) => store.ingredients);
-  console.log(status);
 
   const ingredientsOrder = [];
   for (let i = 0; i < ingredients.length; i++) {
