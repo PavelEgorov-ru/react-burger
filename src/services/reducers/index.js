@@ -5,10 +5,12 @@ import { elementsReducers } from './elementsSlice';
 import { ingredientReducers } from './ingredientSlice';
 import { orderReducers } from './orderSlice';
 import { userReducers } from './userSlice';
+import { wsActions, wsReducers } from './wsSlice';
 
 //экшены
 export { elementsActions } from './elementsSlice';
 export { ingredientActions } from './ingredientSlice';
+export { wsActions } from './wsSlice';
 export { ingredientsActions, fetchIngredients } from './ingredientsSlice';
 export { orderActions, fetchOrder } from './orderSlice';
 export {
@@ -17,7 +19,6 @@ export {
   fetchAuth,
   fetchCheckUser,
   fetchEditUser,
-  // fetchNewToken,
   fetchLogout,
   fetchForgotPassword,
   fetchResetPassword,
@@ -29,4 +30,5 @@ export const rootReducer = combineReducers({
   ingredient: ingredientReducers,
   order: orderReducers,
   user: userReducers,
+  socket: wsReducers,
 });
