@@ -47,6 +47,27 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage }) => {
             if (index < 6) {
               shiftValue = shiftValue + 40;
               positionIndex = positionIndex - 1;
+
+              if (index === 5) {
+                return (
+                  <div
+                    className={`${styles.icon} ${styles.icon_last}`}
+                    style={{
+                      backgroundImage: `url(${element.image})`,
+                      position: 'absolute',
+                      left: `${shiftValue}px`,
+                      zIndex: `${positionIndex}`,
+                    }}
+                  >
+                    {ingredientsOrder.length - 6 !== 0 && (
+                      <p className={`text text_type_digits-default ${styles.number}`}>
+                        +{ingredientsOrder.length - 6}
+                      </p>
+                    )}
+                  </div>
+                );
+              }
+
               return (
                 <div
                   className={styles.icon}
