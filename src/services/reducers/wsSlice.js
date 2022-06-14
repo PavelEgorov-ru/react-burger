@@ -13,17 +13,26 @@ const wsSlice = createSlice({
   initialState: initialStateSocket,
   reducers: {
     connectionFeedList(state, action) {
-      state.isConect = true;
       state.isLoadingWs = false;
     },
     connectionOrderList(state, action) {
-      state.isConect = true;
       state.isLoadingWs = false;
+    },
+    onOpen(state, action) {
+      state.isConect = true;
     },
     getMessage(state, action) {
       state.isLoadingWs = true;
       state.message = action.payload;
     },
+    onError(state, action) {
+      state.isConect = false;
+      state.isLoadingWs = true;
+    },
+    onClose(state, action) {
+      state.isConect = false;
+    },
+    wsClose(state, actin) {},
   },
 });
 

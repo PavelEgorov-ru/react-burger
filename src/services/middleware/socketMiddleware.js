@@ -22,13 +22,13 @@ export const socketMiddleware = (wsUrl) => {
 
       if (socket) {
         socket.onopen = (event) => {
-          // dispatch();
+          dispatch(wsActions.onOpen());
           console.log(event);
         };
 
-        // socket.onerror = (event) => {
-        //   dispatch({ type: 'WS_CONNECTION_ERROR', payload: event });
-        // };
+        socket.onerror = (event) => {
+          dispatch(wsActions.onError());
+        };
 
         socket.onmessage = (event) => {
           const { data } = event;
@@ -37,14 +37,13 @@ export const socketMiddleware = (wsUrl) => {
           dispatch(wsActions.getMessage(parseData));
         };
 
-        // socket.onclose = (event) => {
-        //   dispatch({ type: 'WS_CONNECTION_CLOSED', payload: event });
-        // };
+        socket.onclose = (event) => {
+          dispatch(wsActions.onClose());
+        };
 
-        // if (type === 'WS_SEND_MESSAGE') {
-        //   const message = payload;
-        //   socket.send(JSON.stringify(message));
-        // }
+        if (type === 'socket/wsClose') {
+          socket.close();
+        }
       }
 
       next(action);
