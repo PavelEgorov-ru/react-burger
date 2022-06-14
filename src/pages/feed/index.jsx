@@ -11,7 +11,11 @@ export const FeedPage = () => {
 
   useEffect(() => {
     dispatch(wsActions.connectionFeedList());
-  }, []);
+
+    return () => {
+      dispatch(wsActions.wsClose());
+    };
+  }, [dispatch]);
 
   return (
     <div className={styles.main}>

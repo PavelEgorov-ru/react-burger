@@ -20,7 +20,11 @@ export const OrderPage = () => {
 
   useEffect(() => {
     dispatch(wsActions.connectionOrderList());
-  }, []);
+
+    return () => {
+      dispatch(wsActions.wsClose());
+    };
+  }, [dispatch]);
 
   return (
     <main className={cn(styles.main)}>
