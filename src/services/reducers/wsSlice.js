@@ -6,6 +6,8 @@ const initialStateSocket = {
   isLoadingWs: true,
   success: false,
   orders: [],
+  total: null,
+  totalToday: null,
   error: '',
 };
 
@@ -26,6 +28,8 @@ const wsSlice = createSlice({
       state.isLoadingWs = true;
       state.success = payload.success;
       state.orders = payload.orders;
+      state.total = payload.total;
+      state.totalToday = payload.totalToday;
     },
     onError(state) {
       state.isConect = false;
@@ -35,6 +39,8 @@ const wsSlice = createSlice({
       state.isConect = false;
       state.success = false;
       state.orders = [];
+      state.total = null;
+      state.totalToday = null;
     },
     wsClose(state, actin) {},
   },

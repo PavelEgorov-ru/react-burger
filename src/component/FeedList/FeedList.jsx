@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import styles from './FeedList.module.css';
-import { dataTest } from '../../utils/constants';
 import FeedCard from '../FeedCard/FeedCard';
 import { useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
