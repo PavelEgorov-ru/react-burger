@@ -4,7 +4,7 @@ import { stat } from 'fs';
 const initialStateSocket = {
   isConect: false,
   isLoadingWs: true,
-  message: [],
+  message: {},
   error: '',
 };
 
@@ -19,6 +19,10 @@ const wsSlice = createSlice({
     connectionOrderList(state, action) {
       state.isConect = true;
       state.isLoadingWs = false;
+    },
+    getMessage(state, action) {
+      state.isLoadingWs = true;
+      state.message = action.payload;
     },
   },
 });

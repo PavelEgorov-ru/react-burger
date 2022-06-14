@@ -1,4 +1,5 @@
 import { getCookie } from '../../utils/cookie';
+import { wsActions } from '../reducers';
 
 export const socketMiddleware = (wsUrl) => {
   return (store) => {
@@ -21,7 +22,7 @@ export const socketMiddleware = (wsUrl) => {
 
       if (socket) {
         socket.onopen = (event) => {
-          // dispatch({ type: 'WS_CONNECTION_SUCCESS', payload: event });
+          // dispatch();
           console.log(event);
         };
 
@@ -31,8 +32,9 @@ export const socketMiddleware = (wsUrl) => {
 
         socket.onmessage = (event) => {
           const { data } = event;
-          console.log(data);
-          // dispatch({ type: 'WS_GET_MESSAGE', payload: data });
+          const parseData = JSON.parse(data);
+          console.log(parseData);
+          dispatch(wsActions.getMessage(parseData));
         };
 
         // socket.onclose = (event) => {
