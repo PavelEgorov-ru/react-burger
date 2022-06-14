@@ -15,10 +15,8 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, numb
   let shiftValue = -40;
   let positionIndex = 6;
 
-  // let nameOrder = '';
   let price = 0;
   ingredientsOrder.forEach((element) => {
-    // nameOrder = `${nameOrder} ` + `${element.name}`;
     price = price + element.price;
   });
 
