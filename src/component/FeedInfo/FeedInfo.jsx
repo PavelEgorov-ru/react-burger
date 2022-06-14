@@ -21,7 +21,7 @@ const FeedInfo = () => {
       <div className={styles.statusSection}>
         <div className={styles.statusDone}>
           <p className={`text text_type_main-medium ${styles.title}`}> Готовы: </p>
-          <div className={styles.number}>
+          <div className={styles.numbers}>
             {ordersDone.map((item) => {
               return (
                 <p className={`text text_type_digits-default ${styles.order}`} key={nanoid()}>
@@ -33,7 +33,7 @@ const FeedInfo = () => {
         </div>
         <div className={styles.statusCreated}>
           <p className={`text text_type_main-medium ${styles.title}`}> В работе: </p>
-          <div className={styles.number}>
+          <div className={styles.numbers}>
             {ordersCreated.map((item) => {
               return (
                 <p className="text text_type_digits-default" key={nanoid()}>
