@@ -1,10 +1,12 @@
 import cn from 'classnames';
 import styles from './order.module.css';
+import { useEffect } from 'react';
 import { NavLink, useLocation, useRouteMatch } from 'react-router-dom';
 import { fetchLogout } from '../../services/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { dataTest } from '../../utils/constants';
 import FeedCard from '../../component/FeedCard/FeedCard';
+import { wsActions } from '../../services/reducers';
 
 export const OrderPage = () => {
   const { url, path } = useRouteMatch();
@@ -15,6 +17,10 @@ export const OrderPage = () => {
     const refToken = localStorage.getItem('refBurgerToken');
     dispatch(fetchLogout({ token: refToken }));
   };
+
+  useEffect(() => {
+    dispatch(wsActions.connectionOrderList());
+  }, []);
 
   return (
     <main className={cn(styles.main)}>

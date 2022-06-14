@@ -1,18 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { stat } from 'fs';
 
 const initialStateSocket = {
-  test1: {},
+  isConect: false,
+  isLoadingWs: true,
+  message: [],
+  error: '',
 };
 
 const wsSlice = createSlice({
   name: 'socket',
   initialState: initialStateSocket,
   reducers: {
-    testAstion1(state, action) {
-      state.state1 = action.payload;
+    connectionFeedList(state, action) {
+      state.isConect = true;
+      state.isLoadingWs = false;
     },
-    testAction2(state, action) {
-      state.state1 = action.payload;
+    connectionOrderList(state, action) {
+      state.isConect = true;
+      state.isLoadingWs = false;
     },
   },
 });

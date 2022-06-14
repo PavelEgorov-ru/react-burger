@@ -10,7 +10,7 @@ export const FeedPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(wsActions.testAstion1());
+    dispatch(wsActions.connectionFeedList());
   }, []);
 
   return (

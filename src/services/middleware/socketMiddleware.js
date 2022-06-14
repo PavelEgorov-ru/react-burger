@@ -1,3 +1,5 @@
+import { getCookie } from '../../utils/cookie';
+
 export const socketMiddleware = (wsUrl) => {
   return (store) => {
     let socket = null;
@@ -8,10 +10,15 @@ export const socketMiddleware = (wsUrl) => {
       console.log(type);
       console.log(payload);
 
-      if (type === 'socket/testAstion1') {
-        socket = new WebSocket(wsUrl);
-        console.log('видит');
+      if (type === 'socket/connectionFeedList') {
+        socket = new WebSocket(`${wsUrl}/all`);
+        console.log('общее соединение');
       }
+      if (type === 'socket/connectionOrderList') {
+        socket = new WebSocket(`${wsUrl}?token=${getCookie('burgerToken')}`);
+        console.log('соединение для данных профиля');
+      }
+
       if (socket) {
         socket.onopen = (event) => {
           // dispatch({ type: 'WS_CONNECTION_SUCCESS', payload: event });
