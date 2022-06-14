@@ -1,15 +1,14 @@
 import styles from './FeedInfo.module.css';
 import { useSelector } from 'react-redux';
-import { dataTest } from '../../utils/constants';
+import { nanoid } from '@reduxjs/toolkit';
 
 const FeedInfo = () => {
-  console.log(dataTest);
-  const items = dataTest.orders;
+  const { orders, total, totalToday } = useSelector((store) => store.socket);
 
   const ordersDone = [];
   const ordersCreated = [];
 
-  items.forEach((item) => {
+  orders.forEach((item) => {
     if (item.status === 'done') {
       ordersDone.push(item);
     } else if (item.status === 'created') {
@@ -17,19 +16,16 @@ const FeedInfo = () => {
     } else return;
   });
 
-  console.log(ordersDone);
-  console.log(ordersCreated);
-
   return (
     <section className={styles.sectionSize}>
       <div className={styles.statusSection}>
         <div className={styles.statusDone}>
           <p className={`text text_type_main-medium ${styles.title}`}> Готовы: </p>
-          <div className={styles.number}>
+          <div className={styles.numbers}>
             {ordersDone.map((item) => {
               return (
-                <p className={`text text_type_digits-default ${styles.order}`} key={item._id}>
-                  {item._id}
+                <p className={`text text_type_digits-default ${styles.order}`} key={nanoid()}>
+                  {item.number}
                 </p>
               );
             })}
@@ -37,11 +33,11 @@ const FeedInfo = () => {
         </div>
         <div className={styles.statusCreated}>
           <p className={`text text_type_main-medium ${styles.title}`}> В работе: </p>
-          <div className={styles.number}>
+          <div className={styles.numbers}>
             {ordersCreated.map((item) => {
               return (
-                <p className="text text_type_digits-default" key={item._id}>
-                  {item._id}
+                <p className="text text_type_digits-default" key={nanoid()}>
+                  {item.number}
                 </p>
               );
             })}
@@ -50,11 +46,11 @@ const FeedInfo = () => {
       </div>
       <div className={styles.info}>
         <p className="text text_type_main-medium">Выполнено за все время:</p>
-        <p className="text text_type_digits-large">{dataTest.total}</p>
+        <p className="text text_type_digits-large">{total}</p>
       </div>
       <div className={styles.info}>
         <p className="text text_type_main-medium">Выполнено за сегодня:</p>
-        <p className="text text_type_digits-large">{dataTest.totalToday}</p>
+        <p className="text text_type_digits-large">{totalToday}</p>
       </div>
     </section>
   );

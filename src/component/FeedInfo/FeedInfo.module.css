@@ -18,7 +18,7 @@
   min-width: 300px;
 }
 
-.number {
+.numbers {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

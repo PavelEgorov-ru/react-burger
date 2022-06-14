@@ -3,9 +3,8 @@ import { useSelector } from 'react-redux';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 
-const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage }) => {
+const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, number }) => {
   const data = useSelector((store) => store.ingredients);
-  console.log(status);
 
   const ingredientsOrder = [];
   for (let i = 0; i < ingredients.length; i++) {
@@ -16,21 +15,19 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage }) => {
   let shiftValue = -40;
   let positionIndex = 6;
 
-  let nameOrder = '';
   let price = 0;
   ingredientsOrder.forEach((element) => {
-    nameOrder = `${nameOrder} ` + `${element.name}`;
     price = price + element.price;
   });
 
   return (
     <div className={styles.card}>
       <div className={styles.header}>
-        <p className="text text_type_digits-default">{`#${_id}`}</p>
+        <p className="text text_type_digits-default">{`#${number}`}</p>
         <p className="text text_type_digits-default text_color_inactive">{createdAt}</p>
       </div>
       <div className={styles.nameContainer}>
-        <p className={`${styles.description} text text_type_main-medium`}>{nameOrder}</p>
+        <p className={`${styles.description} text text_type_main-medium`}>{name}</p>
         {isOrderPage ? (
           <p
             className={cn(`text text_type_main-default mt-2`, {

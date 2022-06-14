@@ -7,6 +7,10 @@ export function getCookie(name) {
 }
 
 export function setCookie(name, value, props) {
+  console.log(value);
+  let newValue = value.split('Bearer ')[1];
+  console.log(newValue);
+  console.log(props);
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -17,8 +21,8 @@ export function setCookie(name, value, props) {
   if (exp && exp.toUTCString) {
     props.expires = exp.toUTCString();
   }
-  value = encodeURIComponent(value);
-  let updatedCookie = name + '=' + value;
+  newValue = encodeURIComponent(newValue);
+  let updatedCookie = name + '=' + newValue;
   for (const propName in props) {
     updatedCookie += '; ' + propName;
     const propValue = props[propName];

@@ -1,13 +1,15 @@
 import cn from 'classnames';
 import styles from './order.module.css';
-import { NavLink, useLocation, useRouteMatch } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import { fetchLogout } from '../../services/reducers';
 import { useDispatch, useSelector } from 'react-redux';
-import { dataTest } from '../../utils/constants';
 import FeedCard from '../../component/FeedCard/FeedCard';
+import { wsActions } from '../../services/reducers';
 
 export const OrderPage = () => {
-  const { url, path } = useRouteMatch();
+  const { orders } = useSelector((store) => store.socket);
+  const { url } = useRouteMatch();
   const isOrderPage = true;
 
   const dispatch = useDispatch();
@@ -15,6 +17,14 @@ export const OrderPage = () => {
     const refToken = localStorage.getItem('refBurgerToken');
     dispatch(fetchLogout({ token: refToken }));
   };
+
+  useEffect(() => {
+    dispatch(wsActions.connectionOrderList());
+
+    return () => {
+      dispatch(wsActions.wsClose());
+    };
+  }, [dispatch]);
 
   return (
     <main className={cn(styles.main)}>
@@ -35,7 +45,7 @@ export const OrderPage = () => {
       </nav>
       <section className={cn(styles.sectionSize)}>
         <div className={cn(styles.container)}>
-          {dataTest.orders.map((card) => (
+          {orders.map((card) => (
             <FeedCard {...card} key={card.createdAt} isOrderPage={isOrderPage} />
           ))}
         </div>
