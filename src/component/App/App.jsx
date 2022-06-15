@@ -75,7 +75,7 @@ const App = () => {
         <ProtectedRoute path="/profile" exact={true}>
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute path="/profile/order" exact={true}>
+        <ProtectedRoute path="/profile/orders" exact={true}>
           <OrderPage />
         </ProtectedRoute>
         <Route path="/" exact={true}>
