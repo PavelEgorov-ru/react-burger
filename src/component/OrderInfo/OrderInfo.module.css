@@ -1,0 +1,79 @@
+.status {
+  align-self: flex-start;
+  margin-bottom: 60px;
+}
+
+.done {
+  color: #00cccc;
+}
+
+.nameOrder {
+  align-self: flex-start;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 24px;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 2px solid #4c4cff;
+  border-radius: 100%;
+  background-position: center;
+  background-size: cover;
+  background-color: #1c1c21;
+}
+
+.listIngredients {
+  padding: 0;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 270px;
+  overflow: auto;
+}
+
+.listIngredients::-webkit-scrollbar {
+  width: 8px; /* ширина для вертикального скролла */
+  background-color: #2f2f37;
+}
+
+.listIngredients::-webkit-scrollbar-thumb {
+  height: 100px;
+  background-color: #8585ad;
+}
+
+.li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 24px;
+}
+
+.nameContainer {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
