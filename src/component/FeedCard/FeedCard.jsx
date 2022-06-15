@@ -2,6 +2,7 @@ import styles from './FeedCard.module.css';
 import { useSelector } from 'react-redux';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
+import { dateUtils } from '../../utils/date-utils';
 import cn from 'classnames';
 
 const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, number }) => {
@@ -36,7 +37,7 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, numb
       <div className={styles.card}>
         <div className={styles.header}>
           <p className="text text_type_digits-default">{`#${number}`}</p>
-          <p className="text text_type_digits-default text_color_inactive">{createdAt}</p>
+          <p className="text text_type_main-default text_color_inactive">{dateUtils(createdAt)}</p>
         </div>
         <div className={styles.nameContainer}>
           <p className={`${styles.description} text text_type_main-medium`}>{name}</p>

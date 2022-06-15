@@ -2,15 +2,14 @@ import styles from './OrderInfo.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchOrderInfo, orderActions } from '../../services/reducers';
+import { dateUtils } from '../../utils/date-utils';
 import cn from 'classnames';
 
 const OrderInfo = () => {
   const router = useParams();
   const number = router.id;
-  // const { path } = useRouteMatch();
-  // console.log(path);
   const dispatch = useDispatch();
   const { ingredients } = useSelector((store) => store.ingredients);
 
@@ -88,7 +87,9 @@ const OrderInfo = () => {
           })}
         </ul>
         <div className={styles.footer}>
-          <p className="text text_type_main-medium text_color_inactive">{order.updatedAt}</p>
+          <p className="text text_type_main-default text_color_inactive">
+            {dateUtils(order.updatedAt)}
+          </p>
           <div className={styles.price}>
             <p className="text text_type_digits-default">{totaPrice}</p>
             <CurrencyIcon />
