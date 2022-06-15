@@ -38,13 +38,13 @@ const orderSlice = createSlice({
   reducers: {
     closeModal(state) {
       state.order = {};
+      state.orders = [];
       state.isOrder = false;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchOrder.pending, (state, action) => {
-        console.log(action);
         state.isOrder = false;
       })
       .addCase(fetchOrder.fulfilled, (state, action) => {
@@ -58,7 +58,6 @@ const orderSlice = createSlice({
       .addCase(fetchOrderInfo.fulfilled, (state, action) => {
         state.isLoadingOrder = true;
         state.orders = action.payload.orders;
-        console.log(action.payload);
       })
       .addCase(fetchOrderInfo.rejected, (state, action) => {
         state.isLoadingOrder = true;

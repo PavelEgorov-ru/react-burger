@@ -47,44 +47,6 @@ export const fetchLogout = createAsyncThunk(
   }
 );
 
-// export const fetchCheckUser = createAsyncThunk(
-//   'user/fetchCheckUser',
-//   async (refToken, { rejectWithValue }) => {
-//     try {
-//       const response = await auth.checkUser();
-//       if (!response.ok) {
-//         const message = rejectWithValue(responseData.message);
-//         console.log(message);
-//         if (message === 'jwt expired') {
-//           const check = await auth.newToken({ token: refToken });
-//           const checkData = await check.json();
-//           setCookie('burgerToken', checkData.accessToken);
-//           localStorage.setItem('refBurgerToken', checkData.refreshToken);
-//           console.log(checkData);
-//           if (checkData.success === true) {
-//             const response = await auth.checkUser();
-//             const newResponseData = await response.json();
-//             return newResponseData;
-//           }
-//         } else return rejectWithValue(responseData.message);
-//       }
-//       const responseData = await response.json();
-//       return responseData;
-//     } catch (res) {
-//       // console.log('111');
-//       // if (res.message === 'jwt expired') {
-//       //   console.log('222');
-//       //   const check = await auth.newToken();
-//       //   if (check.status === 200) {
-//       //     const response = await auth.checkUser();
-//       //     const responseData = response.json();
-//       //     return responseData;
-//       //   }
-//       // }
-//     }
-//   }
-// );
-
 export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async (refToken) => {
   const response = await auth.checkUser();
   const responseData = await response.json();
@@ -202,7 +164,6 @@ const userSlice = createSlice({
         state.isLoader = false;
       })
       .addCase(fetchCheckUser.fulfilled, (state, { payload }) => {
-        console.log(payload);
         state.userName = payload.user.name;
         state.userEmail = payload.user.email;
         state.isLoader = true;
