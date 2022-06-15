@@ -3,12 +3,19 @@ import { useEffect } from 'react';
 import cn from 'classnames';
 import styles from './Modal.module.css';
 import { createPortal } from 'react-dom';
+import { useHistory } from 'react-router-dom';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const modalRoot = document.getElementById('modal-root');
 
-const Modal = ({ children, title, onClose }) => {
+const Modal = ({ children, title }) => {
+  const history = useHistory();
+
+  const onClose = () => {
+    history.goBack();
+  };
+
   useEffect(() => {
     const closeModalEsc = (event) => {
       event.key === 'Escape' && onClose();

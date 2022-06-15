@@ -33,10 +33,6 @@ const App = () => {
     dispatch(orderActions.closeModal());
   };
 
-  const onCloseIngredient = () => {
-    history.goBack();
-  };
-
   const checkAuth = () => {
     const token = getCookie('burgerToken');
     const refToken = localStorage.getItem('refBurgerToken');
@@ -93,7 +89,7 @@ const App = () => {
 
       {background && (
         <Route path="/ingredients/:id" exact={true}>
-          <Modal onClose={onCloseIngredient}>
+          <Modal>
             <IngredientDetails />
           </Modal>
         </Route>
