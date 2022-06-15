@@ -12,7 +12,7 @@ export { elementsActions } from './elementsSlice';
 export { ingredientActions } from './ingredientSlice';
 export { wsActions } from './wsSlice';
 export { ingredientsActions, fetchIngredients } from './ingredientsSlice';
-export { orderActions, fetchOrder } from './orderSlice';
+export { orderActions, fetchOrder, fetchOrderInfo } from './orderSlice';
 export {
   userActions,
   fetchNewUser,

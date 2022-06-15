@@ -1,11 +1,19 @@
 import styles from './OrderInfo.module.css';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { fetchOrderInfo } from '../../services/reducers';
 
 const OrderInfo = () => {
-  const { orders } = useSelector((store) => store.socket);
   const router = useParams();
   const number = router.id;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchOrderInfo(number));
+  }, []);
+
+  const { orders } = useSelector((store) => store.order);
+  console.log(orders);
 
   return <div>информация о заказе</div>;
 };

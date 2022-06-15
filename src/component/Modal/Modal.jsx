@@ -33,7 +33,7 @@ const Modal = ({ children, title, onClose }) => {
 
   return createPortal(
     <div className={cn(styles.window)}>
-      <ModalOverlay onClose={onClose} />
+      <ModalOverlay onClose={onCloseModal} />
       <div className={cn(styles.container)}>
         <h2 className={cn(`${styles.title} text text_type_main-large`)}>{title}</h2>
         <button className={cn(styles.button)} onClick={() => onCloseModal()}>

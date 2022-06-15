@@ -31,6 +31,10 @@ class Api extends React.Component {
   postOrders(info) {
     return this._request('POST', 'orders', info);
   }
+
+  getOrder(id) {
+    return this._request('GET', `orders/${id}`);
+  }
 }
 
 const newApi = new Api({
