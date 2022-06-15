@@ -2,13 +2,15 @@ import styles from './OrderInfo.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useRouteMatch } from 'react-router-dom';
 import { fetchOrderInfo, orderActions } from '../../services/reducers';
 import cn from 'classnames';
 
 const OrderInfo = () => {
   const router = useParams();
   const number = router.id;
+  const match = useRouteMatch();
+  console.log(match);
   const dispatch = useDispatch();
   const { ingredients } = useSelector((store) => store.ingredients);
 

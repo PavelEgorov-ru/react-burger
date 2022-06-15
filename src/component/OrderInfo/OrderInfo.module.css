@@ -52,10 +52,11 @@
 }
 
 .li {
+  /* margin-right: 24px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: calc(100% - 24px);
   gap: 24px;
 }
 
