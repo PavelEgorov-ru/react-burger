@@ -11,6 +11,10 @@
   align-self: flex-start;
 }
 
+.numberOrder {
+  align-self: flex-start;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -52,7 +56,6 @@
 }
 
 .li {
-  /* margin-right: 24px; */
   display: flex;
   justify-content: space-between;
   align-items: center;

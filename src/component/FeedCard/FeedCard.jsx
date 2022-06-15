@@ -1,12 +1,13 @@
 import styles from './FeedCard.module.css';
 import { useSelector } from 'react-redux';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import cn from 'classnames';
 
 const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, number }) => {
   const data = useSelector((store) => store.ingredients);
   const location = useLocation();
+  const { url } = useRouteMatch();
 
   const ingredientsOrder = [];
   for (let i = 0; i < ingredients.length; i++) {
@@ -27,7 +28,7 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, numb
   return (
     <Link
       to={{
-        pathname: `/feed/${number}`,
+        pathname: `${url}/${number}`,
         state: { background: location },
       }}
       className={styles.link}

@@ -91,23 +91,40 @@ const App = () => {
             <OrderInfo />
           </div>
         </Route>
+        <Route exact={true} path="/profile/orders/:id">
+          <div className={styles.app__ingredientContainer}>
+            <OrderInfo />
+          </div>
+        </Route>
       </Switch>
 
       {background && (
-        <Route path="/ingredients/:id" exact={true}>
-          <Modal>
-            <IngredientDetails />
-          </Modal>
-        </Route>
+        <>
+          <Route path="/ingredients/:id" exact={true}>
+            <Modal>
+              <IngredientDetails />
+            </Modal>
+          </Route>
+          <Route path="/feed/:id" exact={true}>
+            <Modal>
+              <OrderInfo />
+            </Modal>
+          </Route>
+          <Route path="/profile/orders/:id" exact={true}>
+            <Modal>
+              <OrderInfo />
+            </Modal>
+          </Route>
+        </>
       )}
 
-      {background && (
+      {/* {background && (
         <Route path="/feed/:id" exact={true}>
           <Modal>
             <OrderInfo />
           </Modal>
         </Route>
-      )}
+      )} */}
     </div>
   );
 };

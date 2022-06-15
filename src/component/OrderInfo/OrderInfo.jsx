@@ -9,8 +9,8 @@ import cn from 'classnames';
 const OrderInfo = () => {
   const router = useParams();
   const number = router.id;
-  const match = useRouteMatch();
-  console.log(match);
+  // const { path } = useRouteMatch();
+  // console.log(path);
   const dispatch = useDispatch();
   const { ingredients } = useSelector((store) => store.ingredients);
 
@@ -50,8 +50,10 @@ const OrderInfo = () => {
 
   return (
     <>
-      <p className="text text_type_digits-default mb-10">{`#${order.number}`}</p>
-      <p className={`text text_type_main-medium mb-3 ${styles.nameOrder}`}>{order.name}</p>
+      <p
+        className={cn(`text text_type_digits-default mb-10 ${styles.numberOrder}`)}
+      >{`#${order.number}`}</p>
+      <p className={cn(`text text_type_main-medium mb-3 ${styles.nameOrder}`)}>{order.name}</p>
       <p
         className={cn(`text text_type_main-default ${styles.status}`, {
           [styles.done]: order.status === 'done',

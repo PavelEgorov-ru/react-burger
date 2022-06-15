@@ -7,5 +7,5 @@
 .app__ingredientContainer {
   box-sizing: border-box;
   padding: 120px 50px;
-  max-width: 900px;
+  width: 900px;
 }
