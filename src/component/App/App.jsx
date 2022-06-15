@@ -8,6 +8,7 @@ import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetails from '../OrderDetails/OrderDetails';
+import OrderInfo from '../OrderInfo/OrderInfo';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { orderActions, fetchIngredients, fetchCheckUser } from '../../services/reducers';
 import {
@@ -85,12 +86,25 @@ const App = () => {
             <IngredientDetails />
           </div>
         </Route>
+        <Route exact={true} path="/feed/:id">
+          <div className={styles.app__ingredientContainer}>
+            <OrderInfo />
+          </div>
+        </Route>
       </Switch>
 
       {background && (
         <Route path="/ingredients/:id" exact={true}>
           <Modal>
             <IngredientDetails />
+          </Modal>
+        </Route>
+      )}
+
+      {background && (
+        <Route path="/feed/:id" exact={true}>
+          <Modal>
+            <OrderInfo />
           </Modal>
         </Route>
       )}
