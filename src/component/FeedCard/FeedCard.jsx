@@ -31,7 +31,7 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, numb
   return (
     <Link
       to={{
-        pathname: `${url}/${number}`,
+        pathname: `${location.pathname}/${number}`,
         state: { background: location },
       }}
       className={styles.link}
