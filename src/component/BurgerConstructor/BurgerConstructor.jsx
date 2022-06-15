@@ -11,7 +11,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Element from '../Element/Element';
 import { elementsActions, fetchOrder } from '../../services/reducers';
-import { store } from '../../services';
 
 const BurgerConstructor = React.memo(() => {
   const history = useHistory();

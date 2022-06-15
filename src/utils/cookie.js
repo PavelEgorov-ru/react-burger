@@ -7,10 +7,7 @@ export function getCookie(name) {
 }
 
 export function setCookie(name, value, props) {
-  console.log(value);
   let newValue = value.split('Bearer ')[1];
-  console.log(newValue);
-  console.log(props);
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {

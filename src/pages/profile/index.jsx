@@ -106,7 +106,7 @@ export const ProfilePage = () => {
         <NavLink className={styles.link_active} to={{ pathname: `${url}` }}>
           <p className={cn('text text_type_main-medium')}>Профиль</p>
         </NavLink>
-        <NavLink className={styles.link} to={{ pathname: `${url}/order` }}>
+        <NavLink className={styles.link} to={{ pathname: `${url}/orders` }}>
           <p className={cn('text text_type_main-medium')}>История заказов</p>
         </NavLink>
         <NavLink className={styles.link} to={{ pathname: '/login' }} onClick={logout}>
