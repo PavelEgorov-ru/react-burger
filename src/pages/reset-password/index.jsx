@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { NavLink, Redirect, useHistory } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchResetPassword } from '../../services/reducers';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';

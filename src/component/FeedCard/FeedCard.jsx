@@ -1,4 +1,5 @@
 import styles from './FeedCard.module.css';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
@@ -100,6 +101,16 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, numb
       </div>
     </Link>
   );
+};
+
+FeedCard.propTypes = {
+  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  _id: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  isOrderPage: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.number,
 };
 
 export default FeedCard;

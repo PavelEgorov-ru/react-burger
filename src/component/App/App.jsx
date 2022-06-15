@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
@@ -26,7 +26,6 @@ import { getCookie } from '../../utils/cookie';
 const App = () => {
   const location = useLocation();
   const background = location.state && location.state.background;
-  const history = useHistory();
   const dispatch = useDispatch();
   const { isOrder } = useSelector((store) => store.order);
 
@@ -117,14 +116,6 @@ const App = () => {
           </Route>
         </>
       )}
-
-      {/* {background && (
-        <Route path="/feed/:id" exact={true}>
-          <Modal>
-            <OrderInfo />
-          </Modal>
-        </Route>
-      )} */}
     </div>
   );
 };

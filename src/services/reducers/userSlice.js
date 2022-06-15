@@ -55,7 +55,6 @@ export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async (ref
     const checkData = await check.json();
     setCookie('burgerToken', checkData.accessToken);
     localStorage.setItem('refBurgerToken', checkData.refreshToken);
-    console.log(checkData);
     if (checkData.success === true) {
       const response = await auth.checkUser();
       const newResponseData = await response.json();

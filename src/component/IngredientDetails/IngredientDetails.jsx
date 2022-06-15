@@ -7,9 +7,7 @@ const IngredientDetails = () => {
   const { ingredients } = useSelector((store) => store.ingredients);
   const router = useParams();
   const id = router.id;
-  console.log(router);
   const ingredient = ingredients.find((el) => el._id === id);
-  console.log(ingredient);
 
   if (!ingredient) return <div>загрузка</div>;
 

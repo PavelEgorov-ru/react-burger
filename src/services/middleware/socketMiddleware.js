@@ -16,11 +16,11 @@ export const socketMiddleware = (wsUrl) => {
       }
 
       if (socket) {
-        socket.onopen = (event) => {
+        socket.onopen = () => {
           dispatch(wsActions.onOpen());
         };
 
-        socket.onerror = (event) => {
+        socket.onerror = () => {
           dispatch(wsActions.onError());
         };
 
@@ -30,7 +30,7 @@ export const socketMiddleware = (wsUrl) => {
           dispatch(wsActions.getMessage(parseData));
         };
 
-        socket.onclose = (event) => {
+        socket.onclose = () => {
           dispatch(wsActions.onClose());
         };
 
