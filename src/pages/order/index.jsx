@@ -9,6 +9,10 @@ import { wsActions } from '../../services/reducers';
 
 export const OrderPage = () => {
   const { orders } = useSelector((store) => store.socket);
+  console.log(orders);
+
+  const ordersRevers = [...orders].reverse();
+
   const { url } = useRouteMatch();
   const isOrderPage = true;
 
@@ -45,7 +49,7 @@ export const OrderPage = () => {
       </nav>
       <section className={cn(styles.sectionSize)}>
         <div className={cn(styles.container)}>
-          {orders.map((card) => (
+          {ordersRevers.map((card) => (
             <FeedCard {...card} key={card.createdAt} isOrderPage={isOrderPage} />
           ))}
         </div>
