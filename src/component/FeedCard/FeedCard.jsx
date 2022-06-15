@@ -9,7 +9,9 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, numb
   const ingredientsOrder = [];
   for (let i = 0; i < ingredients.length; i++) {
     const element = data.ingredients.find((item) => item._id === ingredients[i]);
-    ingredientsOrder.push(element);
+    if (element) {
+      ingredientsOrder.push(element);
+    }
   }
 
   let shiftValue = -40;
