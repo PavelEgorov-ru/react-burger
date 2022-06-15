@@ -5,6 +5,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { dateUtils } from '../../utils/date-utils';
 import cn from 'classnames';
+import { nanoid } from '@reduxjs/toolkit';
 
 const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, number }) => {
   const data = useSelector((store) => store.ingredients);
@@ -69,6 +70,7 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, numb
                         left: `${shiftValue}px`,
                         zIndex: `${positionIndex}`,
                       }}
+                      key={nanoid()}
                     >
                       {ingredientsOrder.length - 6 !== 0 && (
                         <p className={`text text_type_digits-default ${styles.number}`}>
@@ -88,6 +90,7 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, numb
                       left: `${shiftValue}px`,
                       zIndex: `${positionIndex}`,
                     }}
+                    key={nanoid()}
                   ></div>
                 );
               } else return;

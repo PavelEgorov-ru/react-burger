@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { fetchOrderInfo, orderActions } from '../../services/reducers';
 import { dateUtils } from '../../utils/date-utils';
 import cn from 'classnames';
+import { nanoid } from '@reduxjs/toolkit';
 
 const OrderInfo = () => {
   const router = useParams();
@@ -32,7 +33,6 @@ const OrderInfo = () => {
         ingredientsOrder.push(element);
       }
     }
-    console.log(order);
   }
 
   const getCount = (id) => {
@@ -65,7 +65,7 @@ const OrderInfo = () => {
         <ul className={styles.listIngredients}>
           {ingredientsOrder.map((item) => {
             return (
-              <li key={item._id} className={styles.li}>
+              <li key={nanoid()} className={styles.li}>
                 <div className={styles.nameContainer}>
                   <div
                     className={styles.icon}
