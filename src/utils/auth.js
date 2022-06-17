@@ -15,8 +15,7 @@ class Auth extends React.Component {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: faceToken,
-        Authorization: token ? token : null,
+        Authorization: token ? `Bearer ${token}` : null,
       },
     };
 

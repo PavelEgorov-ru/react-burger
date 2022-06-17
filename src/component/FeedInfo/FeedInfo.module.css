@@ -1,0 +1,48 @@
+.sectionSize {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.statusSection {
+  display: flex;
+  gap: 36px;
+}
+
+.statusDone {
+  min-width: 300px;
+}
+
+.statusCreated {
+  min-width: 300px;
+}
+
+.numbers {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.numbers::-webkit-scrollbar {
+  height: 5px; /* ширина для горизонтального скрола скролла */
+  width: 0px;
+  background-color: #2f2f37;
+}
+
+::-webkit-scrollbar-thumb {
+  height: 5px;
+  background-color: #8585ad;
+}
+
+.numbers .title {
+  margin-bottom: 24px;
+}
+
+.order {
+  color: #00cccc;
+}

@@ -85,3 +85,26 @@
   justify-content: flex-end;
   gap: 20px;
 }
+
+.sectionSize {
+  width: 840px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: auto;
+  max-height: calc(100vh - 330px);
+  position: relative;
+}
+
+.container::-webkit-scrollbar {
+  width: 8px; /* ширина для вертикального скролла */
+  background-color: #2f2f37;
+}
+
+.container::-webkit-scrollbar-thumb {
+  height: 392px;
+  background-color: #8585ad;
+}

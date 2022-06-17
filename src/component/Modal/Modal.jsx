@@ -3,15 +3,26 @@ import { useEffect } from 'react';
 import cn from 'classnames';
 import styles from './Modal.module.css';
 import { createPortal } from 'react-dom';
+import { useHistory } from 'react-router-dom';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const modalRoot = document.getElementById('modal-root');
 
 const Modal = ({ children, title, onClose }) => {
+  const history = useHistory();
+
+  const onCloseModal = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      history.goBack();
+    }
+  };
+
   useEffect(() => {
     const closeModalEsc = (event) => {
-      event.key === 'Escape' && onClose();
+      event.key === 'Escape' && onCloseModal();
     };
 
     document.addEventListener('keydown', closeModalEsc);
@@ -22,10 +33,10 @@ const Modal = ({ children, title, onClose }) => {
 
   return createPortal(
     <div className={cn(styles.window)}>
-      <ModalOverlay onClose={onClose} />
+      <ModalOverlay onClose={onCloseModal} />
       <div className={cn(styles.container)}>
         <h2 className={cn(`${styles.title} text text_type_main-large`)}>{title}</h2>
-        <button className={cn(styles.button)} onClick={() => onClose()}>
+        <button className={cn(styles.button)} onClick={() => onCloseModal()}>
           <CloseIcon />
         </button>
         {children}
@@ -38,7 +49,7 @@ const Modal = ({ children, title, onClose }) => {
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
   title: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
 };
 
 export default Modal;
