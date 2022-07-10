@@ -43,3 +43,5 @@ export const socketMiddleware = (wsUrl) => {
     };
   };
 };
+
+// стартовый коммит
