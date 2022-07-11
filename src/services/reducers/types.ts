@@ -8,6 +8,12 @@ export interface IStateIgredient {
   isOpenModal: boolean;
 }
 
+export interface IStateConstructor {
+  bun: Record<string, any> | IIngredient;
+  elements: IElement[];
+  isElements: boolean;
+}
+
 export interface IIngredient {
   _id: string;
   name: string;
@@ -21,6 +27,10 @@ export interface IIngredient {
   image_mobile: string;
   image_large: string;
   __v: number;
+}
+
+export interface IElement extends IIngredient {
+  uid: string;
 }
 
 export type TResponseIngredients = {
