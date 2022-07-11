@@ -3,6 +3,11 @@ export interface IStateIgredients {
   isIngredients: boolean;
 }
 
+export interface IStateIgredient {
+  ingredient: {};
+  isOpenModal: boolean;
+}
+
 export interface IIngredient {
   _id: string;
   name: string;
