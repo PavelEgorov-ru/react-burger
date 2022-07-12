@@ -1,13 +1,13 @@
 import { getCookie } from '../../utils/cookie';
 import { wsActions } from '../reducers';
 
-export const socketMiddleware = (wsUrl) => {
-  return (store) => {
-    let socket = null;
+export const socketMiddleware = (wsUrl: any) => {
+  return (store: any) => {
+    let socket: any = null;
 
-    return (next) => (action) => {
+    return (next: any) => (action: any) => {
       const { dispatch } = store;
-      const { type, payload } = action;
+      const { type } = action;
       if (type === 'socket/connectionFeedList') {
         socket = new WebSocket(`${wsUrl}/all`);
       }
@@ -24,8 +24,8 @@ export const socketMiddleware = (wsUrl) => {
           dispatch(wsActions.onError());
         };
 
-        socket.onmessage = (event) => {
-          const { data } = event;
+        socket.onmessage = (event: any) => {
+          const data = event.data;
           const parseData = JSON.parse(data);
           dispatch(wsActions.getMessage(parseData));
         };

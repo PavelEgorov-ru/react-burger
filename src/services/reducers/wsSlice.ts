@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { IStateWs } from './types';
 
-const initialStateSocket = {
+const initialStateSocket: IStateWs = {
   isConect: false,
   isLoadingWs: true,
   success: false,
@@ -23,12 +24,12 @@ const wsSlice = createSlice({
     onOpen(state) {
       state.isConect = true;
     },
-    getMessage(state, { payload }) {
+    getMessage(state, action) {
       state.isLoadingWs = true;
-      state.success = payload.success;
-      state.orders = payload.orders;
-      state.total = payload.total;
-      state.totalToday = payload.totalToday;
+      state.success = action.payload.success;
+      state.orders = action.payload.orders;
+      state.total = action.payload.total;
+      state.totalToday = action.payload.totalToday;
     },
     onError(state) {
       state.isConect = false;
@@ -41,7 +42,7 @@ const wsSlice = createSlice({
       state.total = null;
       state.totalToday = null;
     },
-    wsClose(state, actin) {},
+    wsClose() {},
   },
 });
 

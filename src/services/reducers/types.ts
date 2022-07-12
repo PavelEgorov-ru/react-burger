@@ -84,3 +84,15 @@ export type TResponseIngredients = {
   data: IIngredient[];
   success: boolean;
 };
+
+// wsSlice
+
+export interface IStateWs {
+  isConect: boolean;
+  isLoadingWs: boolean;
+  success: boolean;
+  orders: [];
+  total: number | null;
+  totalToday: number | null;
+  error: string;
+}
