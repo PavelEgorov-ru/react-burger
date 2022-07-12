@@ -22,6 +22,7 @@ const OrderInfo = () => {
   }, []);
 
   const { orders } = useSelector((store) => store.order);
+  console.log(orders);
   const order = orders[0];
 
   const ingredientsOrder = [];
