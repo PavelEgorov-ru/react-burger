@@ -2,8 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '../../utils/auth';
 import resetApi from '../../utils/resetApi';
 import { setCookie, deleteCookie } from '../../utils/cookie';
+import type { IStateUser, IResponseReject, IResponseRegister } from './types';
 
-const initialState = {
+const initialState: IStateUser = {
   isAuth: false,
   isLoader: true,
   isForgot: false,
@@ -18,32 +19,38 @@ export const fetchNewUser = createAsyncThunk(
   'user/fetchNewUser',
   async (info, { rejectWithValue }) => {
     const response = await auth.register(info);
-    const responseData = response.json();
-    if (!response.ok) {
+    if (response.ok) {
+      const responseData: IResponseRegister = await response.json();
+      return responseData;
+    } else {
+      const responseData: IResponseReject = await response.json();
       return rejectWithValue(responseData.message);
     }
-    return responseData;
   }
 );
 
 export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejectWithValue }) => {
   const response = await auth.login(info);
-  const responseData = response.json();
-  if (!response.ok) {
+  if (response.ok) {
+    const responseData = await response.json();
+    return responseData;
+  } else {
+    const responseData: IResponseReject = await response.json();
     return rejectWithValue(responseData.message);
   }
-  return responseData;
 });
 
 export const fetchLogout = createAsyncThunk(
   'user/fetchLogout',
   async (info, { rejectWithValue }) => {
     const response = await auth.logout(info);
-    const responseData = response.json();
-    if (!response.ok) {
+    if (response.ok) {
+      const responseData = await response.json();
+      return responseData;
+    } else {
+      const responseData: IResponseReject = await response.json();
       return rejectWithValue(responseData.message);
     }
-    return responseData;
   }
 );
 
@@ -68,11 +75,13 @@ export const fetchEditUser = createAsyncThunk(
   'user/fetchEditUser',
   async (info, { rejectWithValue }) => {
     const response = await auth.editUser(info);
-    const responseData = response.json();
-    if (!response.ok) {
+    if (response.ok) {
+      const responseData = await response.json();
+      return responseData;
+    } else {
+      const responseData: IResponseReject = await response.json();
       return rejectWithValue(responseData.message);
     }
-    return responseData;
   }
 );
 
@@ -80,11 +89,13 @@ export const fetchForgotPassword = createAsyncThunk(
   'user/fetchForgotPassword',
   async (info, { rejectWithValue }) => {
     const response = await resetApi.forgotPassword(info);
-    const responseData = response.json();
-    if (!response.ok) {
+    if (response.ok) {
+      const responseData = await response.json();
+      return responseData;
+    } else {
+      const responseData: IResponseReject = await response.json();
       return rejectWithValue(responseData.message);
     }
-    return responseData;
   }
 );
 
@@ -92,11 +103,13 @@ export const fetchResetPassword = createAsyncThunk(
   'user/fetchResetPassword',
   async (info, { rejectWithValue }) => {
     const response = await resetApi.resetPassword(info);
-    const responseData = response.json();
-    if (!response.ok) {
+    if (response.ok) {
+      const responseData = await response.json();
+      return responseData;
+    } else {
+      const responseData: IResponseReject = await response.json();
       return rejectWithValue(responseData.message);
     }
-    return responseData;
   }
 );
 
@@ -117,37 +130,37 @@ const userSlice = createSlice({
       .addCase(fetchNewUser.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchNewUser.fulfilled, (state, { payload }) => {
-        setCookie('burgerToken', payload.accessToken);
-        localStorage.setItem('refBurgerToken', payload.refreshToken);
-        state.userName = payload.user.name;
-        state.userEmail = payload.user.email;
-        state.userPassword = payload.user.password;
+      .addCase(fetchNewUser.fulfilled, (state, action: any) => {
+        setCookie('burgerToken', action.payload.accessToken);
+        localStorage.setItem('refBurgerToken', action.payload.refreshToken);
+        state.userName = action.payload.user.name;
+        state.userEmail = action.payload.user.email;
+        state.userPassword = action.payload.user.password;
         state.isLoader = true;
-        state.isAuth = payload.success;
+        state.isAuth = action.payload.success;
       })
-      .addCase(fetchNewUser.rejected, (state, { payload }) => {
-        state.errorMessage = payload;
+      .addCase(fetchNewUser.rejected, (state, action: any) => {
+        state.errorMessage = action.payload;
       })
       .addCase(fetchAuth.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchAuth.fulfilled, (state, { payload }) => {
-        setCookie('burgerToken', payload.accessToken);
-        localStorage.setItem('refBurgerToken', payload.refreshToken);
+      .addCase(fetchAuth.fulfilled, (state, action: any) => {
+        setCookie('burgerToken', action.payload.accessToken);
+        localStorage.setItem('refBurgerToken', action.payload.refreshToken);
         state.isLoader = true;
-        state.isAuth = payload.success;
-        state.userName = payload.user.name;
-        state.userEmail = payload.user.email;
-        state.userPassword = payload.user.password;
+        state.isAuth = action.payload.success;
+        state.userName = action.payload.user.name;
+        state.userEmail = action.payload.user.email;
+        state.userPassword = action.payload.user.password;
       })
-      .addCase(fetchAuth.rejected, (state, { payload }) => {
+      .addCase(fetchAuth.rejected, (state) => {
         state.isLoader = true;
       })
       .addCase(fetchLogout.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchLogout.fulfilled, (state, { payload }) => {
+      .addCase(fetchLogout.fulfilled, (state) => {
         deleteCookie('burgerToken');
         localStorage.removeItem('refBurgerToken');
         state.isLoader = true;
@@ -156,51 +169,51 @@ const userSlice = createSlice({
         state.userEmail = '';
         state.userPassword = '';
       })
-      .addCase(fetchLogout.rejected, (state, { payload }) => {
+      .addCase(fetchLogout.rejected, (state) => {
         state.isLoader = true;
       })
-      .addCase(fetchCheckUser.pending, (state, { payload }) => {
+      .addCase(fetchCheckUser.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchCheckUser.fulfilled, (state, { payload }) => {
-        state.userName = payload.user.name;
-        state.userEmail = payload.user.email;
+      .addCase(fetchCheckUser.fulfilled, (state, action: any) => {
+        state.userName = action.payload.user.name;
+        state.userEmail = action.payload.user.email;
         state.isLoader = true;
-        state.isAuth = payload.success;
+        state.isAuth = action.payload.success;
       })
-      .addCase(fetchCheckUser.rejected, (state, { payload }) => {
+      .addCase(fetchCheckUser.rejected, (state) => {
         state.isLoader = true;
       })
-      .addCase(fetchEditUser.pending, (state, { payload }) => {
+      .addCase(fetchEditUser.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchEditUser.fulfilled, (state, { payload }) => {
-        state.userName = payload.user.name;
-        state.userEmail = payload.user.email;
+      .addCase(fetchEditUser.fulfilled, (state, action: any) => {
+        state.userName = action.payload.user.name;
+        state.userEmail = action.payload.user.email;
         state.isLoader = true;
       })
-      .addCase(fetchEditUser.rejected, (state, { payload }) => {
+      .addCase(fetchEditUser.rejected, (state) => {
         state.isLoader = true;
       })
-      .addCase(fetchForgotPassword.pending, (state, { payload }) => {
+      .addCase(fetchForgotPassword.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchForgotPassword.fulfilled, (state, { payload }) => {
+      .addCase(fetchForgotPassword.fulfilled, (state) => {
         state.isLoader = true;
         state.isForgot = true;
       })
-      .addCase(fetchForgotPassword.rejected, (state, { payload }) => {
+      .addCase(fetchForgotPassword.rejected, (state) => {
         state.isLoader = true;
       })
-      .addCase(fetchResetPassword.pending, (state, { payload }) => {
+      .addCase(fetchResetPassword.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchResetPassword.fulfilled, (state, { payload }) => {
+      .addCase(fetchResetPassword.fulfilled, (state) => {
         state.isLoader = true;
         state.isReset = true;
         state.isForgot = false;
       })
-      .addCase(fetchResetPassword.rejected, (state, { payload }) => {
+      .addCase(fetchResetPassword.rejected, (state) => {
         state.isLoader = true;
       });
   },

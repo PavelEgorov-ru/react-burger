@@ -96,3 +96,25 @@ export interface IStateWs {
   totalToday: number | null;
   error: string;
 }
+
+export interface IStateUser {
+  isAuth: boolean;
+  isLoader: boolean;
+  isForgot: boolean;
+  isReset: boolean;
+  userName: string;
+  userEmail: string;
+  userPassword: string;
+  errorMessage: string;
+}
+// User
+
+export interface IResponseRegister {
+  accessToken: string;
+  refreshToken: string;
+  success: boolean;
+  user: {
+    email: string;
+    name: string;
+  };
+}
