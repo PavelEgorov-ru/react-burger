@@ -1,11 +1,12 @@
 import { getCookie } from '../../utils/cookie';
 import { wsActions } from '../reducers';
+import { MiddlewareAPI } from 'redux';
 
-export const socketMiddleware = (wsUrl) => {
-  return (store) => {
-    let socket = null;
+export const socketMiddleware = (wsUrl: string) => {
+  return (store: MiddlewareAPI) => {
+    let socket: WebSocket | null = null;
 
-    return (next) => (action) => {
+    return (next: any) => (action: { type: string; payload: string }) => {
       const { dispatch } = store;
       const { type, payload } = action;
       if (type === 'socket/connectionFeedList') {
@@ -25,7 +26,8 @@ export const socketMiddleware = (wsUrl) => {
         };
 
         socket.onmessage = (event) => {
-          const { data } = event;
+          const data = event.data;
+          console.log(data);
           const parseData = JSON.parse(data);
           dispatch(wsActions.getMessage(parseData));
         };
