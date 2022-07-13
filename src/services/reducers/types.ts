@@ -104,7 +104,6 @@ export interface IStateUser {
   isReset: boolean;
   userName: string;
   userEmail: string;
-  userPassword: string;
   errorMessage: string;
 }
 // User
@@ -117,4 +116,23 @@ export interface IResponseRegister {
     email: string;
     name: string;
   };
+}
+
+export interface IResponseEditUser {
+  success: boolean;
+  user: {
+    email: string;
+    name: string;
+  };
+}
+
+export interface IResponseSuccess {
+  message: string;
+  success: true;
+}
+
+export interface IResponseCheckUser {
+  accessToken: string;
+  refreshToken: string;
+  success: boolean;
 }

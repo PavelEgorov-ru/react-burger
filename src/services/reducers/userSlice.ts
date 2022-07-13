@@ -2,7 +2,15 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '../../utils/auth';
 import resetApi from '../../utils/resetApi';
 import { setCookie, deleteCookie } from '../../utils/cookie';
-import type { IStateUser, IResponseReject, IResponseRegister } from './types';
+import type {
+  IStateUser,
+  IResponseReject,
+  IResponseRegister,
+  IResponseSuccess,
+  IResponseEditUser,
+  IResponseCheckUser,
+} from './types';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: IStateUser = {
   isAuth: false,
@@ -11,7 +19,6 @@ const initialState: IStateUser = {
   isReset: false,
   userName: '',
   userEmail: '',
-  userPassword: '',
   errorMessage: '',
 };
 
@@ -24,7 +31,7 @@ export const fetchNewUser = createAsyncThunk(
       return responseData;
     } else {
       const responseData: IResponseReject = await response.json();
-      return rejectWithValue(responseData.message);
+      return rejectWithValue(responseData);
     }
   }
 );
@@ -45,7 +52,7 @@ export const fetchLogout = createAsyncThunk(
   async (info, { rejectWithValue }) => {
     const response = await auth.logout(info);
     if (response.ok) {
-      const responseData = await response.json();
+      const responseData: IResponseSuccess = await response.json();
       return responseData;
     } else {
       const responseData: IResponseReject = await response.json();
@@ -56,19 +63,23 @@ export const fetchLogout = createAsyncThunk(
 
 export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async (refToken) => {
   const response = await auth.checkUser();
-  const responseData = await response.json();
-  if (responseData.message === 'jwt expired') {
-    const check = await auth.newToken({ token: refToken });
-    const checkData = await check.json();
-    setCookie('burgerToken', checkData.accessToken);
-    localStorage.setItem('refBurgerToken', checkData.refreshToken);
-    if (checkData.success === true) {
-      const response = await auth.checkUser();
-      const newResponseData = await response.json();
-      return newResponseData;
+  if (response.ok) {
+    const responseData: IResponseEditUser = await response.json();
+    return responseData;
+  } else {
+    const responseData: IResponseReject = await response.json();
+    if (responseData.message === 'jwt expired') {
+      const check = await auth.newToken({ token: refToken });
+      const checkData: IResponseCheckUser = await check.json();
+      setCookie('burgerToken', checkData.accessToken);
+      localStorage.setItem('refBurgerToken', checkData.refreshToken);
+      if (checkData.success === true) {
+        const response = await auth.checkUser();
+        const newResponseData: IResponseEditUser = await response.json();
+        return newResponseData;
+      }
     }
   }
-  return responseData;
 });
 
 export const fetchEditUser = createAsyncThunk(
@@ -76,7 +87,7 @@ export const fetchEditUser = createAsyncThunk(
   async (info, { rejectWithValue }) => {
     const response = await auth.editUser(info);
     if (response.ok) {
-      const responseData = await response.json();
+      const responseData: IResponseEditUser = await response.json();
       return responseData;
     } else {
       const responseData: IResponseReject = await response.json();
@@ -90,7 +101,7 @@ export const fetchForgotPassword = createAsyncThunk(
   async (info, { rejectWithValue }) => {
     const response = await resetApi.forgotPassword(info);
     if (response.ok) {
-      const responseData = await response.json();
+      const responseData: IResponseSuccess = await response.json();
       return responseData;
     } else {
       const responseData: IResponseReject = await response.json();
@@ -104,7 +115,7 @@ export const fetchResetPassword = createAsyncThunk(
   async (info, { rejectWithValue }) => {
     const response = await resetApi.resetPassword(info);
     if (response.ok) {
-      const responseData = await response.json();
+      const responseData: IResponseSuccess = await response.json();
       return responseData;
     } else {
       const responseData: IResponseReject = await response.json();
@@ -130,29 +141,27 @@ const userSlice = createSlice({
       .addCase(fetchNewUser.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchNewUser.fulfilled, (state, action: any) => {
+      .addCase(fetchNewUser.fulfilled, (state, action: PayloadAction<IResponseRegister>) => {
         setCookie('burgerToken', action.payload.accessToken);
         localStorage.setItem('refBurgerToken', action.payload.refreshToken);
         state.userName = action.payload.user.name;
         state.userEmail = action.payload.user.email;
-        state.userPassword = action.payload.user.password;
         state.isLoader = true;
         state.isAuth = action.payload.success;
       })
-      .addCase(fetchNewUser.rejected, (state, action: any) => {
-        state.errorMessage = action.payload;
+      .addCase(fetchNewUser.rejected, (state) => {
+        state.isLoader = true;
       })
       .addCase(fetchAuth.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchAuth.fulfilled, (state, action: any) => {
+      .addCase(fetchAuth.fulfilled, (state, action: PayloadAction<IResponseRegister>) => {
         setCookie('burgerToken', action.payload.accessToken);
         localStorage.setItem('refBurgerToken', action.payload.refreshToken);
         state.isLoader = true;
         state.isAuth = action.payload.success;
         state.userName = action.payload.user.name;
         state.userEmail = action.payload.user.email;
-        state.userPassword = action.payload.user.password;
       })
       .addCase(fetchAuth.rejected, (state) => {
         state.isLoader = true;
@@ -167,7 +176,6 @@ const userSlice = createSlice({
         state.isAuth = false;
         state.userName = '';
         state.userEmail = '';
-        state.userPassword = '';
       })
       .addCase(fetchLogout.rejected, (state) => {
         state.isLoader = true;
@@ -187,7 +195,7 @@ const userSlice = createSlice({
       .addCase(fetchEditUser.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchEditUser.fulfilled, (state, action: any) => {
+      .addCase(fetchEditUser.fulfilled, (state, action: PayloadAction<IResponseEditUser>) => {
         state.userName = action.payload.user.name;
         state.userEmail = action.payload.user.email;
         state.isLoader = true;
