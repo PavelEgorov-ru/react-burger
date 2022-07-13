@@ -32,7 +32,7 @@ export const fetchNewUser = createAsyncThunk(
 export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejectWithValue }) => {
   const response = await auth.login(info);
   if (response.ok) {
-    const responseData = await response.json();
+    const responseData: IResponseRegister = await response.json();
     return responseData;
   } else {
     const responseData: IResponseReject = await response.json();
