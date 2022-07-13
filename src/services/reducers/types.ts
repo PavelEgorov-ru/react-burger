@@ -91,7 +91,7 @@ export interface IStateWs {
   isConect: boolean;
   isLoadingWs: boolean;
   success: boolean;
-  orders: [];
+  orders: IOrderObj[];
   total: number | null;
   totalToday: number | null;
   error: string;
@@ -135,4 +135,11 @@ export interface IResponseCheckUser {
   accessToken: string;
   refreshToken: string;
   success: boolean;
+}
+
+export interface IResponsDataWs {
+  success: boolean;
+  orders: IOrderObj[];
+  total: number;
+  totalToday: number;
 }

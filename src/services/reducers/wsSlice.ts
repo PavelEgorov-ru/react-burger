@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { IStateWs } from './types';
+import type { IStateWs, IResponsDataWs } from './types';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 const initialStateSocket: IStateWs = {
   isConect: false,
@@ -24,7 +25,7 @@ const wsSlice = createSlice({
     onOpen(state) {
       state.isConect = true;
     },
-    getMessage(state, action) {
+    getMessage(state, action: PayloadAction<IResponsDataWs>) {
       state.isLoadingWs = true;
       state.success = action.payload.success;
       state.orders = action.payload.orders;
