@@ -9,7 +9,7 @@ export interface IStateIgredient {
 }
 
 export interface IStateConstructor {
-  bun: Record<string, any> | IIngredient;
+  bun: IIngredient;
   elements: IElement[];
   isElements: boolean;
 }

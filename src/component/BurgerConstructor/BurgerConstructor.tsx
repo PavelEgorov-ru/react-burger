@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hoocks';
 import { useHistory } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import cn from 'classnames';
@@ -11,31 +11,34 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Element from '../Element/Element';
 import { elementsActions, fetchOrder } from '../../services/reducers';
+import type { IIngredient, IElement } from './type';
 
 const BurgerConstructor = React.memo(() => {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const { bun } = useSelector((store) => store.elements);
-  const { elements } = useSelector((store) => store.elements);
-  const { isAuth } = useSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+  const bun: IIngredient = useAppSelector((store) => store.elements.bun);
+  const elements: IElement[] = useAppSelector((store) => store.elements.elements);
+  const isAuth = useAppSelector((store) => store.user);
 
-  const arrayElements = [bun, ...elements];
+  const arrayElements: IIngredient[] = [bun, ...elements];
   const count = arrayElements.reduce((acc, item) => {
     return acc + item.price;
   }, 0);
 
-  const onClick = (arrayElements) => {
+  const onClick = (arrayElements: IIngredient[]) => {
+    console.log('arrayElements', arrayElements);
     if (!isAuth) {
       history.replace({ pathname: '/login' });
     } else {
       const arrayId = arrayElements.map(function (element) {
         return element._id;
       });
+      console.log('arrayId', arrayId);
       dispatch(fetchOrder({ ingredients: arrayId }));
     }
   };
 
-  const moveCard = (dragIndex, hoverIndex) => {
+  const moveCard = (dragIndex: number, hoverIndex: number) => {
     const newElements = [...elements];
     let dragElement = newElements[dragIndex];
     newElements.splice(dragIndex, 1);
@@ -45,22 +48,20 @@ const BurgerConstructor = React.memo(() => {
 
   const [, dropBunRef] = useDrop({
     accept: 'bun',
-    drop(item) {
+    drop(item: IIngredient) {
       dispatch(elementsActions.postBun(item));
     },
   });
 
   const [{ isHover }, dropRef] = useDrop({
     accept: ['sauce', 'main'],
-    drop(item) {
+    drop(item: IIngredient) {
       dispatch(elementsActions.postElement(item));
     },
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
   });
-
-  const boxShadow = isHover ? '0 0 20px #6434db' : null;
 
   return (
     <section className={cn(`pt-25 + ${styles.container}`)}>
@@ -81,7 +82,7 @@ const BurgerConstructor = React.memo(() => {
             );
           })
         ) : (
-          <div className={styles.box} style={{ boxShadow }}>
+          <div className={styles.box}>
             <p className="text text_type_main-default text_color_inactive">
               Выберите себе вкусную начинку. Можно несколько
             </p>
@@ -111,3 +112,6 @@ const BurgerConstructor = React.memo(() => {
 });
 
 export default BurgerConstructor;
+
+// const boxShadow: string | null = isHover ? '0 0 20px #6434db' : null;
+// style={{ boxShadow }} вернуть

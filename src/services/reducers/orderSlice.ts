@@ -19,7 +19,7 @@ const initialStateOrder: IStateOrder = {
 
 export const fetchOrder = createAsyncThunk(
   'order/fetchOrder',
-  async (info, { rejectWithValue }) => {
+  async (info: any, { rejectWithValue }) => {
     const response = await newApi.postOrders(info);
     if (response.ok) {
       const responseData: IResponseOrderSlise = await response.json();
