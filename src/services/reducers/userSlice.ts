@@ -61,26 +61,29 @@ export const fetchLogout = createAsyncThunk(
   }
 );
 
-export const fetchCheckUser = createAsyncThunk('user/fetchCheckUser', async (refToken) => {
-  const response = await auth.checkUser();
-  if (response.ok) {
-    const responseData: IResponseEditUser = await response.json();
-    return responseData;
-  } else {
-    const responseData: IResponseReject = await response.json();
-    if (responseData.message === 'jwt expired') {
-      const check = await auth.newToken({ token: refToken });
-      const checkData: IResponseCheckUser = await check.json();
-      setCookie('burgerToken', checkData.accessToken);
-      localStorage.setItem('refBurgerToken', checkData.refreshToken);
-      if (checkData.success === true) {
-        const response = await auth.checkUser();
-        const newResponseData: IResponseEditUser = await response.json();
-        return newResponseData;
+export const fetchCheckUser = createAsyncThunk(
+  'user/fetchCheckUser',
+  async (refToken: string | null) => {
+    const response = await auth.checkUser();
+    if (response.ok) {
+      const responseData: IResponseEditUser = await response.json();
+      return responseData;
+    } else {
+      const responseData: IResponseReject = await response.json();
+      if (responseData.message === 'jwt expired') {
+        const check = await auth.newToken({ token: refToken });
+        const checkData: IResponseCheckUser = await check.json();
+        setCookie('burgerToken', checkData.accessToken);
+        localStorage.setItem('refBurgerToken', checkData.refreshToken);
+        if (checkData.success === true) {
+          const response = await auth.checkUser();
+          const newResponseData: IResponseEditUser = await response.json();
+          return newResponseData;
+        }
       }
     }
   }
-});
+);
 
 export const fetchEditUser = createAsyncThunk(
   'user/fetchEditUser',

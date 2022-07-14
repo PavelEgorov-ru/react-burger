@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hoocks';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import styles from './App.module.css';
@@ -24,10 +24,10 @@ import {
 import { getCookie } from '../../utils/cookie';
 
 const App = () => {
-  const location = useLocation();
+  const location = useLocation<any>();
   const background = location.state && location.state.background;
-  const dispatch = useDispatch();
-  const { isOrder } = useSelector((store) => store.order);
+  const dispatch = useAppDispatch();
+  const { isOrder } = useAppSelector((store) => store.order);
 
   const onCloseOrder = () => {
     dispatch(orderActions.closeModal());
