@@ -1,6 +1,7 @@
 import styles from './Menu.module.css';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hoocks';
 import cn from 'classnames';
 import {
   Logo,
@@ -10,7 +11,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const Menu = () => {
-  const { userName } = useSelector((store) => store.user);
+  const { userName } = useAppSelector((store) => store.user);
 
   return (
     <nav>
@@ -21,7 +22,7 @@ const Menu = () => {
           exact
           to={{ pathname: '/' }}
         >
-          <BurgerIcon type="secondary" className={cn(styles.iconActive)} />
+          <BurgerIcon type="secondary" />
           <p className={cn('text text_type_main-default pl-2')}>Конструктор</p>
         </NavLink>
         <NavLink
