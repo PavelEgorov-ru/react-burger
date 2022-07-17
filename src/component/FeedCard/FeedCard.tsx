@@ -1,20 +1,24 @@
 import styles from './FeedCard.module.css';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hoocks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { dateUtils } from '../../utils/date-utils';
 import cn from 'classnames';
 import { nanoid } from '@reduxjs/toolkit';
+import type { TProps } from './type';
+// : React.FC<TProps>
 
-const FeedCard = ({ ingredients, createdAt, status, name, number }) => {
-  const data = useSelector((store) => store.ingredients);
+const FeedCard: React.FC<TProps> = ({ ingredients, createdAt, status, name, number }) => {
+  const data = useAppSelector((store) => store.ingredients);
   const location = useLocation();
   const { url } = useRouteMatch();
 
   const ingredientsOrder = [];
   for (let i = 0; i < ingredients.length; i++) {
-    const element = data.ingredients.find((item) => item._id === ingredients[i]);
+    // здесь для  item добавил тип any. Без него условие почему-то ломается. Хотя в обоих типах есть все необходимое. Не понимаю природы ошибки
+    const element = data.ingredients.find((item: any) => item._id === ingredients[i]);
+    console.log(element);
     if (element) {
       ingredientsOrder.push(element);
     }
@@ -43,15 +47,14 @@ const FeedCard = ({ ingredients, createdAt, status, name, number }) => {
         </div>
         <div className={styles.nameContainer}>
           <p className={`${styles.description} text text_type_main-medium`}>{name}</p>
-          {isOrderPage ? (
-            <p
-              className={cn(`text text_type_main-default mt-2`, {
-                [styles.color]: status === 'done',
-              })}
-            >
-              {status === 'done' ? 'Выполнено' : status === 'created' ? 'Создан' : 'Готовится'}
-            </p>
-          ) : null}
+
+          <p
+            className={cn(`text text_type_main-default mt-2`, {
+              [styles.color]: status === 'done',
+            })}
+          >
+            {status === 'done' ? 'Выполнено' : status === 'created' ? 'Создан' : 'Готовится'}
+          </p>
         </div>
         <div className={styles.footer}>
           <div className={styles.imageContainer}>
