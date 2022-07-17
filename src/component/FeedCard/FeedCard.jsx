@@ -7,7 +7,7 @@ import { dateUtils } from '../../utils/date-utils';
 import cn from 'classnames';
 import { nanoid } from '@reduxjs/toolkit';
 
-const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, number }) => {
+const FeedCard = ({ ingredients, createdAt, status, name, number }) => {
   const data = useSelector((store) => store.ingredients);
   const location = useLocation();
   const { url } = useRouteMatch();
@@ -104,16 +104,6 @@ const FeedCard = ({ ingredients, _id, createdAt, status, isOrderPage, name, numb
       </div>
     </Link>
   );
-};
-
-FeedCard.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
-  _id: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  isOrderPage: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  number: PropTypes.number,
 };
 
 export default FeedCard;
