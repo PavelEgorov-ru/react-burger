@@ -11,7 +11,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import newApi from '../../utils/api';
 
 const initialStateOrder: IStateOrder = {
-  order: {},
+  order: [],
   orders: [],
   isOrder: false,
   isLoadingOrder: true,
@@ -33,7 +33,7 @@ export const fetchOrder = createAsyncThunk(
 
 export const fetchOrderInfo = createAsyncThunk(
   'order/fetchOrderInfo',
-  async (id, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     const response = await newApi.getOrder(id);
     if (response.ok) {
       const responseData: IResponseOrderInfoSlice = await response.json();
@@ -50,7 +50,7 @@ const orderSlice = createSlice({
   initialState: initialStateOrder,
   reducers: {
     closeModal(state) {
-      state.order = {};
+      state.order = [];
       state.orders = [];
       state.isOrder = false;
     },
@@ -60,7 +60,8 @@ const orderSlice = createSlice({
       .addCase(fetchOrder.pending, (state) => {
         state.isOrder = false;
       })
-      .addCase(fetchOrder.fulfilled, (state, action: PayloadAction<IOrderObj>) => {
+      .addCase(fetchOrder.fulfilled, (state, action: any) => {
+        // PayloadAction<IOrderObj>
         state.isOrder = true;
         console.log(action.payload);
         state.order = action.payload;
@@ -69,10 +70,9 @@ const orderSlice = createSlice({
       .addCase(fetchOrderInfo.pending, (state) => {
         state.isLoadingOrder = false;
       })
-      .addCase(fetchOrderInfo.fulfilled, (state, action: PayloadAction<IIngredient[]>) => {
+      .addCase(fetchOrderInfo.fulfilled, (state, action: PayloadAction<IOrderObj[]>) => {
         state.isLoadingOrder = true;
-        console.log(action.payload);
-        state.orders = action.payload;
+        state.order = action.payload;
       })
       .addCase(fetchOrderInfo.rejected, (state) => {
         state.isLoadingOrder = true;

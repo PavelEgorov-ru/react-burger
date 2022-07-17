@@ -6,10 +6,11 @@ import { useAppSelector } from '../../hoocks';
 
 const OrderDetails = () => {
   const { order } = useAppSelector((store) => store.order);
+  const orderObj = order[0];
 
   return (
     <>
-      <p className={cn('text text_type_digits-large mt-20')}> {order.number} </p>
+      <p className={cn('text text_type_digits-large mt-20')}> {orderObj.number} </p>
       <p className={cn('text text_type_main-medium mt-8 mb-15')}> идентификатор заказа </p>
       <img className={cn(styles.image)} src={checkIcon} alt="иконка успешности заказа" />
       <p className={cn('text text_type_main-default mt-15 mb-2')}>Ваш заказ начали готовить</p>

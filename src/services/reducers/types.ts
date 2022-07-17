@@ -65,7 +65,7 @@ export interface IResponseOrderSlise {
 
 export interface IResponseOrderInfoSlice {
   success: boolean;
-  orders: IIngredient[];
+  orders: IOrderObj[];
 }
 
 export interface IResponseReject {
@@ -74,7 +74,7 @@ export interface IResponseReject {
 }
 
 export interface IStateOrder {
-  order: Record<string, any> | IOrderObj;
+  order: IOrderObj[];
   orders: IIngredient[];
   isOrder: boolean;
   isLoadingOrder: boolean;
