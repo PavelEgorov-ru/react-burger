@@ -101,7 +101,7 @@ export const fetchEditUser = createAsyncThunk(
 
 export const fetchForgotPassword = createAsyncThunk(
   'user/fetchForgotPassword',
-  async (info, { rejectWithValue }) => {
+  async (info: { email: string }, { rejectWithValue }) => {
     const response = await resetApi.forgotPassword(info);
     if (response.ok) {
       const responseData: IResponseSuccess = await response.json();

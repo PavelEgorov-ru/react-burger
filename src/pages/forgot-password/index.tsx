@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, ChangeEvent } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hoocks';
 import { fetchForgotPassword } from '../../services/reducers';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
@@ -11,11 +11,11 @@ export const ForgotPage = () => {
     email: '',
   });
 
-  const { isForgot, isLoader, isAuth } = useSelector((store) => store.user);
-  const inputRef = useRef();
-  const dispatch = useDispatch();
+  const { isForgot, isLoader, isAuth } = useAppSelector((store) => store.user);
+  // const inputRef = useRef();
+  const dispatch = useAppDispatch();
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -55,7 +55,7 @@ export const ForgotPage = () => {
             value={formState.email}
             name={'email'}
             error={false}
-            ref={inputRef}
+            // ref={inputRef}
             errorText={'Ошибка'}
             size={'default'}
           />
