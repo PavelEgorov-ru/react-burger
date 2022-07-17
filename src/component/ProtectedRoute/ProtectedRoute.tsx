@@ -1,9 +1,11 @@
 import { Route, Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hoocks';
+import type { TProps } from './type';
 
-export function ProtectedRoute({ children, ...rest }) {
-  const { isAuth, isLoader } = useSelector((store) => store.user);
+const ProtectedRoute: React.FC<TProps> = ({ children, ...rest }) => {
+  const { isAuth, isLoader } = useAppSelector((store) => store.user);
 
   if (!isLoader) return <div>загрузка данных</div>;
 
@@ -28,10 +30,6 @@ export function ProtectedRoute({ children, ...rest }) {
       />
     )
   );
-}
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.element,
 };
 
 export default ProtectedRoute;
