@@ -17,9 +17,4 @@ const ItemsContainer = React.forwardRef<HTMLDivElement, TProps>(({ data, childre
   );
 });
 
-// ItemsContainer.propTypes = {
-//   data: PropTypes.arrayOf(PropTypes.shape(typeIndegrient)).isRequired,
-//   children: PropTypes.string.isRequired,
-// };
-
 export default ItemsContainer;
