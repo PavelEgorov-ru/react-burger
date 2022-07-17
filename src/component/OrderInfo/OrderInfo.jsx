@@ -2,6 +2,7 @@ import styles from './OrderInfo.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hoocks';
 import { useParams } from 'react-router-dom';
 import { fetchOrderInfo, orderActions } from '../../services/reducers';
 import { dateUtils } from '../../utils/date-utils';
@@ -9,10 +10,10 @@ import cn from 'classnames';
 import { nanoid } from '@reduxjs/toolkit';
 
 const OrderInfo = () => {
-  const router = useParams();
+  const router = useParams<any>();
   const number = router.id;
-  const dispatch = useDispatch();
-  const { ingredients } = useSelector((store) => store.ingredients);
+  const dispatch = useAppDispatch();
+  const { ingredients } = useAppSelector((store) => store.ingredients);
 
   useEffect(() => {
     dispatch(fetchOrderInfo(number));
@@ -21,7 +22,7 @@ const OrderInfo = () => {
     };
   }, []);
 
-  const { orders } = useSelector((store) => store.order);
+  const { orders } = useAppSelector((store) => store.order);
   console.log(orders);
   const order = orders[0];
 

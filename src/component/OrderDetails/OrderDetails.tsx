@@ -2,9 +2,10 @@ import cn from 'classnames';
 import styles from './OrderDetails.module.css';
 import checkIcon from '../../images/check-icon.png';
 import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hoocks';
 
 const OrderDetails = () => {
-  const { order } = useSelector((store) => store.order);
+  const { order } = useAppSelector((store) => store.order);
 
   return (
     <>
