@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, ChangeEvent, FormEventHandler, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hoocks';
 import styles from './profile.module.css';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,24 +10,24 @@ import cn from 'classnames';
 export const ProfilePage = () => {
   const { url } = useRouteMatch();
 
-  const { userName, userEmail, userPassword } = useSelector((store) => store.user);
+  const { userName, userEmail } = useAppSelector((store) => store.user);
   const [formState, setFormState] = useState({
     name: userName,
     email: userEmail,
-    password: userPassword,
+    password: '',
   });
 
   const [isEditName, setEditName] = useState(false);
   const [isEditEmail, setEditEmail] = useState(false);
   const [isEditPassword, setEditPassword] = useState(false);
 
-  const inputNameRef = useRef();
-  const inputEmailRef = useRef();
-  const inputPasswordRef = useRef();
-  const dispatch = useDispatch();
+  const inputNameRef = useRef<HTMLInputElement>(null);
+  const inputEmailRef = useRef<HTMLInputElement>(null);
+  const inputPasswordRef = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
 
   const onClickNameIcon = () => {
-    setTimeout(() => inputNameRef.current.focus(), 0);
+    setTimeout(() => inputNameRef.current?.focus(), 0);
     setEditName(!isEditName);
     setEditEmail(false);
     setEditPassword(false);
@@ -39,7 +40,7 @@ export const ProfilePage = () => {
   };
 
   const onClickEmailIcon = () => {
-    setTimeout(() => inputEmailRef.current.focus(), 0);
+    setTimeout(() => inputEmailRef.current?.focus(), 0);
     setEditEmail(!isEditEmail);
     setEditName(false);
     setEditPassword(false);
@@ -52,19 +53,19 @@ export const ProfilePage = () => {
   };
 
   const onClickPasswordEmail = () => {
-    setTimeout(() => inputPasswordRef.current.focus(), 0);
+    setTimeout(() => inputPasswordRef.current?.focus(), 0);
     setEditPassword(!isEditPassword);
     setEditEmail(false);
     setEditName(false);
     if (isEditPassword) {
       setFormState({
         ...formState,
-        password: userPassword,
+        password: '',
       });
     }
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -75,20 +76,20 @@ export const ProfilePage = () => {
     });
   };
 
-  const cancelSend = (e) => {
-    e.preventDefault();
+  const cancelSend = (event: FormEvent) => {
+    event.preventDefault();
     setFormState({
       name: userName,
       email: userEmail,
-      password: userPassword,
+      password: '',
     });
     setEditEmail(false);
     setEditPassword(false);
     setEditName(false);
   };
 
-  const submitForm = (e) => {
-    e.preventDefault();
+  const submitForm = (event: FormEvent) => {
+    event.preventDefault();
     dispatch(fetchEditUser(formState));
     setEditEmail(false);
     setEditPassword(false);

@@ -1,11 +1,12 @@
 import cn from 'classnames';
 import styles from './IngredientDetails.module.css';
 import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hoocks';
 import { useParams } from 'react-router-dom';
 
 const IngredientDetails = () => {
-  const { ingredients } = useSelector((store) => store.ingredients);
-  const router = useParams();
+  const { ingredients } = useAppSelector((store) => store.ingredients);
+  const router = useParams<any>();
   const id = router.id;
   const ingredient = ingredients.find((el) => el._id === id);
 

@@ -24,7 +24,7 @@ const initialState: IStateUser = {
 
 export const fetchNewUser = createAsyncThunk(
   'user/fetchNewUser',
-  async (info, { rejectWithValue }) => {
+  async (info: { name: string; email: string; password: string }, { rejectWithValue }) => {
     const response = await auth.register(info);
     if (response.ok) {
       const responseData: IResponseRegister = await response.json();
@@ -36,20 +36,23 @@ export const fetchNewUser = createAsyncThunk(
   }
 );
 
-export const fetchAuth = createAsyncThunk('user/fetchAuth', async (info, { rejectWithValue }) => {
-  const response = await auth.login(info);
-  if (response.ok) {
-    const responseData: IResponseRegister = await response.json();
-    return responseData;
-  } else {
-    const responseData: IResponseReject = await response.json();
-    return rejectWithValue(responseData.message);
+export const fetchAuth = createAsyncThunk(
+  'user/fetchAuth',
+  async (info: { email: string; password: string }, { rejectWithValue }) => {
+    const response = await auth.login(info);
+    if (response.ok) {
+      const responseData: IResponseRegister = await response.json();
+      return responseData;
+    } else {
+      const responseData: IResponseReject = await response.json();
+      return rejectWithValue(responseData.message);
+    }
   }
-});
+);
 
 export const fetchLogout = createAsyncThunk(
   'user/fetchLogout',
-  async (info, { rejectWithValue }) => {
+  async (info: { token: string | null }, { rejectWithValue }) => {
     const response = await auth.logout(info);
     if (response.ok) {
       const responseData: IResponseSuccess = await response.json();
@@ -87,7 +90,7 @@ export const fetchCheckUser = createAsyncThunk(
 
 export const fetchEditUser = createAsyncThunk(
   'user/fetchEditUser',
-  async (info, { rejectWithValue }) => {
+  async (info: { name: string; email: string; password?: string }, { rejectWithValue }) => {
     const response = await auth.editUser(info);
     if (response.ok) {
       const responseData: IResponseEditUser = await response.json();
@@ -101,7 +104,7 @@ export const fetchEditUser = createAsyncThunk(
 
 export const fetchForgotPassword = createAsyncThunk(
   'user/fetchForgotPassword',
-  async (info, { rejectWithValue }) => {
+  async (info: { email: string }, { rejectWithValue }) => {
     const response = await resetApi.forgotPassword(info);
     if (response.ok) {
       const responseData: IResponseSuccess = await response.json();
@@ -115,7 +118,7 @@ export const fetchForgotPassword = createAsyncThunk(
 
 export const fetchResetPassword = createAsyncThunk(
   'user/fetchResetPassword',
-  async (info, { rejectWithValue }) => {
+  async (info: { password: string; token: string }, { rejectWithValue }) => {
     const response = await resetApi.resetPassword(info);
     if (response.ok) {
       const responseData: IResponseSuccess = await response.json();

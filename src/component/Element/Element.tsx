@@ -2,16 +2,15 @@ import styles from './Element.module.css';
 import { useRef } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
-import typeIndegrient from '../../utils/types';
+import { useAppDispatch } from '../../hoocks';
+import type { IElement, TProps } from './type';
 import { elementsActions } from '../../services/reducers/index';
 
-const Element = ({ element, moveCard, index }) => {
-  const dispatch = useDispatch();
-  const ref = useRef();
-  const handleClose = (elementUid) => {
+const Element: React.FC<TProps> = ({ element, moveCard, index }) => {
+  const dispatch = useAppDispatch();
+  const ref = useRef<HTMLLIElement>(null);
+  const handleClose = (elementUid: string) => {
     dispatch(elementsActions.deleteElement(elementUid));
   };
 
@@ -22,7 +21,7 @@ const Element = ({ element, moveCard, index }) => {
 
   const [, drop] = useDrop({
     accept: 'element',
-    hover(item) {
+    hover(item: { index: number }) {
       if (item.index === index) {
         return;
       }
@@ -35,10 +34,10 @@ const Element = ({ element, moveCard, index }) => {
   });
 
   drag(drop(ref));
-
+  //index={index} в <li>
   return (
-    <li className={cn(styles.li)} draggable ref={ref} index={index}>
-      <DragIcon />
+    <li className={cn(styles.li)} draggable ref={ref}>
+      <DragIcon type="primary" />
       <ConstructorElement
         text={element.name}
         price={element.price}
@@ -47,12 +46,6 @@ const Element = ({ element, moveCard, index }) => {
       />
     </li>
   );
-};
-
-Element.propTypes = {
-  element: PropTypes.shape(typeIndegrient).isRequired,
-  index: PropTypes.number.isRequired,
-  moveCard: PropTypes.func.isRequired,
 };
 
 export default Element;

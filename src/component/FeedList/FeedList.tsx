@@ -1,11 +1,11 @@
 import cn from 'classnames';
 import styles from './FeedList.module.css';
 import FeedCard from '../FeedCard/FeedCard';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hoocks';
 import { nanoid } from '@reduxjs/toolkit';
 
 const FeedList = () => {
-  const { orders } = useSelector((store) => store.socket);
+  const { orders } = useAppSelector((store) => store.socket);
 
   return (
     <section className={cn(styles.sectionSize)}>

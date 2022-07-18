@@ -1,24 +1,24 @@
-import { useState, useRef } from 'react';
-import { NavLink, Redirect, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { fetchAuth, userActions } from '../../services/reducers';
+import { useState, useRef, ChangeEvent } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hoocks';
+import { NavLink, Redirect } from 'react-router-dom';
 import cn from 'classnames';
-import styles from './login.module.css';
+import styles from './register.module.css';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { fetchNewUser } from '../../services/reducers';
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
   const [formState, setFormState] = useState({
     email: '',
     password: '',
+    name: '',
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
-  const { isAuth, isLoader, isReset } = useSelector((store) => store.user);
 
-  const dispatch = useDispatch();
-  const inputRef = useRef();
-  const location = useLocation();
+  const { isAuth, isLoader } = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -29,25 +29,17 @@ export const LoginPage = () => {
     });
   };
 
-  if (isReset) {
-    dispatch(userActions.defaultReset());
-  }
-
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current?.focus(), 0);
     setIsActiveIcon(!isActiveIcon);
   };
 
-  const submitForm = (e) => {
-    dispatch(fetchAuth(formState));
-    setFormState({
-      email: '',
-      password: '',
-    });
+  const submitForm = () => {
+    dispatch(fetchNewUser(formState));
   };
 
   if (isAuth) {
-    return <Redirect to={location.state?.from || '/'} />;
+    return <Redirect to="/" />;
   }
 
   if (!isLoader) return <div>загрузка данных</div>;
@@ -55,7 +47,20 @@ export const LoginPage = () => {
   return (
     <main className={cn(styles.main)}>
       <form className={cn(styles.form)} onSubmit={submitForm}>
-        <p className="text text_type_main-medium">Вход</p>
+        <p className={cn('text text_type_main-medium')}>Регистрация</p>
+        <div className={cn(styles.input)}>
+          <Input
+            placeholder={'Имя'}
+            type={'text'}
+            onChange={handleInputChange}
+            value={formState.name}
+            name={'name'}
+            error={false}
+            ref={inputRef}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+        </div>
         <div className={cn(styles.input)}>
           <Input
             placeholder={'Email'}
@@ -85,19 +90,13 @@ export const LoginPage = () => {
           />
         </div>
         <Button type="primary" htmlType="submit" size="medium">
-          Войти
+          Зарегистрироваться
         </Button>
       </form>
       <p className={cn(`text text_type_main-default text_color_inactive ${styles.text}`)}>
-        Вы - новый пользователь?
-        <NavLink className={cn(styles.link)} to={{ pathname: '/register' }}>
-          Зарегистрироваться
-        </NavLink>
-      </p>
-      <p className={cn(`text text_type_main-default text_color_inactive ${styles.text}`)}>
-        Забыли пароль?
-        <NavLink className={styles.link} to={{ pathname: '/forgot-password' }}>
-          Восстановить пароль
+        Уже зарегитсрированны?
+        <NavLink className={cn(styles.link)} to={{ pathname: '/login' }}>
+          Войти
         </NavLink>
       </p>
     </main>

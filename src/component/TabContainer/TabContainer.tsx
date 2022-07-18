@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './TabContainer.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TProps } from './type';
 
-const TabContainer = ({ current, handleCurrent }) => {
-  const scrollTab = (value) => {
+const TabContainer: React.FC<TProps> = ({ current, handleCurrent }) => {
+  const scrollTab = (value: string) => {
     handleCurrent(value);
   };
 
@@ -21,11 +21,6 @@ const TabContainer = ({ current, handleCurrent }) => {
       </Tab>
     </div>
   );
-};
-
-TabContainer.propTypes = {
-  current: PropTypes.string.isRequired,
-  handleCurrent: PropTypes.func.isRequired,
 };
 
 export default TabContainer;

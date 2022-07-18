@@ -6,20 +6,36 @@ import type {
   IStateOrder,
   IOrderObj,
   IIngredient,
+  IOrderInfo,
 } from './types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import newApi from '../../utils/api';
 
 const initialStateOrder: IStateOrder = {
-  order: {},
-  orders: [],
+  order: [],
+  orderInfo: {
+    ingredients: [],
+    _id: '',
+    owner: {
+      createdAt: '',
+      email: '',
+      name: '',
+      updatedAt: '',
+    },
+    status: '',
+    name: '',
+    createdAt: '',
+    updatedAt: '',
+    number: 0,
+    price: 0,
+  },
   isOrder: false,
   isLoadingOrder: true,
 };
 
 export const fetchOrder = createAsyncThunk(
   'order/fetchOrder',
-  async (info, { rejectWithValue }) => {
+  async (info: any, { rejectWithValue }) => {
     const response = await newApi.postOrders(info);
     if (response.ok) {
       const responseData: IResponseOrderSlise = await response.json();
@@ -33,7 +49,7 @@ export const fetchOrder = createAsyncThunk(
 
 export const fetchOrderInfo = createAsyncThunk(
   'order/fetchOrderInfo',
-  async (id, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     const response = await newApi.getOrder(id);
     if (response.ok) {
       const responseData: IResponseOrderInfoSlice = await response.json();
@@ -50,8 +66,23 @@ const orderSlice = createSlice({
   initialState: initialStateOrder,
   reducers: {
     closeModal(state) {
-      state.order = {};
-      state.orders = [];
+      state.order = [];
+      state.orderInfo = {
+        ingredients: [],
+        _id: '',
+        owner: {
+          createdAt: '',
+          email: '',
+          name: '',
+          updatedAt: '',
+        },
+        status: '',
+        name: '',
+        createdAt: '',
+        updatedAt: '',
+        number: 0,
+        price: 0,
+      };
       state.isOrder = false;
     },
   },
@@ -60,19 +91,20 @@ const orderSlice = createSlice({
       .addCase(fetchOrder.pending, (state) => {
         state.isOrder = false;
       })
-      .addCase(fetchOrder.fulfilled, (state, action: PayloadAction<IOrderObj>) => {
+      .addCase(fetchOrder.fulfilled, (state, action: PayloadAction<IOrderInfo>) => {
+        // PayloadAction<IOrderObj>
         state.isOrder = true;
         console.log(action.payload);
-        state.order = action.payload;
+        state.orderInfo = action.payload;
       })
       .addCase(fetchOrder.rejected, (state) => state)
       .addCase(fetchOrderInfo.pending, (state) => {
         state.isLoadingOrder = false;
       })
-      .addCase(fetchOrderInfo.fulfilled, (state, action: PayloadAction<IIngredient[]>) => {
-        state.isLoadingOrder = true;
+      .addCase(fetchOrderInfo.fulfilled, (state, action: PayloadAction<IOrderObj[]>) => {
         console.log(action.payload);
-        state.orders = action.payload;
+        state.isLoadingOrder = true;
+        state.order = action.payload;
       })
       .addCase(fetchOrderInfo.rejected, (state) => {
         state.isLoadingOrder = true;

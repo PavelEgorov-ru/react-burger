@@ -9,7 +9,7 @@ export interface IStateIgredient {
 }
 
 export interface IStateConstructor {
-  bun: Record<string, any> | IIngredient;
+  bun: IIngredient;
   elements: IElement[];
   isElements: boolean;
 }
@@ -57,15 +57,32 @@ export interface IOrderObj {
   _id: string;
 }
 
+export interface IOrderInfo {
+  ingredients: IIngredient[];
+  _id: string;
+  owner: {
+    createdAt: string;
+    email: string;
+    name: string;
+    updatedAt: string;
+  };
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+  price: number;
+}
+
 export interface IResponseOrderSlise {
   name: string;
-  order: IOrderObj;
+  order: IOrderInfo;
   success: boolean;
 }
 
 export interface IResponseOrderInfoSlice {
   success: boolean;
-  orders: IIngredient[];
+  orders: IOrderObj[];
 }
 
 export interface IResponseReject {
@@ -74,8 +91,8 @@ export interface IResponseReject {
 }
 
 export interface IStateOrder {
-  order: Record<string, any> | IOrderObj;
-  orders: IIngredient[];
+  order: IOrderObj[];
+  orderInfo: IOrderInfo;
   isOrder: boolean;
   isLoadingOrder: boolean;
 }

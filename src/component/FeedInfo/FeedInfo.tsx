@@ -1,12 +1,13 @@
 import styles from './FeedInfo.module.css';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hoocks';
 import { nanoid } from '@reduxjs/toolkit';
+import type { IOrderObj } from './type';
 
 const FeedInfo = () => {
-  const { orders, total, totalToday } = useSelector((store) => store.socket);
+  const { orders, total, totalToday } = useAppSelector((store) => store.socket);
 
-  const ordersDone = [];
-  const ordersCreated = [];
+  const ordersDone: IOrderObj[] = [];
+  const ordersCreated: IOrderObj[] = [];
 
   orders.forEach((item) => {
     if (item.status === 'done') {

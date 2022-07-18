@@ -2,17 +2,20 @@ import styles from './OrderInfo.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hoocks';
 import { useParams } from 'react-router-dom';
 import { fetchOrderInfo, orderActions } from '../../services/reducers';
 import { dateUtils } from '../../utils/date-utils';
 import cn from 'classnames';
 import { nanoid } from '@reduxjs/toolkit';
+import type { IIngredient } from './type';
 
 const OrderInfo = () => {
-  const router = useParams();
+  const router = useParams<any>();
   const number = router.id;
-  const dispatch = useDispatch();
-  const { ingredients } = useSelector((store) => store.ingredients);
+  const dispatch = useAppDispatch();
+  const { ingredients } = useAppSelector((store) => store.ingredients);
+  const { order } = useAppSelector((store) => store.order);
 
   useEffect(() => {
     dispatch(fetchOrderInfo(number));
@@ -20,23 +23,20 @@ const OrderInfo = () => {
       dispatch(orderActions.closeModal());
     };
   }, []);
+  const ingredientsOrder: IIngredient[] = [];
 
-  const { orders } = useSelector((store) => store.order);
-  console.log(orders);
-  const order = orders[0];
+  if (order.length === 0) return <div>загрузка данных</div>;
 
-  const ingredientsOrder = [];
+  const orderObj = order[0];
 
-  if (order) {
-    for (let i = 0; i < order.ingredients.length; i++) {
-      const element = ingredients.find((item) => item._id === order.ingredients[i]);
-      if (element) {
-        ingredientsOrder.push(element);
-      }
+  for (let i = 0; i < orderObj.ingredients.length; i++) {
+    const element = ingredients.find((item: any) => item._id === orderObj.ingredients[i]);
+    if (element) {
+      ingredientsOrder.push(element);
     }
   }
 
-  const getCount = (id) => {
+  const getCount = (id: string) => {
     let count = 0;
     ingredientsOrder.forEach((ingredient) => {
       if (ingredient._id === id) count += 1;
@@ -46,20 +46,18 @@ const OrderInfo = () => {
 
   const totaPrice = ingredientsOrder.reduce((acc, ingredient) => acc + ingredient.price, 0);
 
-  if (!order) return <div>загрузка данных</div>;
-
   return (
     <>
       <p
         className={cn(`text text_type_digits-default mb-10 ${styles.numberOrder}`)}
-      >{`#${order.number}`}</p>
-      <p className={cn(`text text_type_main-medium mb-3 ${styles.nameOrder}`)}>{order.name}</p>
+      >{`#${orderObj.number}`}</p>
+      <p className={cn(`text text_type_main-medium mb-3 ${styles.nameOrder}`)}>{orderObj.name}</p>
       <p
         className={cn(`text text_type_main-default ${styles.status}`, {
-          [styles.done]: order.status === 'done',
+          [styles.done]: orderObj.status === 'done',
         })}
       >
-        {order.status === 'done' ? 'Выполнено' : 'pending' ? 'Готовится' : 'Создан'}
+        {orderObj.status === 'done' ? 'Выполнено' : 'pending' ? 'Готовится' : 'Создан'}
       </p>
       <div className={styles.container}>
         <p className="text text_type_main-medium"> Выполнено:</p>
@@ -81,7 +79,7 @@ const OrderInfo = () => {
                   <p className="text text_type_digits-default">{`${getCount(item._id)} x ${
                     item.price
                   }`}</p>
-                  <CurrencyIcon />
+                  <CurrencyIcon type="primary" />
                 </div>
               </li>
             );
@@ -89,11 +87,11 @@ const OrderInfo = () => {
         </ul>
         <div className={styles.footer}>
           <p className="text text_type_main-default text_color_inactive">
-            {dateUtils(order.updatedAt)}
+            {dateUtils(orderObj.updatedAt)}
           </p>
           <div className={styles.price}>
             <p className="text text_type_digits-default">{totaPrice}</p>
-            <CurrencyIcon />
+            <CurrencyIcon type="primary" />
           </div>
         </div>
       </div>

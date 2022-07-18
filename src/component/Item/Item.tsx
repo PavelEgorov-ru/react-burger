@@ -2,16 +2,15 @@ import cn from 'classnames';
 import styles from './Item.module.css';
 import { useDrag } from 'react-dnd';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import typeIndegrient from '../../utils/types';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hoocks';
 import { Link, useLocation } from 'react-router-dom';
+import type { TProps } from './type';
 
-const Item = ({ item }) => {
+const Item: React.FC<TProps> = ({ item }) => {
   const location = useLocation();
 
-  const { bun } = useSelector((store) => store.elements);
-  const { elements } = useSelector((store) => store.elements);
+  const { bun } = useAppSelector((store) => store.elements);
+  const { elements } = useAppSelector((store) => store.elements);
 
   let count = 0;
   if (item._id === bun._id) {
@@ -31,10 +30,8 @@ const Item = ({ item }) => {
     }),
   });
 
-  const boxShadow = isDrag ? '0 0 20px #6434db' : null;
-
   return (
-    <li className={cn(styles.item)} draggable ref={dragRef} style={{ boxShadow }}>
+    <li className={cn(styles.item)} draggable ref={dragRef}>
       <Link
         to={{
           pathname: `/ingredients/${item._id}`,
@@ -54,8 +51,7 @@ const Item = ({ item }) => {
   );
 };
 
-Item.propTypes = {
-  item: PropTypes.shape(typeIndegrient).isRequired,
-};
-
 export default Item;
+
+// const boxShadow = isDrag ? '0 0 20px #6434db' : null;
+// style={{ boxShadow }}

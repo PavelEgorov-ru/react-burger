@@ -1,34 +1,36 @@
-import React, { useMemo, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, { ReactNode, useMemo, useRef } from 'react';
+import { useAppSelector } from '../../hoocks';
 import cn from 'classnames';
 import styles from './BurgerIngredients.module.css';
 import TabContainer from '../TabContainer/TabContainer';
 import ItemsContainer from '../ItemsContainer/ItemsContainer';
 
 const BurgerIngredients = () => {
-  const { ingredients } = useSelector((store) => store.ingredients);
+  const { ingredients } = useAppSelector((store) => store.ingredients);
 
   const [current, setCurrent] = React.useState('булки');
-  const handleCurrent = (value) => {
+  const handleCurrent = (value: string) => {
     setCurrent(value);
     if (value === 'булки') {
-      bunsSectoin.current.scrollIntoView({ behavior: 'smooth' });
+      bunsSectoin.current && bunsSectoin.current.scrollIntoView({ behavior: 'smooth' });
     } else if (value === 'соусы') {
-      saucesSection.current.scrollIntoView({ behavior: 'smooth' });
+      saucesSection.current && saucesSection.current.scrollIntoView({ behavior: 'smooth' });
     } else {
-      mainsSection.current.scrollIntoView({ behavior: 'smooth' });
+      mainsSection.current && mainsSection.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const bunsSectoin = useRef(null);
-  const saucesSection = useRef(null);
-  const mainsSection = useRef(null);
+  const bunsSectoin = useRef<HTMLDivElement>(null);
+  const saucesSection = useRef<HTMLDivElement>(null);
+  const mainsSection = useRef<HTMLDivElement>(null);
 
-  const onScroll = (event) => {
+  const onScroll = (event: any) => {
+    //  Пытаюсь использовать UIEvent<HTMLDivElement>, но почему-то не могу. Оно не универсальное у меня получается
+    event.stopPropagation();
     const container = event.target;
-    const scrollPosition = container.scrollTop;
-    const saucesPosition = saucesSection.current.offsetTop;
-    const mainsPosition = mainsSection.current.offsetTop;
+    const scrollPosition: number = container ? container.scrollTop : null;
+    const saucesPosition: number = saucesSection.current ? saucesSection.current.offsetTop : 0;
+    const mainsPosition: number = mainsSection.current ? mainsSection.current.offsetTop : 0;
 
     if (scrollPosition + 200 >= mainsPosition) {
       setCurrent('мясо');
