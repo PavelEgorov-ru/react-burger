@@ -57,9 +57,26 @@ export interface IOrderObj {
   _id: string;
 }
 
+export interface IOrderInfo {
+  ingredients: IIngredient[];
+  _id: string;
+  owner: {
+    createdAt: string;
+    email: string;
+    name: string;
+    updatedAt: string;
+  };
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+  price: number;
+}
+
 export interface IResponseOrderSlise {
   name: string;
-  order: IOrderObj;
+  order: IOrderInfo;
   success: boolean;
 }
 
@@ -75,7 +92,7 @@ export interface IResponseReject {
 
 export interface IStateOrder {
   order: IOrderObj[];
-  orders: IIngredient[];
+  orderInfo: IOrderInfo;
   isOrder: boolean;
   isLoadingOrder: boolean;
 }

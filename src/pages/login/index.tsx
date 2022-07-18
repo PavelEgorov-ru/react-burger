@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, ChangeEvent, FormEventHandler } from 'react';
 import { NavLink, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../hoocks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { fetchAuth, userActions } from '../../services/reducers';
 import cn from 'classnames';
@@ -12,13 +13,13 @@ export const LoginPage = () => {
     password: '',
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
-  const { isAuth, isLoader, isReset } = useSelector((store) => store.user);
+  const { isAuth, isLoader, isReset } = useAppSelector((store) => store.user);
 
-  const dispatch = useDispatch();
-  const inputRef = useRef();
-  const location = useLocation();
+  const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const location = useLocation<any>();
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -34,11 +35,11 @@ export const LoginPage = () => {
   }
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current?.focus(), 0);
     setIsActiveIcon(!isActiveIcon);
   };
 
-  const submitForm = (e) => {
+  const submitForm = () => {
     dispatch(fetchAuth(formState));
     setFormState({
       email: '',

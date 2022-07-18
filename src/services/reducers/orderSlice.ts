@@ -6,13 +6,29 @@ import type {
   IStateOrder,
   IOrderObj,
   IIngredient,
+  IOrderInfo,
 } from './types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import newApi from '../../utils/api';
 
 const initialStateOrder: IStateOrder = {
   order: [],
-  orders: [],
+  orderInfo: {
+    ingredients: [],
+    _id: '',
+    owner: {
+      createdAt: '',
+      email: '',
+      name: '',
+      updatedAt: '',
+    },
+    status: '',
+    name: '',
+    createdAt: '',
+    updatedAt: '',
+    number: 0,
+    price: 0,
+  },
   isOrder: false,
   isLoadingOrder: true,
 };
@@ -51,7 +67,22 @@ const orderSlice = createSlice({
   reducers: {
     closeModal(state) {
       state.order = [];
-      state.orders = [];
+      state.orderInfo = {
+        ingredients: [],
+        _id: '',
+        owner: {
+          createdAt: '',
+          email: '',
+          name: '',
+          updatedAt: '',
+        },
+        status: '',
+        name: '',
+        createdAt: '',
+        updatedAt: '',
+        number: 0,
+        price: 0,
+      };
       state.isOrder = false;
     },
   },
@@ -60,17 +91,18 @@ const orderSlice = createSlice({
       .addCase(fetchOrder.pending, (state) => {
         state.isOrder = false;
       })
-      .addCase(fetchOrder.fulfilled, (state, action: any) => {
+      .addCase(fetchOrder.fulfilled, (state, action: PayloadAction<IOrderInfo>) => {
         // PayloadAction<IOrderObj>
         state.isOrder = true;
         console.log(action.payload);
-        state.order = action.payload;
+        state.orderInfo = action.payload;
       })
       .addCase(fetchOrder.rejected, (state) => state)
       .addCase(fetchOrderInfo.pending, (state) => {
         state.isLoadingOrder = false;
       })
       .addCase(fetchOrderInfo.fulfilled, (state, action: PayloadAction<IOrderObj[]>) => {
+        console.log(action.payload);
         state.isLoadingOrder = true;
         state.order = action.payload;
       })

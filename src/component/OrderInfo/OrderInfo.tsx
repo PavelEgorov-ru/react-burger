@@ -28,6 +28,7 @@ const OrderInfo = () => {
   if (order.length === 0) return <div>загрузка данных</div>;
 
   const orderObj = order[0];
+
   for (let i = 0; i < orderObj.ingredients.length; i++) {
     const element = ingredients.find((item: any) => item._id === orderObj.ingredients[i]);
     if (element) {

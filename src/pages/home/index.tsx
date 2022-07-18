@@ -6,19 +6,18 @@ import BurgerContainer from '../../component/BurgerContainer/BurgerContainer';
 import { useAppSelector } from '../../hoocks';
 import cn from 'classnames';
 import styles from './home.module.css';
+import type { TProps } from './type';
 
-export const HomePage = () => {
+export const HomePage: React.FC<TProps> = () => {
   const { isIngredients } = useAppSelector((store) => store.ingredients);
   const { isElements } = useAppSelector((store) => store.elements);
 
-  return (
-    isIngredients && (
-      <DndProvider backend={HTML5Backend}>
-        <main className={cn(styles.main)}>
-          <BurgerIngredients />
-          {isElements ? <BurgerConstructor /> : <BurgerContainer />}
-        </main>
-      </DndProvider>
-    )
-  );
+  return isIngredients ? (
+    <DndProvider backend={HTML5Backend}>
+      <main className={cn(styles.main)}>
+        <BurgerIngredients />
+        {isElements ? <BurgerConstructor /> : <BurgerContainer />}
+      </main>
+    </DndProvider>
+  ) : null;
 };

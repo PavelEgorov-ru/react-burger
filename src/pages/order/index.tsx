@@ -4,11 +4,12 @@ import { useEffect } from 'react';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { fetchLogout } from '../../services/reducers';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../hoocks';
 import FeedCard from '../../component/FeedCard/FeedCard';
 import { wsActions } from '../../services/reducers';
 
 export const OrderPage = () => {
-  const { orders } = useSelector((store) => store.socket);
+  const { orders } = useAppSelector((store) => store.socket);
   console.log(orders);
 
   const ordersRevers = [...orders].reverse();
@@ -16,7 +17,7 @@ export const OrderPage = () => {
   const { url } = useRouteMatch();
   const isOrderPage = true;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const logout = () => {
     const refToken = localStorage.getItem('refBurgerToken');
     dispatch(fetchLogout({ token: refToken }));
@@ -50,7 +51,7 @@ export const OrderPage = () => {
       <section className={cn(styles.sectionSize)}>
         <div className={cn(styles.container)}>
           {ordersRevers.map((card) => (
-            <FeedCard {...card} key={card.createdAt} isOrderPage={isOrderPage} />
+            <FeedCard {...card} key={card.createdAt} />
           ))}
         </div>
       </section>
