@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useRef, ChangeEvent } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hoocks';
 import { NavLink, Redirect } from 'react-router-dom';
 import cn from 'classnames';
 import styles from './register.module.css';
@@ -14,11 +14,11 @@ export const RegisterPage = () => {
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
 
-  const { isAuth, isLoader } = useSelector((store) => store.user);
-  const dispatch = useDispatch();
-  const inputRef = useRef();
+  const { isAuth, isLoader } = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -30,11 +30,11 @@ export const RegisterPage = () => {
   };
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current?.focus(), 0);
     setIsActiveIcon(!isActiveIcon);
   };
 
-  const submitForm = (e) => {
+  const submitForm = () => {
     dispatch(fetchNewUser(formState));
   };
 

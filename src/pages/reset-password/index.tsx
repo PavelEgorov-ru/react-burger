@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, ChangeEvent, FormEvent } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hoocks';
 import { fetchResetPassword } from '../../services/reducers';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
@@ -13,16 +13,16 @@ export const ResetPage = () => {
   });
   const [isActiveIcon, setIsActiveIcon] = useState(false);
 
-  const { isReset, isLoader, isAuth, isForgot } = useSelector((store) => store.user);
-  const inputRef = useRef();
-  const dispatch = useDispatch();
+  const { isReset, isLoader, isAuth, isForgot } = useAppSelector((store) => store.user);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current?.focus(), 0);
     setIsActiveIcon(!isActiveIcon);
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -33,8 +33,8 @@ export const ResetPage = () => {
     });
   };
 
-  const submitForm = (e) => {
-    e.preventDefault();
+  const submitForm = (event: FormEvent) => {
+    event.preventDefault();
     dispatch(fetchResetPassword(formState));
     setFormState({
       password: '',
@@ -76,7 +76,7 @@ export const ResetPage = () => {
             placeholder={'Введите код из письма'}
             type={'text'}
             onChange={handleInputChange}
-            value={formState.name}
+            value={formState.token}
             name={'token'}
             error={false}
             ref={inputRef}

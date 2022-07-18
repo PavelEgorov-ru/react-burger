@@ -24,7 +24,7 @@ const initialState: IStateUser = {
 
 export const fetchNewUser = createAsyncThunk(
   'user/fetchNewUser',
-  async (info, { rejectWithValue }) => {
+  async (info: { name: string; email: string; password: string }, { rejectWithValue }) => {
     const response = await auth.register(info);
     if (response.ok) {
       const responseData: IResponseRegister = await response.json();
@@ -118,7 +118,7 @@ export const fetchForgotPassword = createAsyncThunk(
 
 export const fetchResetPassword = createAsyncThunk(
   'user/fetchResetPassword',
-  async (info, { rejectWithValue }) => {
+  async (info: { password: string; token: string }, { rejectWithValue }) => {
     const response = await resetApi.resetPassword(info);
     if (response.ok) {
       const responseData: IResponseSuccess = await response.json();
