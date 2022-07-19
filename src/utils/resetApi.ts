@@ -9,7 +9,7 @@ class ResetApi extends React.Component {
     this.baseUrl = baseUrl;
   }
 
-  _request(method: string, endpoint: string, info: any) {
+  _request(method: string, endpoint: string, info: TForgotPasswordInfo | TResetPasswordInfo) {
     const pattern = {
       method: method,
       headers: {
