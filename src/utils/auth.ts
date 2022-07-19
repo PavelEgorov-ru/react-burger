@@ -1,21 +1,38 @@
 import React from 'react';
+import type {
+  TApiConstructor,
+  TLoginInfo,
+  TRegisterInfo,
+  TLogoutInfo,
+  TNewTokenInfo,
+  TEditUserInfo,
+} from './type';
 import { getCookie } from './cookie';
 import { BASE_URL } from './constants';
 export const BASE_URL_AUTH = `${BASE_URL}/auth`;
 
+type TInfo =
+  | TApiConstructor
+  | TLoginInfo
+  | TRegisterInfo
+  | TLogoutInfo
+  | TNewTokenInfo
+  | TEditUserInfo;
+
 class Auth extends React.Component {
-  constructor({ baseUrl }) {
+  baseUrl: string;
+  constructor({ baseUrl }: TApiConstructor) {
     super(baseUrl);
     this.baseUrl = baseUrl;
   }
 
-  _request(method, endpoint, info) {
+  _request(method: string, endpoint: string, info?: TInfo) {
     const token = getCookie('burgerToken');
     const pattern = {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token ? `Bearer ${token}` : null,
+        Authorization: token ? `Bearer ${token}` : '',
       },
     };
 
@@ -25,27 +42,27 @@ class Auth extends React.Component {
     );
   }
 
-  login(info) {
+  login(info: TLoginInfo) {
     return this._request('POST', 'login', info);
   }
 
-  register(info) {
+  register(info: TRegisterInfo) {
     return this._request('POST', 'register', info);
   }
 
-  logout(info) {
+  logout(info: TLogoutInfo) {
     return this._request('POST', 'logout', info);
   }
 
-  newToken(info) {
+  newToken(info: TNewTokenInfo) {
     return this._request('POST', 'token', info);
   }
 
-  checkUser(info) {
-    return this._request('GET', 'user', info);
+  checkUser() {
+    return this._request('GET', 'user');
   }
 
-  editUser(info) {
+  editUser(info: TEditUserInfo) {
     return this._request('PATCH', 'user', info);
   }
 }

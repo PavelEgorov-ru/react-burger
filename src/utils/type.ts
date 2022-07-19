@@ -14,3 +14,28 @@ export type TResetPasswordInfo = {
   password: string;
   token: string;
 };
+
+export type TLoginInfo = {
+  email: string;
+  password: string;
+};
+
+export type TRegisterInfo = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type TLogoutInfo = {
+  token: string | null;
+};
+
+export type TNewTokenInfo = {
+  token: string | null;
+};
+
+export type TEditUserInfo = {
+  name: string;
+  email: string;
+  password?: string;
+};
