@@ -1,20 +1,22 @@
 import React from 'react';
 import { BASE_URL } from './constants';
 import { getCookie } from './cookie';
+import type { TApiConstructor, TPostOrdersInfo } from './type';
 
 class Api extends React.Component {
-  constructor({ baseUrl }) {
+  baseUrl: string;
+  constructor({ baseUrl }: TApiConstructor) {
     super(baseUrl);
     this.baseUrl = baseUrl;
   }
 
-  _request(method, endpoint, info) {
+  _request(method: string, endpoint: string, info?: TPostOrdersInfo): Promise<Response> {
     const token = getCookie('burgerToken');
     const pattern = {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token ? `Bearer ${token}` : null,
+        Authorization: token ? `Bearer ${token}` : '',
       },
     };
 
@@ -28,11 +30,11 @@ class Api extends React.Component {
     return this._request('GET', 'ingredients');
   }
 
-  postOrders(info) {
+  postOrders(info: any) {
     return this._request('POST', 'orders', info);
   }
 
-  getOrder(id) {
+  getOrder(id: any) {
     return this._request('GET', `orders/${id}`);
   }
 }
