@@ -1,13 +1,15 @@
 import React from 'react';
-export const BASE_URL = 'https://norma.nomoreparties.space/api';
+import { BASE_URL } from './constants';
+import { TApiConstructor, TForgotPasswordInfo, TResetPasswordInfo } from './type';
 
 class ResetApi extends React.Component {
-  constructor({ baseUrl }) {
+  baseUrl: string;
+  constructor({ baseUrl }: TApiConstructor) {
     super(baseUrl);
     this.baseUrl = baseUrl;
   }
 
-  _request(method, endpoint, info) {
+  _request(method: string, endpoint: string, info: any) {
     const pattern = {
       method: method,
       headers: {
@@ -21,11 +23,11 @@ class ResetApi extends React.Component {
     );
   }
 
-  forgotPassword(info) {
+  forgotPassword(info: TForgotPasswordInfo) {
     return this._request('POST', 'password-reset', info);
   }
 
-  resetPassword(info) {
+  resetPassword(info: TResetPasswordInfo) {
     return this._request('POST', 'password-reset/reset', info);
   }
 }
