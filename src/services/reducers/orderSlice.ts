@@ -92,9 +92,7 @@ const orderSlice = createSlice({
         state.isOrder = false;
       })
       .addCase(fetchOrder.fulfilled, (state, action: PayloadAction<IOrderInfo>) => {
-        // PayloadAction<IOrderObj>
         state.isOrder = true;
-        console.log(action.payload);
         state.orderInfo = action.payload;
       })
       .addCase(fetchOrder.rejected, (state) => state)
@@ -102,7 +100,6 @@ const orderSlice = createSlice({
         state.isLoadingOrder = false;
       })
       .addCase(fetchOrderInfo.fulfilled, (state, action: PayloadAction<IOrderObj[]>) => {
-        console.log(action.payload);
         state.isLoadingOrder = true;
         state.order = action.payload;
       })

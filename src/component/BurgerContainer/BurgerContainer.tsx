@@ -11,7 +11,6 @@ const BurgerContainer = () => {
   const [{ isHover }, dropRef] = useDrop({
     accept: 'bun',
     drop(item: IIngredient) {
-      console.log(item);
       dispatch(elementsActions.postBun(item));
     },
     collect: (monitor) => ({

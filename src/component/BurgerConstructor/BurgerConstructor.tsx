@@ -26,14 +26,12 @@ const BurgerConstructor = React.memo(() => {
   }, 0);
 
   const onClick = (arrayElements: IIngredient[]) => {
-    console.log('arrayElements', arrayElements);
     if (!isAuth) {
       history.replace({ pathname: '/login' });
     } else {
       const arrayId = arrayElements.map(function (element) {
         return element._id;
       });
-      console.log('arrayId', arrayId);
       dispatch(fetchOrder({ ingredients: arrayId }));
     }
   };

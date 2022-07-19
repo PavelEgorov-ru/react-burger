@@ -10,7 +10,6 @@ import { wsActions } from '../../services/reducers';
 
 export const OrderPage = () => {
   const { orders } = useAppSelector((store) => store.socket);
-  console.log(orders);
 
   const ordersRevers = [...orders].reverse();
 
