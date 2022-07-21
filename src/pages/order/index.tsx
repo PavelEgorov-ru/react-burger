@@ -3,10 +3,10 @@ import styles from './order.module.css';
 import { useEffect } from 'react';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { fetchLogout } from '../../services/reducers';
-import { useDispatch, useSelector } from 'react-redux';
 import { useAppSelector, useAppDispatch } from '../../hoocks';
 import FeedCard from '../../component/FeedCard/FeedCard';
 import { wsActions } from '../../services/reducers';
+import { getCookie } from '../../utils/cookie';
 
 export const OrderPage = () => {
   const { orders } = useAppSelector((store) => store.socket);
@@ -23,7 +23,7 @@ export const OrderPage = () => {
   };
 
   useEffect(() => {
-    dispatch(wsActions.connectionOrderList());
+    dispatch(wsActions.connectionOrderList(`token=${getCookie('burgerToken')}`));
 
     return () => {
       dispatch(wsActions.wsClose());

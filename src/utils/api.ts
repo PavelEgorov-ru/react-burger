@@ -30,11 +30,11 @@ class Api extends React.Component {
     return this._request('GET', 'ingredients');
   }
 
-  postOrders(info: any) {
+  postOrders(info: TPostOrdersInfo) {
     return this._request('POST', 'orders', info);
   }
 
-  getOrder(id: any) {
+  getOrder(id: number) {
     return this._request('GET', `orders/${id}`);
   }
 }

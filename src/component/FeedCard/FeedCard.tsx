@@ -1,5 +1,4 @@
 import styles from './FeedCard.module.css';
-import { useSelector } from 'react-redux';
 import { useAppSelector } from '../../hoocks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
@@ -7,7 +6,6 @@ import { dateUtils } from '../../utils/date-utils';
 import cn from 'classnames';
 import { nanoid } from '@reduxjs/toolkit';
 import type { TProps } from './type';
-// : React.FC<TProps>
 
 const FeedCard: React.FC<TProps> = ({ ingredients, createdAt, status, name, number }) => {
   const data = useAppSelector((store) => store.ingredients);

@@ -16,10 +16,10 @@ const wsSlice = createSlice({
   name: 'socket',
   initialState: initialStateSocket,
   reducers: {
-    connectionFeedList(state) {
+    connectionFeedList(state, payload) {
       state.isLoadingWs = false;
     },
-    connectionOrderList(state) {
+    connectionOrderList(state, payload) {
       state.isLoadingWs = false;
     },
     onOpen(state) {

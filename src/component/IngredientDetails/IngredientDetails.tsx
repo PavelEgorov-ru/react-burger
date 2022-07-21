@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import styles from './IngredientDetails.module.css';
-import { useSelector } from 'react-redux';
 import { useAppSelector } from '../../hoocks';
 import { useParams } from 'react-router-dom';
 

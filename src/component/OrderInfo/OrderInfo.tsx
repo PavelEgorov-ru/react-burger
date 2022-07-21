@@ -30,7 +30,7 @@ const OrderInfo = () => {
   const orderObj = order[0];
 
   for (let i = 0; i < orderObj.ingredients.length; i++) {
-    const element = ingredients.find((item: any) => item._id === orderObj.ingredients[i]);
+    const element = ingredients.find((item: any) => item.__ === orderObj.ingredients[i]);
     if (element) {
       ingredientsOrder.push(element);
     }
