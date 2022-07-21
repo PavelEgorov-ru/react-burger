@@ -8,7 +8,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
     let socket: WebSocket | null = null;
 
     return (next) => (action: { type: string; payload: string }) => {
-      const dispatch = useAppDispatch();
+      const { dispatch } = store;
       const { type, payload } = action;
       if (type === 'socket/connectionFeedList') {
         socket = new WebSocket(`${wsUrl}/${payload}`);
