@@ -12,7 +12,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWsActions): Middlewa
       const { type, payload } = action;
 
       if (type === 'socket/wsInit') {
-        socket = new WebSocket(`${wsUrl}?${payload}`);
+        socket = new WebSocket(`${wsUrl}${payload}`);
       }
 
       if (socket) {

@@ -9,7 +9,7 @@ export const FeedPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(wsActions.wsInit('all'));
+    dispatch(wsActions.wsInit('/all'));
 
     return () => {
       dispatch(wsActions.wsClose());
