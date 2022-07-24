@@ -90,7 +90,10 @@ export const fetchCheckUser = createAsyncThunk(
 
 export const fetchEditUser = createAsyncThunk(
   'user/fetchEditUser',
-  async (info: { name: string; email: string; password?: string }, { rejectWithValue }) => {
+  async (
+    info: { name: string | undefined; email: string | undefined; password?: string },
+    { rejectWithValue }
+  ) => {
     const response = await auth.editUser(info);
     if (response.ok) {
       const responseData: IResponseEditUser = await response.json();
@@ -189,12 +192,15 @@ const userSlice = createSlice({
       .addCase(fetchCheckUser.pending, (state) => {
         state.isLoader = false;
       })
-      .addCase(fetchCheckUser.fulfilled, (state, action: any) => {
-        state.userName = action.payload.user.name;
-        state.userEmail = action.payload.user.email;
-        state.isLoader = true;
-        state.isAuth = action.payload.success;
-      })
+      .addCase(
+        fetchCheckUser.fulfilled,
+        (state, action: PayloadAction<IResponseEditUser | undefined>) => {
+          state.userName = action.payload?.user.name;
+          state.userEmail = action.payload?.user.email;
+          state.isLoader = true;
+          state.isAuth = action.payload?.success;
+        }
+      )
       .addCase(fetchCheckUser.rejected, (state) => {
         state.isLoader = true;
       })

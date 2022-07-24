@@ -115,12 +115,12 @@ export interface IStateWs {
 }
 
 export interface IStateUser {
-  isAuth: boolean;
+  isAuth: boolean | undefined;
   isLoader: boolean;
   isForgot: boolean;
   isReset: boolean;
-  userName: string;
-  userEmail: string;
+  userName: string | undefined;
+  userEmail: string | undefined;
   errorMessage: string;
 }
 // User

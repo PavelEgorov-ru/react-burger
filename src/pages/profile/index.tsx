@@ -1,5 +1,4 @@
-import { useState, useRef, ChangeEvent, FormEventHandler, FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useRef, ChangeEvent, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hoocks';
 import styles from './profile.module.css';
 import { NavLink, useRouteMatch } from 'react-router-dom';
@@ -129,7 +128,7 @@ export const ProfilePage = () => {
             icon={isEditName ? 'CloseIcon' : 'EditIcon'}
             type={'text'}
             onChange={handleInputChange}
-            value={formState.name}
+            value={formState.name ? formState.name : ''}
             name={'name'}
             error={false}
             ref={inputNameRef}
@@ -149,7 +148,7 @@ export const ProfilePage = () => {
             icon={isEditEmail ? 'CloseIcon' : 'EditIcon'}
             type={'email'}
             onChange={handleInputChange}
-            value={formState.email}
+            value={formState.email ? formState.email : ''}
             name={'email'}
             error={false}
             ref={inputEmailRef}

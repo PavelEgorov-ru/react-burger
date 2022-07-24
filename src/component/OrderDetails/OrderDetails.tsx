@@ -2,13 +2,9 @@ import cn from 'classnames';
 import styles from './OrderDetails.module.css';
 import checkIcon from '../../images/check-icon.png';
 import { useAppSelector } from '../../hoocks';
-import type { IOrderInfo } from './type';
 
 const OrderDetails = () => {
   const { orderInfo } = useAppSelector((store) => store.order);
-  console.log(orderInfo);
-  // console.log(order);
-  // `${orderObj.number}`
 
   if (orderInfo.ingredients.length === 0) <div>Загрузка данных</div>;
 
