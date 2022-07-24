@@ -23,7 +23,7 @@ export const OrderPage = () => {
   };
 
   useEffect(() => {
-    dispatch(wsActions.connectionOrderList(`token=${getCookie('burgerToken')}`));
+    dispatch(wsActions.wsInit(`token=${getCookie('burgerToken')}`));
 
     return () => {
       dispatch(wsActions.wsClose());

@@ -16,6 +16,8 @@ const wsSlice = createSlice({
   name: 'socket',
   initialState: initialStateSocket,
   reducers: {
+    wsInit(state, payload) {},
+
     connectionFeedList(state, payload) {
       state.isLoadingWs = false;
     },
@@ -43,6 +45,7 @@ const wsSlice = createSlice({
       state.total = null;
       state.totalToday = null;
     },
+    wsSendMessage() {},
     wsClose() {},
   },
 });

@@ -1,19 +1,17 @@
 import { wsActions } from '../reducers';
 import { Middleware, MiddlewareAPI } from 'redux';
 import { AppDispatch, RootState } from '..';
-import { useAppDispatch } from '../../hoocks';
+import type { TWsActions } from './type';
 
-export const socketMiddleware = (wsUrl: string): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: TWsActions): Middleware => {
   return (store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
     return (next) => (action: { type: string; payload: string }) => {
       const { dispatch } = store;
       const { type, payload } = action;
-      if (type === 'socket/connectionFeedList') {
-        socket = new WebSocket(`${wsUrl}/${payload}`);
-      }
-      if (type === 'socket/connectionOrderList') {
+
+      if (type === 'socket/wsInit') {
         socket = new WebSocket(`${wsUrl}?${payload}`);
       }
 
