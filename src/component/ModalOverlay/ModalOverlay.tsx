@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './ModalOverlay.module.css';
 import type { TProps } from './type';

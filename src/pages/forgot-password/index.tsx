@@ -1,4 +1,4 @@
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hoocks';
 import { fetchForgotPassword } from '../../services/reducers';
@@ -12,7 +12,6 @@ export const ForgotPage = () => {
   });
 
   const { isForgot, isLoader, isAuth } = useAppSelector((store) => store.user);
-  // const inputRef = useRef();
   const dispatch = useAppDispatch();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

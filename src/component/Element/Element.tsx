@@ -4,7 +4,7 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import cn from 'classnames';
 import { useDrag, useDrop } from 'react-dnd';
 import { useAppDispatch } from '../../hoocks';
-import type { IElement, TProps } from './type';
+import type { TProps } from './type';
 import { elementsActions } from '../../services/reducers/index';
 
 const Element: React.FC<TProps> = ({ element, moveCard, index }) => {

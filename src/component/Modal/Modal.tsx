@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import cn from 'classnames';
 import styles from './Modal.module.css';

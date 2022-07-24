@@ -14,7 +14,6 @@ const FeedCard: React.FC<TProps> = ({ ingredients, createdAt, status, name, numb
 
   const ingredientsOrder = [];
   for (let i = 0; i < ingredients.length; i++) {
-    // здесь для  item добавил тип any. Без него условие почему-то ломается. Хотя в обоих типах есть все необходимое. Не понимаю природы ошибки
     const element = data.ingredients.find((item) => item._id === ingredients[i]);
     if (element) {
       ingredientsOrder.push(element);

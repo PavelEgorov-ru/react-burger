@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useAppSelector } from '../../hoocks';
 import cn from 'classnames';
 import styles from './BurgerIngredients.module.css';
@@ -25,7 +25,6 @@ const BurgerIngredients = () => {
   const mainsSection = useRef<HTMLDivElement>(null);
 
   const onScroll: React.UIEventHandler<HTMLDivElement> = (event) => {
-    //  Пытаюсь использовать UIEvent<HTMLDivElement>, но почему-то не могу. Оно не универсальное у меня получается
     event.stopPropagation();
     const container = event.target;
     // @ts-ignore

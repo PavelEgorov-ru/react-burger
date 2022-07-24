@@ -14,7 +14,6 @@ export const OrderPage = () => {
   const ordersRevers = [...orders].reverse();
 
   const { url } = useRouteMatch();
-  const isOrderPage = true;
 
   const dispatch = useAppDispatch();
   const logout = () => {
