@@ -43,7 +43,7 @@ export interface IIngredientsId {
 
 export interface IOrderObj {
   createdAt: string;
-  ingredients: IIngredient[];
+  ingredients: string[];
   name: string;
   number: number;
   owner: {
