@@ -1,7 +1,6 @@
 import styles from './OrderInfo.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../hoocks';
 import { useParams } from 'react-router-dom';
 import { fetchOrderInfo, orderActions } from '../../services/reducers';
@@ -30,9 +29,12 @@ const OrderInfo = () => {
   const orderObj = order[0];
 
   for (let i = 0; i < orderObj.ingredients.length; i++) {
-    const element = ingredients.find((item: any) => item._id === orderObj.ingredients[i]);
+    const element = ingredients.find((item) => item._id === orderObj.ingredients[i]._id);
     if (element) {
+      console.log(element);
       ingredientsOrder.push(element);
+    } else {
+      console.log('ничего нет');
     }
   }
 
