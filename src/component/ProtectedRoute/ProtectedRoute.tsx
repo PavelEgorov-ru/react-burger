@@ -1,10 +1,8 @@
 import { Route, Redirect } from 'react-router';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { useAppSelector } from '../../hoocks';
-import type { TProps } from './type';
+import { RouteProps } from 'react-router-dom';
 
-const ProtectedRoute: React.FC<TProps> = ({ children, ...rest }) => {
+const ProtectedRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
   const { isAuth, isLoader } = useAppSelector((store) => store.user);
 
   if (!isLoader) return <div>загрузка данных</div>;
