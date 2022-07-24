@@ -24,10 +24,11 @@ const BurgerIngredients = () => {
   const saucesSection = useRef<HTMLDivElement>(null);
   const mainsSection = useRef<HTMLDivElement>(null);
 
-  const onScroll = (event: any) => {
+  const onScroll: React.UIEventHandler<HTMLDivElement> = (event) => {
     //  Пытаюсь использовать UIEvent<HTMLDivElement>, но почему-то не могу. Оно не универсальное у меня получается
     event.stopPropagation();
     const container = event.target;
+    // @ts-ignore
     const scrollPosition: number = container ? container.scrollTop : null;
     const saucesPosition: number = saucesSection.current ? saucesSection.current.offsetTop : 0;
     const mainsPosition: number = mainsSection.current ? mainsSection.current.offsetTop : 0;
